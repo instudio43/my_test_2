@@ -1,0 +1,21 @@
+<div class="image_banner">
+{% capture image %}mobilebanner.jpg{% endcapture %}
+{% capture texts %}mobilebannertext{% endcapture %}
+  {% capture link_url %}link_url1{% endcapture %}
+  <div class="setrelative">
+    <a href="{{ settings[link_url] }}" class="hover-img">
+      <img src="{{ image | asset_url }}" alt="Shop Now" class="base-first" />
+    </a>
+
+  </div>
+</div>
+<div class="banner_image">
+ {% capture image2 %}mobilebanner2.jpg{% endcapture %}
+  {% capture link_url2 %}link_url2{% endcapture %}
+  <div class="setrelative">
+    <a href="{{ settings[link_url2] }}" class="hover-img">
+      <img src="{{image2 | asset_url }}" alt="Shop Now" class="base-first" />
+    </a>
+
+  </div>
+</div>

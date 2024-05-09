@@ -1,0 +1,133 @@
+<!-- /snippets/ajax-cart-template.liquid -->
+{% comment %}
+
+This snippet provides the default handlebars.js templates for
+the ajax cart plugin. Use the raw liquid tags to keep the
+handlebar.js template tags as available hooks.
+
+{% endcomment %}
+<script id="CartTemplate" type="text/template">
+
+  <form action="/cart" method="post" novalidate class="cart ajaxcart FormShoppingBag">
+    {% raw %}
+      <div class="ajaxcart__inner">
+        {{#items}}
+        <div class="ajaxcart__product">
+          <div role="group" aria-label="Product {{name}} {{variantTitle}}" class="ajaxcart row" data-line="{{line}}">
+
+              <div class="grid__item desktop-4 tablet-2 mobile-1">
+                <a href="{{url}}" class="ajaxcart__product-image"><img src="{{img}}" alt=""></a>
+  </div>
+              <div class="desktop-8 tablet-4 mobile-2 ShoppingBagRightBar">
+                <p>
+                  <a href="{{url}}" class="ajaxcart__product-name">{{name}}</a>
+                  {{#if variation}}
+                    <span class="ajaxcart__product-meta">{{{variation}}}</span>
+                  {{/if}}
+                  {{#properties}}
+                    {{#each this}}
+                      {{#if this}}
+                        <span class="ajaxcart__product-meta">{{@key}}: {{this}}</span>
+                      {{/if}}
+                    {{/each}}
+                  {{/properties}}
+                  {% endraw %}{% if settings.cart_vendor_enable %}{% raw %}
+                    <span class="ajaxcart__product-meta">{{ vendor }}</span>
+                  {% endraw %}{% endif %}{% raw %}
+  </p>
+                <p class="RightBar-Price"><strong>{{{price}}}</strong></p>
+
+                <div class="display-table">
+                  <div class="display-table-cell">
+                    <div class="ajaxcart__qty">
+                      <button aria-label="Decrease Quantity of {{name}}" type="button" class="ajaxcart__qty-adjust ajaxcart__qty--minus quantity-increment" data-id="{{id}}" data-qty="{{itemMinus}}" data-line="{{line}}">
+                        <span>&minus;</span>
+  </button>
+                      <input type="text" name="updates[]" class="ajaxcart__qty-num" value="{{itemQty}}" min="0" data-id="{{id}}" data-line="{{line}}" aria-label="quantity" pattern="[0-9]*">
+                      <button aria-label="Increase Quantity of {{name}}" type="button" class="ajaxcart__qty-adjust ajaxcart__qty--plus quantity-increment" data-id="{{id}}" data-line="{{line}}" data-qty="{{itemAdd}}">                        
+                        <span>+</span>
+  </button>
+  </div>
+  </div>
+  </div>
+                <a href="javascript:void(0);" class="removeitem-link" data-id="{{id}}" data-line="{{line}}" >X REMOVE ITEM</a>
+  </div>
+
+  </div>
+  </div>
+        {{/items}}
+
+        {% endraw %}
+      {% raw %}
+  </div>
+
+
+      <div class="ajaxcart__footer row rightbarfooter ">
+<div class="rightbarpricetitle">
+          <div class="desktop-half tablet-half mobile-half">
+            <p><strong>{% endraw %}{{ 'cart.general.subtotal' | t }}{% raw %}</strong></p>
+  </div>
+          <div class="desktop-half tablet-half mobile-half">
+            <p class="text-right"><strong>{{{totalPrice}}}</strong></p>
+  </div>
+
+  </div>
+
+
+        	<p class="afterpay-paragraph afterpay-paragraph-minicart" >
+	  <span class="afterpay-text1">or 4 interest-free installments of </span>
+	  <strong class="afterpay-instalments">{{{miniCart}}}</strong>
+	  <span class="afterpay-text2"> by </span>
+	  <img class="afterpay-logo" src="https://static.afterpay.com/integration/product-page/logo-afterpay-colour.png" srcset="https://static.afterpay.com/integration/product-page/logo-afterpay-colour.png 1x, https://static.afterpay.com/integration/product-page/logo-afterpay-colour@2x.png 2x, https://static.afterpay.com/integration/product-page/logo-afterpay-colour@3x.png 3x" width="100" height="21" alt="Afterpay" style="vertical-align: middle; width: 100px;">
+	  <span class="afterpay-text3">&nbsp;</span>
+	  <a class="afterpay-link" href="https://www.afterpay.com/purchase-payment-agreement" target="_blank"><u aria-label="Afterpay Information" class="afterpay-link-inner" style="font-size: 12px;"><span aria-hidden="true">ⓘ</span></u></a>
+  </p>
+
+          <div class="custom_checkbox"><input id="agree" type="checkbox" name="attributes[Accept Terms and Conditions]" required="required" checked /> <label for="agree">
+        I have read and agree to <a class="agree-checkout" href="http://www.bombshellsportswear.com/pages/shipping-information" target="_blank">Shipping and International Customs Tax Information</a></label>
+  </div>
+<div class="rightbarpricetitle">
+        <button type="submit" class="cart__checkout" name="checkout">
+          <i class="secure-checkout-icon"></i>{% endraw %}{{ 'cart.general.checkout' | t }}{% raw %}
+  </button>
+  </div>
+        {% endraw %}
+       {% comment %} {% if additional_checkout_buttons %}
+          <div class="additional_checkout_buttons">{{ content_for_additional_checkout_buttons }}</div>
+        {% endif %}{% endcomment %}
+
+        {% raw %}
+  </div>
+  </form>
+  {% endraw %}
+</script>
+<script id="AjaxQty" type="text/template">
+  {% raw %}
+    <div class="ajaxcart__qty">
+      <button type="button" class="ajaxcart__qty-adjust ajaxcart__qty--minus icon-fallback-text" data-id="{{id}}" data-qty="{{itemMinus}}">
+        <span class="icon icon-minus" aria-hidden="true"></span>
+        <span class="fallback-text">&minus;</span>
+  </button>
+      <input type="text" class="ajaxcart__qty-num" value="{{itemQty}}" min="0" data-id="{{id}}" aria-label="quantity" pattern="[0-9]*">
+      <button type="button" class="ajaxcart__qty-adjust ajaxcart__qty--plus icon-fallback-text" data-id="{{id}}" data-qty="{{itemAdd}}">
+        <span class="icon icon-plus" aria-hidden="true"></span>
+        <span class="fallback-text">+</span>
+  </button>
+  </div>
+  {% endraw %}
+</script>
+<script id="JsQty" type="text/template">
+  {% raw %}
+    <div class="js-qty">
+      <button aria-label="Decrease Quantity" type="button" class="js-qty__adjust js-qty__adjust--minus quantity-increment" data-id="{{id}}" data-qty="{{itemMinus}}">
+        <span>&minus;</span>
+  </button>
+      <input type="text" class="js-qty__num" value="{{itemQty}}" min="1" data-id="{{id}}" aria-label="quantity" pattern="[0-9]*" name="{{inputName}}" id="{{inputId}}">
+      <button aria-hidden="Increase Quantity" type="button" class="js-qty__adjust js-qty__adjust--plus quantity-increment" data-id="{{id}}" data-qty="{{itemAdd}}">
+        <span>+</span>
+  </button>
+  </div>
+  {% endraw %}
+</script>
+
+

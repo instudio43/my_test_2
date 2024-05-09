@@ -1,0 +1,18 @@
+{% comment %} Please don’t update this content {% endcomment %}
+
+{% layout none %}
+{
+  "product":
+    {
+      "id":{{ product.id }},
+       "available": {{ product.available }},
+      "availableVariants": {
+        {% for variant in product.variants %}
+      	 	"{{ variant.id }}": {{ variant.available }}{% if forloop.last != true %},{% endif %}
+        {% endfor %}
+      },
+      "metafields":[
+        
+      ]
+    }
+}

@@ -1,0 +1,52 @@
+<!-- Shown on Mobile Only -->
+<ul id="cart" class="mobile-3 mobile-only">
+  {% comment %} <li class="seeks"><a id="inline" href="#search_popup" class="open_popup"><i class="icon-search"></i></a>
+  {% if settings.show_multiple_currencies %}{% include 'currencies-switcher' %}{% endif %}</li>
+  {% if shop.customer_accounts_enabled %}
+  <li class="cust">
+    {% if customer  %}
+    <a href="/account">{{ 'customer.account.title' | t }}</a>
+    {% else %}
+    <a href="/account/login">{{ 'customer.account.title' | t }}</a>
+    {% endif %}
+  </li>
+  {% endif %}{% endcomment %}
+
+  <li class="wider"><button class="shifter-handle btnnostyle">{% include 'icon-menu' %}</button></li>
+  <li class="logoContainer">
+    <div id="mobilelogo">
+      <a href="/"><img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" style="border: 0;"/></a>
+    </div>
+  </li>
+{% comment %}
+  <li class="wishicon">
+    <span class="wishiconimg">{% include 'icon-heart' %}</span>
+  </li>
+  <div id="logo" class="mobile-3 mobile-logo">
+
+    {% if settings.use_logo_image %}
+    <a href="/"><img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" style="border: 0;"/></a>
+    {% else %}
+    <a href="/">{{ shop.name }}</a>
+    {% endif %}
+  </div> {% endcomment %}
+  <li class="searchIcon">{% include 'icon-search' %}</li>
+  <li class="minibag">
+	{% comment %}
+    <a href="/cart" class=" site-header__cart-toggle js-drawer-open-right" aria-controls="CartDrawer" aria-expanded="false">
+      <span class="cart-words">{{ 'cart.general.title' | t }}</span>
+      <img src="{{ 'shopping-bag.png' | asset_url }}" alt="shopping bag">
+      <span class="CartCount">{{ cart.item_count }}</span>
+    </a>
+	{% endcomment %}
+	<a href="/cart" class="cart-link-header">
+      <span class="cart-words">{{ 'cart.general.title' | t }}</span>
+      <span class="mobileCartIcon">
+        {% include 'icon-cart' %}
+        {% unless cart.item_count == 0 %}
+      <span class="CartCount">{{ cart.item_count }}</span>
+        {% endunless %}
+      </span>
+    </a>
+  </li>
+</ul>

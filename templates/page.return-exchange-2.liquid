@@ -1,0 +1,103 @@
+<title>{{ page.title }}</title>
+<div class="{{ page.title | handleize | append: '-page'}} return-exchange-2">
+<div id="image_banner"></div>
+<div id="content" class="row">	
+  <img src="https://cdn.shopify.com/s/files/1/0580/1077/files/return.jpg?v=1593366879" width="100%" />
+  <div class="section-title desktop-12 mobile-3">
+    <h1>{{ page.title }}</h1>
+  </div>
+  <div class="how-it-works-container">
+  	<img class="forDesktopOnly" src="https://cdn.shopify.com/s/files/1/0580/1077/files/howitworks_2new.jpg?v=1602525134" alt="How it works" />
+    <img class="forMobileOnly" src="https://cdn.shopify.com/s/files/1/0580/1077/files/how-it-works.png?v=1602563824" alt="How it works" />
+  </div>
+<div class="{% if settings.pagelist == '' %}desktop-12 tablet-6 mobile-3{% else %}desktop-9 tablet-4 mobile-3{% endif %}">
+  
+  <div class="rte">
+    <div class="section-title-2 desktop-12 mobile-3">
+      <h1>Common Return Questions</h1>
+      <h2>Domestic</h2>
+    </div>
+    <div class="returnSection">
+      <div class="desktop-6 tablet-3 mobile-3">
+        <h3>What Is Your Return Policy?</h3>
+        <p>We hope you love your Bombshell Sportswear! But if for any reason you are unhappy with your purchase,
+          simply mail off your return within <b>30 Days</b> of the delivery date for US orders. We will be happy to offer you a refund. Exchanges can also be made however they
+          can only be for a different size or color of the same style only.</p>
+        <p><b>Sale</b> items may be returned or exchanged for different size of <b>same style and color</b> only.</p>
+        <h3>How Do | Return/Exchange An Item?</h3>
+        <p>Package your returns/exchanges within <b>30 Days</b> of receiving this item and include the <b>INVOICE SHEET that came with your order</b>.</p>
+        <p><b>No RMA is required.</b></p>
+        <p>All Bombshell Sportswear items must be returned <b>unworn, unwashed, with original tags still attached, stickers, folded in its original “EVA” garment bag.</b>
+          Any damaged items that have signs of wear or do not conform with Bombshell Sportswear’s return policy will be declined and the item will be shipped back at the customer’s expense.</p>
+        <h3>Where Do | Send My Return/Exchange?</h3>
+        <p>PLEASE SEND RETURNS/EXCHANGES TO:</p>
+        <p><b>Bombshell Sportswear<br>
+          Returns Department<br>
+          1502 Gage Road<br>
+          Montebello, CA 90640<br>
+          USA</b></p>
+        <p>The customer is responsible for any return shipping costs and for obtaining tracking information as Bombshell Sportswear is not responsible for any lost/missing
+          returns. Exchanges can only be made for a different size or color of the same style only.</p>
+      </div>
+      <div class="desktop-6 tablet-3 mobile-3">
+        <h3>When Will | Receive My Refund?</h3>
+        <p>Once we receive your returned item, we will refund you the purchased amount and send you an email to confirm that the return has been completed. Refunds are in the form of original payment, please allow up to 10 business day for the refund to be reflected in your account or your exchange to be sent out. We don't refund original shipping charges.</p>
+        <h3>Is There A Restocking Fee?</h3>
+        <p>A 20% restocking fee will be applied to any returns allowed over 30 days.</p>
+        <h3>What If My Item is Damaged?</h3>
+        <p>Bombshell Sportswear guarantees its clothing to be free from manufacturing defect for the first 30 days as long as you follow our care instructions.<br>
+          If you believe you have received a defective product, prior to returning the item, please EMAIL US with an image of the defect and your order number for our production team to review.</p>
+        <p>By placing an order with Bombshell Sportswear, the customer acknowledges and agrees to all our shipping/return policies, terms and conditions.<br>
+          Once orders are placed they cannot be cancelled, however returns can still be made.</p>
+      </div>
+    </div>
+    <div class="section-title-2 desktop-12 mobile-3">
+      <h1>INTERNATIONAL RETURNS</h1>
+    </div>
+    <div class="returnSection">
+      <div class="desktop-6 tablet-3 mobile-3">
+        <h3>What Is Your International Return Policy?</h3>
+        <p><b>International Orders can only be returned for a refund.</b> Exchanges must be done as a re-order as shipping must be paid.</p>
+        <p>Bombshell Sportswear reserves the right to refuse any return on merchandise that does not meet the below requirements. Please be aware that international customs duties and sales taxes are not refunded for shipments outside the US.</p>
+        <p>All items must be returned in perfect condition, not used and with the original packaging and tags still attached. We are unable to offer a refund on items that are scratched, damaged or not in their original packaging. Customs or any additional charges for returning the product will not be covered by Bombshell Sportswear and any charges will be due to be payable by the customer if incurred by Bombshell Sportswear and will be subtracted from any refund due.</p>
+      </div>
+      <div class="desktop-6 tablet-3 mobile-3">
+        <h3>How Do | Return/Exchange An Item?</h3>
+        <p>If your order number begins with a "GE" please visit our <a href="">RETURNS PORTAL HERE</a> and follow the instructions provided.</p>
+        <p>If your order number begins with numbers please use the return address provided with your invoice and apply postage to return.</p>
+        <p>Please be aware that original shipping costs and duties and taxes are non-refundable.</p>
+        <h3>What Happens If | Refuse To Pay The Duty?</h3>
+        <p>If an item is returned to us because a customer refused to pay for any import taxes or customs duties due payable, Bombshell Sportswear will seek to recover from the customer all costs or any fees incurred by Bombshell Sportswear. Please note that if you refuse to pay customs duties upon delivery, a refund will only be issued after the product has been returned to us minus a $15 return charge.</p>
+        <h3>When Will | Receive My Refund?</h3>
+        <p>Normally the return of the product to Bombshell Sportswear takes 10-21 business days but depending on the country's customs officers.</p>
+        <p>For any questions please <a href="mailto:">EMAIL US</a></p>
+      </div>
+    </div>
+    {% comment %}
+    {{ page.content }}
+    {% endcomment %}
+  </div>
+</div>
+
+{% if settings.pagelist != '' %}
+<div id="page-sidebar" class="desktop-3 tablet-2 mobile-3">
+  {% comment %}<h2>{{ settings.page-sidebar-title }}</h2>{% endcomment %}
+  <ul>
+    {% for link in linklists[settings.pagelist].links %}
+    <li>{{ link.title | link_to: link.url }}</li>
+    {% endfor %}
+  </ul>
+
+  {% if settings.pagelist == '' %}
+  <p>You are seeing this message as you have yet to pick a linklist in the Pages and contact form section of the theme settings</p>
+  <p>In your admin click on Themes > Customize Theme > Pages and Contact form and choose a Linklist from the dropdown in the area marked Choose a linklist for page sidebar</p> 
+  {% endif %}  
+
+</div>
+{% endif %}
+</div>
+</div>
+
+
+
+

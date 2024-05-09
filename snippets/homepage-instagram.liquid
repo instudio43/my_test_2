@@ -1,0 +1,93 @@
+<section id="homepage-instagram" class="no-fouc">    
+    {% assign igimage = '{{image}}'%}
+    {% assign url = '{{link}}' %}
+    {% assign caption = '{{caption}}' %}
+  <article>
+    <div class="section-title row instagram-row">
+      <h2><a href="https://www.instagram.com/bombshellsportswear" style="text-decoration: none;" target="_blank">{{settings.instagram-title}}</a></h2>
+      <p>{{settings.instagram-subtitle}}</p>
+    </div> 
+    
+  {% comment %}  {% if settings.instagram-user-id == blank %}
+    <div class="theme-instructions row">
+      <div class="onboard desktop-12 tablet-6 mobile-3">
+        <h3>Home page - instagram</h3>
+        You are seeing this message as you have enabled the Instagram section of your Home page options
+        but have yet to add your Instagram credentials to the section titled: <strong>Home page - Instagram</strong>.
+        <br /><br />
+        To configure this section go to the <a href="/admin/themes/96134342/editor">theme Customizer</a> and open the section named: <strong>Home page - Instagram</strong>.
+        <br /><br />
+        Need more help? take a look at our <a target="_blank" href="http://support.undergroundmedia.co.uk/customer/portal/articles/2386318-home-page---instagram">tutorial</a>.
+      </div>
+      <div class="theme-content" style="min-height: 100px">
+        {% for i in (1..6) %}
+        <div class="desktop-2 tablet-1 mobile-1">
+          <img src="//cdn.shopify.com/s/images/themes/product-{{ forloop.index }}.png" alt="{{ image.alt }}" />
+        </div>
+        {% endfor %}
+      </div>        
+    </div>
+    {% endif %}  {% endcomment %}
+    
+        <script src="//foursixty.com/media/scripts/fs.embed.v2.5.js" data-prepend-detail="true" data-feed-id="bombshell-sportswear" data-connector-filter="13859" data-page-size="7"></script>
+    <style>.fs-narrow-timeline div.fs-entry-container {width:20%; padding-top: 20%;}div.fs-has-links { text-indent: -9999px; position: static; font-weight: 500; } .fs-has-links::after {  padding:  6px 9px; border: 1px solid #fff; color:#fff; content: "SHOP IT"; text-indent: 0; display: block; font-size: 10pt; margin: 10px; }.fs-desktop .fs-timeline-entry div.fs-text-container { display: flex; flex-direction: column;align-items: center; justify-content: center; display: -webkit-flex;  -webkit-flex-direction: column;  -webkit-align-items: center;  -webkit-justify-content: center;  display: -ms-flexbox;  -ms-flex-direction: column;  -ms-flex-align: center;  -ms-flex-pack: center; transition: opacity .25s; } .fs-desktop .fs-timeline-entry .fs-text-container:hover { opacity: 1; } .fs-wrapper div.fs-text-container .fs-entry-title, div.fs-detail-title{font-family:Times New Roman, serif;font-style:italic;font-weight:normal;}div.fs-text-container .fs-entry-date, div.fs-detail-container .fs-post-info, div.fs-wrapper div.fs-has-links::after, .fs-text-product, .fs-overlink-text{font-family:Helvetica Neue, Helvetica, Arial, sans-serif;font-style:normal;font-weight:bold;}.fs-wrapper div.fs-text-container * {color:#fff}.fs-wrapper div.fs-text-container {background-color:rgba(9, 9, 9, 0.8); margin: 0px}div.fs-entry-date{display:none}div.fs-entry-title{display:none}.fs-wrapper div.fs-timeline-entry{ margin: 0.5px }</style>
+      
+   {% comment %} <script type="text/javascript">
+      var userFeed = new Instafeed({
+        get: 'user',
+        
+        accessToken: '{{ settings.instagram-access-token }}',
+        limit: {{ settings.instagram-limit }},
+        template: '<a target="_blank" href="{{url}}" rel="ig" title="{{ caption }}"><img alt="Instagram Image" class="instagram-image desktop-2 tablet-1 mobile-1 contained" src="{{ igimage }}" /></a>'
+      });
+      userFeed.run();        
+    </script>{% endcomment %}
+  </article>
+</section>
+
+<script>
+	var checkInstaLoaded = false;
+	jQuery('body').on('DOMNodeInserted', '#homepage-instagram article', function(){
+		jQuery('#homepage-instagram .fs-entry-container').each(function(index, value){
+			if(index == 0){
+				var nextElem = $(this).next();
+				var height, width;
+				if ( $(this).closest('.fs-lookbook').hasClass('fs-normal-timeline') ) {
+					height = 2 * nextElem.innerHeight() + 'px';
+					width = '40%';
+				} else {
+					height = 2 * nextElem.innerHeight() + 'px';
+					width = ((2 * nextElem.width()) - 1) + 'px';
+				}
+				$(this).attr("id", "firstInstaImage");
+				$(this).attr("style", "height: " + height + " !important; width: "+width+" !important");
+				checkInstaLoaded = true;
+			}
+			if(index > 6){
+				jQuery(this).remove();
+			}
+		});
+	});
+	jQuery(window).resize(function(){
+		if ( window.checkInstaLoaded ) {
+			var firstElem = jQuery('#firstInstaImage');
+			// var firstElem = instaGrids.first();
+			var nextElem = firstElem.next();
+			// console.log(firstElem);
+			var height, width;
+			if ( firstElem.closest('.fs-lookbook').hasClass('fs-normal-timeline') ) {
+				height = 2 * nextElem.innerHeight() + 'px';
+				width = '40%';
+			} else {
+				height = 2 * nextElem.innerHeight() + 'px';
+				width = ((2 * nextElem.width()) - 1) + 'px';
+			}
+			firstElem.attr("style", "height: " + height + " !important; width: "+width+" !important");
+		}
+	});
+</script>
+<style>
+.fs-normal-timeline .fs-entry-container {
+    width: 20%;
+}
+</style>

@@ -1,0 +1,27 @@
+{% layout settings.customer_layout %}
+{% section 'sign_up' %}
+
+<script type="text/javascript">
+  jQuery(document).ready(function(){
+    jQuery('#subscribe-form-footer-page').ajaxChimp({
+      callback: function(response){
+        // response = jQuery.parseJSON(response);
+        //console.log(response);
+        if(response.result == 'error'){
+          if(response.msg.includes("0 - ")){
+            var customMsg = response.msg.split("0 - ")[1];
+          }else{
+            var customMsg = response.msg;
+          }
+          jQuery('#subscribe-result-page').html(customMsg).addClass('error').removeClass('success');
+        }else{
+          jQuery('#subscribe-result-page').html(response.msg).addClass('success').removeClass('error');
+        }
+        setTimeout(function(){
+          jQuery('#subscribe-result-page').html('').removeAttr('class');
+        }, 5000);
+      }
+    });
+  });
+</script>
+

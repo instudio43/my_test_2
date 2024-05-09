@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="71px" height="71px" viewBox="0 0 71 71" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>22BFC32B-368A-4B20-B23C-8CFAD242EAF9</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <filter x="-31.4%" y="-27.5%" width="162.7%" height="162.7%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.1 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="ProductDetail-Copy-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-583.000000, -467.000000)">
+        <g id="play" filter="url(#filter-1)" transform="translate(593.000000, 475.000000)" fill="#FFFFFF">
+            <path d="M25.5,4.91566265 C36.8674699,4.91566265 46.0843373,14.1325301 46.0843373,25.5 C46.0843373,36.8674699 36.8674699,46.0843373 25.5,46.0843373 C14.1325301,46.0843373 4.91566265,36.8674699 4.91566265,25.5 C4.91566265,14.1325301 14.1325301,4.91566265 25.5,4.91566265 Z M25.5,0 C11.4280964,0 0,11.4280964 0,25.5 C0,39.5719036 11.4280964,51 25.5,51 C39.5719036,51 51,39.5719036 51,25.5 C51,11.4280964 39.5719036,0 25.5,0 Z" id="Fill-1"></path>
+            <polygon id="Fill-2" points="19 16 19 36 37 25.9705561"></polygon>
+        </g>
+    </g>
+</svg>

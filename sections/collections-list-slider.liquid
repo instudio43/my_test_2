@@ -1,0 +1,20 @@
+<div class="collections-list-slider">
+  {% for block in section.blocks %}
+  <div>
+    <img data-src="{{ block.settings.image | img_url:'master' }}" alt="{{ block.settings.image.alt }}" />
+  </div>
+  {% endfor %}
+</div>
+
+{% schema %}
+  {
+    "name": "SliderList1",
+    "settings": []
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

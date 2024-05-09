@@ -1,0 +1,111 @@
+<div id="homepage">
+  <!-- Start Flexslider Option -->
+  {% if settings.slideshow == 'flexslider' %}
+  {% comment %}
+  {% include 'flexslider' %}
+  {% endcomment %}
+  {% section 'slideshow' %}
+  <!-- End Flexslider option - Start Backstretch option -->
+  {% elsif settings.slideshow == 'backstretch' %}
+  {% include 'backstretch' %}
+  {% else %}
+  <!-- End Backstretch option -->
+  {% endif %}
+  <div class="clear"></div>
+  {% comment %} {% include 'slider-sock' %}{% endcomment %}
+  {% include 'slider-banner' %}
+  {% if settings.home_section_1 != blank %}
+  	{% if settings.home_section_1 == 'home-hats-slider' %}
+		{% section 'home-hats-slider' %}
+    {% else %}
+    	{% include settings.home_section_1 %}
+    {% endif %}
+  {% endif %}
+  {% if settings.home_section_2 != blank %}
+  	{% if settings.home_section_2 == 'home-hats-slider' %}
+		{% section 'home-hats-slider' %}
+    {% else %}
+    	{% include settings.home_section_2 %}
+    {% endif %}
+  {% endif %}
+  {% if settings.home_section_3 != blank %}
+  	{% if settings.home_section_3 == 'home-hats-slider' %}
+		{% section 'home-hats-slider' %}
+    {% else %}
+    	{% include settings.home_section_3 %}
+    {% endif %}
+  {% endif %}
+  <div class="pr-list desktop-10 tablet-9 mobile-12 no-main-banner" style="padding: 0px 50px; margin: auto; align: right;" >
+      <div class="oreadmore" data-collapsed-height='22'>
+        <div class='rm-container' style="">
+          <div class="rm-content" style="text-justify: auto; text-align: justify;">
+            
+            <p>Bombshell Sportswear is a luxury global brand inspired by the women of the fitness world. Our premium selection of women's athletic apparel features styles that look great in and out of the gym. Our leggings, bodysuits, workout tops, and other options are designed with high performance fabrics that fit perfect and make you feel unstoppable. Whether you're just beginning your fitness journey or searching for new designs to add to your wardrobe, we have the best selection of athleisure wear for women.</p>
+			<p>It's our mission to provide you with the most innovative and trendiest looks for your workouts and everyday life. We design all of our women's sportswear pieces in-house in the US, each of which is engineered to give you the support, functionality, and style you expect from Bombshell. Whether you're into yoga, HIIT, spinning, or weight training, our gym-ready designs are built for women like you. You'll fall in love with the fine details, like how our designs easily sculpt and shape your silhouette. Gone are the days of feeling uncomfortable in your workout outfits. From light weight options to heavy weight compression, you can find the right fabrics for your workout needs. In our huge selection of women's athletic apparel, you'll find one-of-a-kind sports bras, tank tops, high waist leggings, hoodies, bodysuits, pullovers, and so much more. Once you've finished up in the gym or studio, our athleisure wear doubles as your weekend attire! Head off to brunch, run errands, and more in these soft and trendy designs.</p>
+			<p>To make the most out of your Bombshell gear, visit the Product Care page to learn more on how to wash and care for these premium fabrics. Be sure to check out our sales section to save big on some of our most popular designs.</p>
+			<p>When shopping for the latest, high-quality designs in athleisure, choose Bombshell as your go-to sportswear store! Sign up for our newsletter to stay up to date on our latest designs, sales, and other announcements. For questions related to our sportswear, orders, or shipping, please visit our FAQ page or contact customer service for further assistance.</p>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  {% if settings.home_section_4 != blank %}
+    {% if settings.home_section_4 == 'home-hats-slider' %}
+		{% section 'home-hats-slider' %}
+    {% else %}
+    	{% include settings.home_section_4 %}
+    {% endif %}
+  {% endif %}
+  {% if settings.home_section_5 != blank %}
+    {% if settings.home_section_5 == 'home-hats-slider' %}
+		{% section 'home-hats-slider' %}
+    {% else %}
+    	{% include settings.home_section_5 %}
+    {% endif %}
+  {% endif %}
+  {% if settings.home_section_6 != blank %}
+  	{% if settings.home_section_6 == 'home-hats-slider' %}
+		{% section 'home-hats-slider' %}
+    {% else %}
+    	{% include settings.home_section_6 %}
+    {% endif %}
+  {% endif %}
+  {% if settings.home_section_7 != blank %}
+    {% if settings.home_section_7 == 'home-hats-slider' %}
+		{% section 'home-hats-slider' %}
+    {% else %}
+    	{% include settings.home_section_7 %}
+    {% endif %}
+  {% endif %}
+  {% if settings.home_section_8 != blank %}
+  	{% if settings.home_section_8 == 'home-hats-slider' %}
+		{% section 'home-hats-slider' %}
+    {% else %}
+    	{% include settings.home_section_8 %}
+    {% endif %}
+  {% endif %}
+  {% if settings.home_section_9 != blank %}
+  	{% if settings.home_section_9 == 'home-hats-slider' %}
+		{% section 'home-hats-slider' %}
+    {% else %}
+    	{% include settings.home_section_9 %}
+    {% endif %}
+  {% endif %}
+  {% if settings.home_section_10 != blank %}
+  	{% if settings.home_section_10 == 'home-hats-slider' %}
+		{% section 'home-hats-slider' %}
+    {% else %}
+    	{% include settings.home_section_10 %}
+    {% endif %}
+  {% endif %}
+  {% if settings.home_section_11 != blank %}
+  	{% if settings.home_section_11 == 'home-hats-slider' %}
+		{% section 'home-hats-slider' %}
+    {% else %}
+    	{% include settings.home_section_11 %}
+    {% endif %}
+  {% endif %}
+</div>
+<div class="load-wait">
+  <i class="icon-spinner icon-spin icon-large"></i>
+</div>

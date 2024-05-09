@@ -1,0 +1,24 @@
+  <a href="{{ settings.pages-1-link }}" aria-label="Homepage Banner 1">
+<section id="homepage-pages-one" class="{% if settings.parallax %}parallax parallax-window{% endif %} no-fouc" {% if settings.parallax %}data-parallax="scroll" data-image-src="{{ 'parallax-background-1.jpg' | asset_url }}"{% endif %}>
+  <article class="row">
+    <div class="pages-left-content desktop-12 tablet-6 mobile-3 {% unless settings.parallax %}parallax_inactive_width{% endunless %}">
+      {% if settings.pages-1-content == 'text' %}
+      <div class="parallax-text">
+        {% if settings.pages-1-link != blank %}
+        {{ settings.pages-1-text }}
+      {% comment %}  <a href="{{ settings.pages-1-link }}">{{ settings.pages-1-text }}</a>{% endcomment %}
+        {% else %}
+        {{ settings.pages-1-text }}{% endif %}
+      </div>
+      {% elsif settings.pages-1-content == 'page-content' %}
+      {{ pages[settings.pages-1].content }}
+      {% else %}
+      {% endif %}
+              {% unless settings.parallax %}
+        <img alt="background" class="tester" src="{{ 'parallax-background-1.jpg' | asset_url }}"/>
+        {% endunless %}
+    </div>
+  </article>
+</section>
+</a>
+<div class="clear"></div>

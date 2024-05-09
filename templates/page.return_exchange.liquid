@@ -1,0 +1,51 @@
+<div class="section-title desktop-12 mobile-3">
+  <h1>{{ page.title }}</h1>
+</div>
+<div id="content" class="row" >	
+<div id="page" class="desktop-12 tablet-6 mobile-3 return">
+ 
+  <div class="desktop-12 mobile-3">
+    {{ page.content }}
+     <div class="mobile-3">
+    
+    <h2>MERCHANDISE RETURN &amp; EXCHANGE FORM</h2>
+
+    {% form 'contact' %}
+    {% if form.posted_successfully? %}
+    <div class="successForm feedback">
+      <p>Thanks for contacting us! We'll get back to you as soon as possible.</p>
+    </div>
+    {% endif %}
+
+    {% if form.errors %}
+    <div class="errorForm feedback">
+      <!-- {{ form.errors.size }} or {{ form.errors | size }} -->
+      <p>Oops, sorry. We were unable to submit your inquiry because it contained {{ form.errors | size | pluralize: 'an error', 'a few errors' }}. Please correct the following and submit again:</p>
+      {% for field in form.errors %}
+      <p>The {{ field | capitalize | replace: 'Body', 'Message' }} field {{ form.errors.messages[field] }}.</p>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="form-all">
+      
+      <input aria-label="Your name" type="text" id="contactFormName" name="contact[name]" placeholder="Name" required/>
+
+     
+      <input aria-label="Email address" type="email" id="contactFormEmail" name="contact[email]" placeholder="Email" required/>  
+
+ 
+      <input aria-label="Your order number" type="text" id="CustomerOrderNumber" name="contact[CustomerOrderNumber]" placeholder="Customer Order Number" required/> 
+
+      
+      <textarea aria-label="Reason for return" rows="15" cols="90" id="ReasonforReturn" name="contact[ReasonforReturn]" placeholder="Reason for Return" required></textarea>   
+
+      <button aria-label="Send your return" id="input_2" type="submit" class="form-submit-button"> SEND </button>
+    </div>
+
+    {% endform %} 
+  </div>
+</div>
+  </div>
+ 
+</div>

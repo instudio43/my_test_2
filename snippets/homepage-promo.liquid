@@ -1,0 +1,54 @@
+{% assign grid = 0 %}
+{% if settings.promo1 %}{% assign grid = grid | plus: 1 %}{% endif %}
+{% if settings.promo2 %}{% assign grid = grid | plus: 1 %}{% endif %}
+{% if settings.promo3 %}{% assign grid = grid | plus: 1 %}{% endif %} 
+{% if grid > 0 %} 
+<section id="homepage-promo" class="no-fouc">   
+  <article id="promo-images" class="row">
+    {% assign promo = 'promo1' %}
+    {% if settings.promo1 %}        
+    <div class="promo-1-cont pimg homepage-promo desktop-{{ 12 | divided_by: grid }} tablet-{{ 6 | divided_by: grid }} mobile-3">
+      {% include 'grid-images' %}
+    </div>
+    {% endif %}
+    {% assign promo = 'promo2' %}
+    {% if settings.promo2 %}  
+    <div class="promo-2-cont pimg homepage-promo desktop-{{ 12 | divided_by: grid }} tablet-{{ 6 | divided_by: grid }} mobile-3">
+      {% include 'grid-images' %}
+    </div>
+    {% endif %}        
+    {% assign promo = 'promo3' %}
+    {% if settings.promo3 %}  
+    <div class="promo-3-cont pimg homepage-promo desktop-{{ 12 | divided_by: grid }} tablet-{{ 6 | divided_by: grid }} mobile-3">
+      {% include 'grid-images' %}
+    </div>
+    {% endif %}
+  </article>
+  {% endif %}
+</section>
+<style>
+  @media screen and (min-width: 768px) {
+    .promo-1-cont .btnShopNowFloat{
+      background-color:{{settings.desktop-1-btn-background}};
+      border-color:{{settings.desktop-1-btn-border}};
+      color:{{settings.desktop-1-btn-text-color}};
+    }
+    .promo-2-cont .btnShopNowFloat{
+      background-color:{{settings.desktop-2-btn-background}};
+      border-color:{{settings.desktop-2-btn-border}};
+      color:{{settings.desktop-2-btn-text-color}};
+    }
+  }
+  @media screen and (max-width: 767px) {
+    .promo-1-cont .btnShopNowFloat{
+      background-color:{{settings.mobile-1-btn-background}};
+      border-color:{{settings.mobile-1-btn-border}};
+      color:{{settings.mobile-1-btn-text-color}};
+    }
+    .promo-2-cont .btnShopNowFloat{
+      background-color:{{settings.mobile-2-btn-background}};
+      border-color:{{settings.mobile-2-btn-border}};
+      color:{{settings.mobile-2-btn-text-color}};
+    }
+  }
+</style>

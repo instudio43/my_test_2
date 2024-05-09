@@ -1,0 +1,138 @@
+{% comment %}
+  Set the extension of your color files below. Use 'png', 'jpeg', 'jpg' or 'gif'.
+{% endcomment %}
+
+{% assign file_extension = 'png' %}
+
+{% if swatch == blank %}
+<div class="swatch error">
+  <p>You must include the snippet swatch.liquid with the name of a product option.</p>
+  <p>Use: <code>{% raw %}{% include 'swatch' with 'name of your product option here' %}{% endraw %}</code></p>
+  <p>Example: <code>{% raw %}{% include 'swatch' with 'Color' %}{% endraw %}</code></p>
+</div>
+{% else %}
+
+{% assign found_option = false %}
+{% assign is_size = false %}
+{% assign is_color = false %}
+{% assign option_index = 0 %}
+
+{% for option in product.options %}
+  {% if option == swatch %}
+    {% assign found_option = true %}
+    {% assign option_index = forloop.index0 %}
+    <style>
+      label[for="product-select-option-{{ option_index }}"] { display: none; }
+      #product-select-option-{{ option_index }} { display: none; }
+      #product-select-option-{{ option_index }} + .custom-style-select-box { display: none !important; }
+    </style>
+    <script>$(window).load(function() { $('.selector-wrapper:eq({{ option_index }})').hide(); });</script>
+    {% assign downcased_option = swatch | downcase %}
+    {% if downcased_option contains 'color' or downcased_option contains 'colour' %}
+      {% assign is_color = true %}
+    {% endif %}
+	{% if downcased_option contains 'size' %}
+      {% assign is_size = true %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+
+{% unless found_option %}
+<div class="swatch error">
+  <p>You included the snippet swatch.liquid with the name of a product option — <code>'{{ swatch }}'</code> — that does not belong to your product.</p>
+  <p>Use <code>{% raw %}{% include 'swatch' with 'name of your product option here' %}{% endraw %}</code></p>
+  <p>Example: <code>{% raw %}{% include 'swatch' with 'Color' %}{% endraw %}</code></p>
+  <p><strong>This is case-sensitive!</strong> Do not put in <code>'color'</code> if your product option name is <code>'Color'</code>.</p>
+</div>
+{% else %}
+<div class="{{ swatch }} swatch clearfix  {{ swatch | handleize }}-swatch-option" data-option-index="{{ option_index }}">
+	{% comment %}
+	{% if is_color %}
+		{% for product_options in product.options %}
+			{% if product_options == 'Color' %}
+				{% capture color_index %}option{{ forloop.index }}{% endcapture %}
+				{% break %}
+			{% endif %}
+		{% endfor %}
+		<p class="options-label">{{ swatch }}: <b>{{ product.variants.first[color_index] }}</b></p>
+	{% else %}
+		<p class="options-label">{{ swatch }}</p>
+	{% endif %}
+	{% endcomment %}
+  <fieldset>
+	<legend class="options-label">{{ swatch }}</legend>
+  <div class="selection-box-wrapper">
+  {% assign values = '' %}
+    
+  {% for variant in product.variants %}
+    {% assign value = variant.options[option_index] %}
+    {% unless values contains value %}
+      {% assign values = values | join: ',' %}
+      {% assign values = values | append: ',' | append: value %}
+      {% assign values = values | split: ',' %}
+
+      <div data-value="{{ value | escape }}" class="swatch-element {% if is_color %}color {% endif %}{{ value | handle }} {% if variant.available %}available{% endif %}">
+
+        <input {% if is_color %}aria-label="Color {{ value | escape }}"{% endif %} tabindex="0" id="swatch-{{ option_index }}-{{ value | handle }}" type="radio" class="size-box" name="option-{{ option_index }}" value="{{ value | escape }}"{% if forloop.first %} checked{% endif %} {% unless variant.available %}disabled{% endunless %} />
+
+        {% if is_color %}
+        <label for="swatch-{{ option_index }}-{{ value | handle }}">
+           {{ value }}
+        </label>
+        {% else %}
+        <label for="swatch-{{ option_index }}-{{ value | handle }}">
+          {{ value }}
+        </label>
+        {% endif %}
+      </div>
+    {% endunless %}
+    <script>
+      jQuery('.swatch[data-option-index="{{ option_index }}"] .{{ value | handle }}').removeClass('soldout').addClass('available').find(':radio').removeAttr('disabled');
+    </script>
+  {% endfor %}
+
+	{% if is_color %}
+		<div class="color-groups">
+			{% assign colorgroup = product.metafields.global.colorgroup | handleize %}
+          {% if colorgroup == blank %}
+            {% assign color_name = product.variants.first[color_index] %}
+            {% capture color_name %}Color {{ color_name }}{% endcapture %}
+            {% assign color_img_url = color_name | handle | append: '.png' %}
+                    <img class="colorswatch" src="{{ color_img_url | file_url }}" alt="{{ color_name }}" title="{{ color_name }}" />
+          {% endif %}
+			{% assign cg_collection = collections[colorgroup] %}
+			{% for cg_product in cg_collection.products %}
+
+				{% assign color_index = '' %}
+				{% for product_options in cg_product.options %}
+					{% if product_options == 'Color' %}
+						{% capture color_index %}option{{ forloop.index }}{% endcapture %}
+						{% break %}
+					{% endif %}
+				{% endfor %}
+				{% assign color_name = cg_product.variants.first[color_index] %}
+				{% capture color_name %}Color {{ color_name }}{% endcapture %}
+				{% assign color_img_url = color_name | handle | append: '.png' %}
+
+				{% if cg_product.id == product.id %}
+					<a href="javascript:void(0);" class="active">
+						<img src="{{ color_img_url | file_url }}" alt="{{ color_name }}" title="{{ color_name }}" />
+					</a>
+				{% else %}
+					<a href="{{ cg_product.url }}" >
+						<img src="{{ color_img_url | file_url }}" alt="{{ color_name }}" title="{{ color_name }}" />
+					</a>
+				{% endif %}
+			{% endfor %}
+		</div>
+	{% endif %}
+
+	</div>
+    </fieldset>
+    </div>
+
+
+
+{% endunless %}
+
+{% endif %}

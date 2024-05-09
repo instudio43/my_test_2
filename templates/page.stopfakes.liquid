@@ -1,0 +1,67 @@
+<title>{{ page.title }}</title>
+<div class="{{ page.title | handleize | append: '-page'}}">
+<div id="image_banner"></div>
+<div class="product-care-page">
+<div class="section-title desktop-12 mobile-3">
+  <h1>{{ page.title }}</h1>
+</div>
+</div>
+<div id="content" class="row">	
+<div class="terms-policies-page">
+<div class="terms-policies-block1">
+  <div class="rte">{{ page.content }}</div>
+  <div class="terms-policies-block">
+  {% form 'contact' %}
+          {% if form.posted_successfully? %}
+          <div class="successForm feedback">
+            <p>Thanks for contacting us! We'll get back to you as soon as possible.</p>
+          </div>
+          {% endif %}
+
+          {% if form.errors %}
+          <div class="errorForm feedback">
+            <!-- {{ form.errors.size }} or {{ form.errors | size }} -->
+            <p>Oops, sorry. We were unable to submit your inquiry because it contained {{ form.errors | size | pluralize: 'an error', 'a few errors' }}. Please correct the following and submit again:</p>
+            {% for field in form.errors %}
+            <p>The {{ field | capitalize | replace: 'Body', 'Message' }} field {{ form.errors.messages[field] }}.</p>
+            {% endfor %}
+          </div>
+          {% endif %}
+
+          <div class="form-all">
+
+            <input aria-label="Name" type="text" id="contactFormName" name="contact[Name]" placeholder="Name" required/>
+            <input aria-label="Email address" type="email" id="contactFormEmail" name="contact[email]" placeholder="Email Address" required/>
+            <!--<label>Tells us a little about yourself (Hobbies, interest, etc...)</label>-->
+            <textarea aria-label="About yourself" rows="15" cols="90" id="AboutYourself" name="contact[AboutYourself]" placeholder="Tell us about your counterfeit experience" required style="border: solid 1px #000; font-size: 1.2rem;"></textarea>
+            <div class="ambassadore-btn f-left"><button aria-label="Submit" id="input_2" type="submit" class="form-submit-button" > Submit </button></div>
+          </div>
+          {% endform %}
+  </div>
+</div>
+</div>
+{% if settings.pagelist != '' %}
+<div id="page-sidebar" class="desktop-3 tablet-2 mobile-3">
+  {% comment %}<h2>{{ settings.page-sidebar-title }}</h2>{% endcomment %}
+  <ul>
+    {% for link in linklists[settings.pagelist].links %}
+    <li>{{ link.title | link_to: link.url }}</li>
+    {% endfor %}
+  </ul>
+
+  {% if settings.pagelist == '' %}
+  <p>You are seeing this message as you have yet to pick a linklist in the Pages and contact form section of the theme settings</p>
+  <p>In your admin click on Themes > Customize Theme > Pages and Contact form and choose a Linklist from the dropdown in the area marked Choose a linklist for page sidebar</p> 
+  {% endif %}  
+
+</div>
+{% endif %}
+</div>
+</div>
+{% if page.title == 'Reviews' %}
+
+{% endif %}
+
+
+
+

@@ -1,0 +1,62 @@
+<h2>Bombshell Favorites</h2>
+<div class="collections-list-slider">
+  {% for block in section.blocks %}
+  <div>
+    <a href="{{block.settings.collection_link}}">
+    <img src="{{ block.settings.image | img_url:'master' }}" alt="{{ block.settings.image.alt }}" />
+    </a>
+    <div style="text-align:center;">
+      <a class="btnShopAll" href="{{block.settings.collection_link}}">{{block.settings.button_text}}</a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% schema %}
+  {
+    "name": "Collections Slider",
+    "settings": [
+		{
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+			"default":"SHOP THIS LOOK"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        }
+	],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "SliderList",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image",
+            "info": "506 x 610px .jpg recommended"
+          },
+          {
+            "type": "url",
+            "id": "collection_link",
+            "label": "Collection Link"
+          },
+          {
+            "type": "text",
+            "id": "button_text",
+            "label": "Button Text",
+            "default":"SHOP THIS LOOK"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

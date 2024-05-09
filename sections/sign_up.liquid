@@ -1,0 +1,72 @@
+<div id="content">
+  <div id="customer-wrapper" class="desktop-12 mobile-3">
+    <div class="clear"></div>
+    <div id="create-customer" class="desktop-push-2 desktop-5 mobile-3 createaccount">
+      <div class="contain-full">
+        <div class="left-side column-half">
+          <img src="{{ 'clipboard-image.png' | asset_url }}" alt="register-banner">
+        </div>
+        <div class="right-side column-half">
+          <div class="form-contain">
+            <div class="template_header">
+              {% if section.settings.title != blank %}
+              <h2>{{ section.settings.title }}</h2>
+              {% endif %}
+              {% if section.settings.sub_title != blank %}
+              <p>{{ section.settings.sub_title }}</p>
+              {% endif %}
+            </div>
+            <form method="post" action="{{ settings.mailchimp }}" name="mc-embedded-subscribe-form" id="email_signup123" >
+              <input type="hidden" name="g" value="JKcmiE">
+              <div id="first_name" class="clearfix large_form">
+                <input aria-label="Email address" type="email" name="email" id="newsletter-2" placeholder="Email Address" title="Enter email address" class="large input-text required-entry validate-email"/>
+              </div>
+              <div class="action_bottom">
+                <input aria-label="Submit" class="secondary button" type="submit" value="{% if section.settings.btn_title != blank %}{{ section.settings.btn_title }}{% endif %}"/>
+              </div>
+              <div id="subscribe-result-page"></div>              
+              <div class="klaviyo_messages">
+                <div class="success_message" style="display:none;"></div>
+                <div class="error_message" style="display:none;"></div>
+              </div>
+            </form>  
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="//www.klaviyo.com/media/js/public/klaviyo_subscribe.js"></script> 
+<script type="text/javascript">
+  KlaviyoSubscribe.attachToForms('#email_signup123', {
+    hide_form_on_success: true,
+    success_message: "Thank you for signing up! Your special offer is on its way!"
+  });
+</script>
+
+
+{% schema %}
+  {
+  "name": "Sign Up",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "sub_title",
+      "label": "Sub Title"
+    },
+	{
+      "type": "text",
+      "id": "btn_title",
+      "label": "Button text"
+    }
+  ]
+}
+{% endschema %}
+
+

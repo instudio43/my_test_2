@@ -1,0 +1,155 @@
+{% capture link_handle %}{{ link.title | handle }}{% endcapture %}
+{% capture linkurl %}{{ link.url }}{% endcapture %} 
+{% capture child_list_handle %}{{ link.title | handleize }}{% endcapture %}
+
+{% if section.settings.megadropdown_title != blank or section.settings.megadropdown_title_1 != blank %}
+
+{% for block in section.blocks %}
+{% if link.title == block.settings.megadropdown_link %}
+
+<li class="dropdown">
+  <button class="toggle-button btnnostyle" aria-expanded="false" aria-controls="submenu-{{link.title | handleize}}">
+    {{ link.title }} <i class="icon-angle-down"></i>
+  </button>
+  <ul class="submenu" id="submenu-{{link.title | handleize}}">
+
+    {% if block.settings.nav_promo_image %}
+
+    {% endif %}
+    <li class="d-menu-left">
+      {% if block.settings.mega_1_links %}            
+      <ul>
+        {% for link in linklists[block.settings.mega_1_links].links %}
+        <li class="nest tessd">
+          <div class="nav-cat-type"><h2>Category Type</h2></div>
+          <ul class="nested">
+            {% for sub_link in link.links %}
+            <li> 
+              {{ sub_link.title | link_to: sub_link.url }}
+            </li>
+            {% for sub_sub_link in sub_link.links %}
+            {{ sub_sub_link.title }}
+            {% endfor %}
+            {% endfor %}
+          </ul>
+        </li>
+
+        {% endfor %}
+      </ul>
+
+      {% endif %}
+
+    </li>
+    <li class="d-menu-right">
+      <ul class="highlights">
+        {% if block.settings.nav_promo_image_1%}
+        <li class="desktop-2 tablet-hide mm-image">
+          <a href="{{ block.settings.nav_promo_link_1 }}">
+            <img src="{{ block.settings.nav_promo_image_1 | img_url:'600x' }}" alt="{{ block.settings.nav_promo_title_1 }}">
+            <span>{{ block.settings.nav_promo_title_1 }}</span>
+          </a>
+        </li>
+        {% endif %}
+        {% if block.settings.nav_promo_image_2 %}
+        <li class="desktop-2 tablet-hide mm-image">
+          <a href="{{ block.settings.nav_promo_link_2 }}">
+            <img src="{{ block.settings.nav_promo_image_2 | img_url:'600x' }}" alt="{{ block.settings.nav_promo_title_2 }}">
+            <span>{{ block.settings.nav_promo_title_2 }}</span>
+          </a>
+        </li>
+        {% endif %}
+        {% if block.settings.nav_promo_image_3 %}
+        <li class="desktop-2 tablet-hide mm-image">
+          <a href="{{ block.settings.nav_promo_link_3 }}">
+            <img src="{{ block.settings.nav_promo_image_3 | img_url:'600x' }}" alt="{{ block.settings.nav_promo_title_3 }}">
+            <span>{{ block.settings.nav_promo_title_3 }}</span>
+          </a>
+        </li>
+        {% endif %}
+        {% if block.settings.nav_promo_image_4 %}
+        <li class="desktop-2 tablet-hide mm-image">
+          <a href="{{ block.settings.nav_promo_link_4 }}">
+            <img src="{{ block.settings.nav_promo_image_4 | img_url:'600x' }}" alt="{{ block.settings.nav_promo_title_4 }}">
+            <span>{{ block.settings.nav_promo_title_4 }}</span>
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </li>
+  </ul>
+</li>
+{% endif %}
+{% endfor %}
+{% endif %}
+
+
+
+{% if link.title == section.settings.megadropdown_title or link.title == section.settings.megadropdown_title_1 or link.title == section.settings.megadropdown_title_2 %}
+{% elsif linklists[child_list_handle] and linklists[child_list_handle].links.size > 0 %}
+<li class="dropdown"><a href="{{ link.url }}" class="dlinks">{{ link.title }}</a>  
+  {% if linkurl contains 'collections/' %}
+  {% assign collection = link.object %}
+  <ul class="submenu">
+    {% for l in linklists[child_list_handle].links %}
+    {% capture child_list_handle %}{{ l.title | handleize }}{% endcapture %}
+    {% if linklists[child_list_handle] and linklists[child_list_handle].links.size > 0 %}      
+    <li class="nest yes"><a href="{{ l.url }}">{{ l.title }}</a>                 
+      <ul class="nested">
+        {% for l in linklists[child_list_handle].links %}
+        <li><a href="{{ l.url }}">{{ l.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </li>
+    {% else %}
+    <li><a href="{{ l.url }}">{{ l.title }}</a></li>    
+    {% endif %}
+
+    {% endfor %}
+  </ul>
+
+  {% else %}
+  <ul class="megamenu">
+    <div class="mega-container">
+      <!-- Start Megamenu Inner Links -->
+      <li class="desktop-2 tablet-1">
+        <h4>{{ link.title }}</h4>
+
+        <ul class="mega-stack">
+          {% for l in linklists[child_list_handle].links %}
+          {% capture child_list_handle %}{{ l.title | handleize }}{% endcapture %}
+          <li><a href="{{ l.url }}">{{ l.title }}</a></li>    
+          {% endfor %}
+        </ul>
+      </li> 
+
+      {% for product in collection.products limit: 5 %}
+      <li class="desktop-2 product-index">
+        <div class="ci">
+          <a href="{{ product.url | within: collection }}" title="{{ product.title | escape }}">
+            <img src="{{ product.featured_image | product_img_url: 'medium' }}" alt="{% if image.alt != blank %}{{ image.alt }}{% else %}{{ product.title | escape }}{% endif %}" />
+          </a>
+        </div>
+        <div class="product-details mega_detail">  
+          <p><a href="{{ product.url | widthin: collection }}">{{ product.title }}</a></p>
+          <div class="price">
+            <a href="{{ product.url | widthin: collection }}">
+              {% if product.price < product.compare_at_price %}
+              <div class="onsale">{{ product.price | money }}</div>
+              <div class="was">{{ product.compare_at_price | money }}</div>
+              {% else %}
+              <div class="prod-price">{% if product.price_varies %} {{ 'products.general.from' | t }} {{ product.price_min | money }} - {{ product.price_max | money }} {% else %}{{ product.price | money }}{% endif %}</div>
+              {% endif %}	
+            </a>
+          </div>          
+        </div>
+      </li>
+      {% endfor %}        
+    </div>
+  </ul>
+  {% endif %}
+</li>
+{% else %}
+<li>{{ link.title | link_to: link.url }}</li>
+{% endif %}
+
+

@@ -1,0 +1,23 @@
+<section id="homepage-social" class="no-fouc">
+  <article class="row">
+    <div class="social-content desktop-6 desktop-push-3 tablet-4 tablet-push-1 mobile-3">
+        <h4>{{ 'layout.homepage.social' | t }}</h4>
+        <ul id="social-icons">
+          {% if settings.show_facebook %}<li><a aria-label="Facebook" href="{{ settings.facebook_url }}" target="_blank"><i class="icon-facebook icon-2x"></i></a></li>{% endif %}
+          {% if settings.show_twitter %}<li><a aria-label="Twitter" href="{{ settings.twittername }}" target="_blank"><i class="icon-twitter icon-2x"></i></a></li>{% endif %}
+          {% if settings.show_pinterest %}<li><a aria-label="Pinterest" href="{{ settings.pinterest_url }}" target="_blank"><i class="icon-pinterest icon-2x"></i></a></li>{% endif %}
+          {% if settings.show_tumblr %}<li><a aria-label="Tumblr" href="{{ settings.tumblr_url }}" target="_blank"><i class="icon-tumblr icon-2x"></i></a></li>{% endif %}
+          {% if settings.show_youtube %}<li><a aria-label="Youtube" href="{{ settings.youtube_url }}" target="_blank"><i class="icon-youtube icon-2x"></i></a></li>{% endif %}
+          {% if settings.show_googleplus %}<li><a aria-label="Google Plus" href="{{ settings.googleplus_url }}" target="_blank"><i class="icon-google-plus icon-2x"></i></a></li>{% endif %}
+          {% if settings.show_instagram %}<li><a aria-label="Instagram" href="//instagram.com/{{ settings.instagram-id }}" target="_blank"><i class="icon-instagram icon-2x"></i></a></li>{% endif %}
+          {% if settings.show_snapchat %}<li><a aria-label="Snapchat" href="//snapchat.com/add/{{ settings.snapchat-id }}" target="_blank"><i class="icon-snapchat icon-2x"></i></a></li>{% endif %}
+          {% if settings.show_rss %}<li><a aria-label="RSS" href="{{ shop.url }}/blogs/news.atom" target="_blank"><i class="icon-rss icon-2x"></i></a></li>{% endif %}
+        </ul>
+        <form action="{{ settings.mailchimp }}" method="post" id="footer-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+          <input aria-label="Email address" value="" name="EMAIL" class="email" id="social-EMAIL" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" required="" type="email">
+          <input aria-label="Submit" value="{{ 'general.newsletter_form.submit' | t }}" name="subscribe" id="social-subscribe" class="button" type="submit">
+        </form>
+    </div>
+  </article>
+</section>
+<div class="clear"></div>

@@ -1,0 +1,30 @@
+{% comment %}{% include 'currencies' %}{% endcomment %}
+
+<a class="currency-switcher hidemobile" aria-label="Currency" href="#">
+  	<span data-value="{{shop.currency}}" class="selected-currency">{{shop.currency}}</span>
+	<div class="currencies"><div class="currencies-box">
+	 {% capture codes %},USD,EUR,GBP,CAD,ARS,AUD,BBD,BDT,BSD,BHD,BRL,BOB,BND,BGN,MMK,KYD,CLP,CNY,COP,CRC,HRK,CZK,DKK,DOP,XCD,EGP,XPF,FJD,GHS,GTQ,GYD,GEL,HKD,HUF,ISK,INR,IDR,NIS,JMD,JPY,JOD,KZT,KES,KWD,LVL,LTL,MXN,MYR,MUR,MDL,MAD,MNT,MZN,ANG,NZD,NGN,NOK,OMR,PKR,PYG,PEN,PHP,PLN,QAR,RON,RUB,SAR,RSD,SCR,SGD,SYP,ZAR,KRW,LKR,SEK,CHF,TWD,THB,TZS,TTD,TRY,UAH,AED,UYU,VEB,VND,ZMK,{% endcapture %}
+	  {% assign supported_codes = settings.supported_currencies | split: ' ' %}
+	  <li data-value="{{ shop.currency }}" class="selected">{{ shop.currency }}</li>
+	  {% for code in supported_codes %}
+	    {% if code != shop.currency and codes contains code %}
+	    <li data-value="{{ code }}">{{ code }}</li>
+	    {% endif %}
+	  {% endfor %}
+	</div></div>
+</a>
+<div class="showmobile">
+<div class="currency-switcher currency-switcher-mobile">
+  <span data-value="{{shop.currency}}" class="selected-currency">{{shop.currency}}</span>
+  <div class="currencies"><div class="currencies-box">
+    {% capture codes %},USD,EUR,GBP,CAD,ARS,AUD,BBD,BDT,BSD,BHD,BRL,BOB,BND,BGN,MMK,KYD,CLP,CNY,COP,CRC,HRK,CZK,DKK,DOP,XCD,EGP,XPF,FJD,GHS,GTQ,GYD,GEL,HKD,HUF,ISK,INR,IDR,NIS,JMD,JPY,JOD,KZT,KES,KWD,LVL,LTL,MXN,MYR,MUR,MDL,MAD,MNT,MZN,ANG,NZD,NGN,NOK,OMR,PKR,PYG,PEN,PHP,PLN,QAR,RON,RUB,SAR,RSD,SCR,SGD,SYP,ZAR,KRW,LKR,SEK,CHF,TWD,THB,TZS,TTD,TRY,UAH,AED,UYU,VEB,VND,ZMK,{% endcapture %}
+    {% assign supported_codes = settings.supported_currencies | split: ' ' %}
+    <li data-value="{{ shop.currency }}" class="selected">{{ shop.currency }}</li>
+    {% for code in supported_codes %}
+    {% if code != shop.currency and codes contains code %}
+    <li data-value="{{ code }}">{{ code }}</li>
+    {% endif %}
+    {% endfor %}
+    </div></div>
+</div>
+</div>

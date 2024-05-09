@@ -1,0 +1,203 @@
+<div class="section-title desktop-12 mobile-3">
+  <h1>{{ 'cart.general.title' | t }}</h1>
+</div>
+<div class="clear"></div>
+<div id="content" class="row" >
+  <div id="shopping-cart" class="desktop-12 tablet-6 mobile-3">
+    {% if cart.item_count == 0 %}
+    <label class="subtext">{{ 'cart.general.empty' | t }}</label>
+
+    {% else %}
+    <script type="text/javascript">
+      function remove_item(id) {
+        document.getElementById('updates_'+id).value = 0;
+        document.getElementById('cartform').submit();
+      }
+    </script>
+    <div class="cartlist-main">
+      <form action="/cart" method="post" id="cartform ">
+        <div id="continue-shopping" class="mobile-3"><a href="{{ shop.url }}" alt="Continue Shopping">Continue Shopping</a></div>
+        <div id="shop-cart" class="desktop-12 tablet-6 mobile-3 cartlist-lft">
+
+          <ul class="cartitem-list">
+            {% for item in cart.items %}
+            <li class="cart-item-li" data-line="{{ forloop.index }}">
+              <div class="cart-item">
+                <div class="cart-image">
+                  <a href="{{ item.url }}" title="{{ item.product.title | escape }}">
+                    <img src="{{ item.image | product_img_url: 'original' }}"  alt="{{ item.product.featured_image.alt | escape }}" />
+                  </a>
+                </div>
+                <div class="cart-title-price">
+                  <div class="cart-title">
+                    {% if settings.vendor %}<p class="terr">{{ item.vendor }}</p>{% endif %}
+                    <div class="product-title"><a href="{{ item.url }}" title="{{ item.product.title | escape }}">{{ item.product.title }}</a></div>
+                    <div class="product-variants">
+                      <ul>
+                        {% for option_title in item.product.options %}
+                        <li>{{ option_title }} : {{item.variant.options[forloop.index0] }}</li>
+                        {% endfor %}                    
+
+                      </ul>
+                    </div>
+                    <a href="javascript:void(0);" class="removeitem-link" data-id="{{ item.id }}" data-line="{{ forloop.index }}" >X REMOVE ITEM</a>
+
+                    {% assign property_size = item.properties | size %}
+                    {% if property_size > 0 %}
+                    {% for p in item.properties %}
+                    {% unless p.last == blank %}
+                    {{ p.first }}:
+
+                    {% comment %}
+                    Check if there was an uploaded file associated
+                    {% endcomment %}
+                    {% if p.last contains '/uploads/' %}
+                    <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+                    {% else %}
+                    {{ p.last }}
+                    {% endif %}
+
+                    <br>
+                    {% endunless %}
+                    {% endfor %}
+                    {% endif %}                
+
+                  </div>
+
+
+                </div>
+                <div class="cartlist-price">
+                  {{ item.price | money }}{% if item.variant.compare_at_price > item.price %}<br /><del>{{ item.variant.compare_at_price | money }}</del>{% endif %}         
+                </div>
+
+                <div class="qty-adjust-cart">
+                  <button aria-label="Reduce quantity of {{ item.product.title }}" type="button" class="ajaxcart__qty-adjust ajaxcart__qty--minus quantity-increment" data-id="{{ item.id }}" data-qty="{{ item.quantity | minus: 1}}" data-line="{{ forloop.index }}">
+                    <span>&minus;</span>
+                  </button>
+                  <input aria-label="Quantity of {{ item.product.title }}" type="text" checked="" class="ajaxcart__qty-num cart-qty" size="4" name="updates[{{ item.id }}]" id="updates_{{ item.variant.id }}" value="{{ item.quantity }}" onfocus="this.select();" data-line="{{ forloop.index }}" style="max-width: 50px; text-indent: 0; text-align: center; margin: 0 auto; "/>    
+                  <button aria-label="Increase quantity of {{ item.product.title }}" type="button" class="ajaxcart__qty-adjust ajaxcart__qty--plus quantity-increment" data-id="{{ item.id }}" data-line="{{ forloop.index }}" data-qty="{{ item.quantity | plus: 1}}">                        
+                    <span>+</span>
+                  </button>
+                </div>
+                <!-- <div class="cart-item-dlt" style="text-align: center">
+<p><a href="javascript:void(0);" class="removeitem-link"><i class="icon-trash icon-2x"></i></a></p>
+</div> -->
+                <div class="cartitem-price">
+                  <p>{{ item.line_price | money }}</p>
+                </div>
+              </div>
+            </li>
+
+            {% endfor %}
+          </ul>
+
+        </div>
+        {% if settings.cart_notes_enable %}
+        <!--<div id="cart-notes" class="desktop-6 tablet-6 mobile-3">
+<label for="note"><strong>{{ 'cart.general.note' | t }}</strong></label>
+<textarea name="note" id="note" rows="5" cols="60">{{cart.note}}</textarea>   
+<label for="how-did-you-hear-about-us">{{ settings.cart_question1 }}</label>{% if settings.is_required_question %}<span>*</span>{% endif %}
+<textarea name="attributes[{{ settings.cart_question1 }}]" id="additinal_question" rows="5" cols="60" class="{% if settings.is_required_question %}required_field{% endif %}"></textarea>
+</div>--> 
+        {% endif %}
+
+        <div id="basket-right" class="desktop-4 tablet-6 mobile-3 cartlist-rgt">
+          <div class="subtotal-price-main">
+            <span id="bk-cart-subtotal-label" class="subtotal-label">{{ 'cart.general.subtotal' | t }}</span> <span id="bk-cart-subtotal-price" class="subtotal-price">{{ cart.total_price | money }}</span>
+          </div>
+          <div style="margin: 0 auto; clear:both;">        
+            <div class="tandc-main">
+              <div class="custom_checkbox">  <input id="agree" type="checkbox" name="attributes[Accept Terms and Conditions]" required="required" checked />
+                <label for="agree"> I have reviewed and agree to <a href="http://www.bombshellsportswear.com/pages/shipping-information" target="_blank">the Shipping and International Customs Tax Information</a></label>
+              </div>
+            </div>
+            <div class="update-cart-checkout">
+              <input aria-label="Update cart" type="submit" name="update" id="update-cart" value="{{ 'cart.general.update' | t }}" class="button updatecart-btn" />
+              <div class="checkout-secure-btn">
+                <button aria-label="Go to secure checkout" type="submit" name="checkout" id="checkout" class="button black-btn"><i class="secure-checkout-icon"></i> {{ 'cart.general.checkout' | t }}</button>
+              </div>
+            </div>
+            <div class="clear"></div>
+            <div class="account-cart">
+              {% comment %}{% if additional_checkout_buttons %} {{ content_for_additional_checkout_buttons }} {% endif %}{% endcomment %}
+              {% if settings.american_express %}<img alt="American Express" src="{{ 'amex.png' | asset_url }}"/>{% endif %}
+              {% if settings.dankort %}<img alt="Dankort" src="{{ 'dankort.png' | asset_url }}"/>{% endif %}
+              {% if settings.diners %}<img alt="Diners Club" src="{{ 'diners.png' | asset_url }}"/>{% endif %}
+              {% if settings.discover %}<img alt="Discover" src="{{ 'discover.png' | asset_url }}"/>{% endif %}
+              {% if settings.forbru %}<img alt="Forbru" src="{{ 'forbru.png' | asset_url }}"/>{% endif %}
+              {% if settings.google %}<img alt="Google" src="{{ 'googlecheckout.png' | asset_url }}">{% endif %}
+              {% if settings.jcb %}<img alt="JCB" src="{{ 'jcb.png' | asset_url }}">{% endif %}
+              {% if settings.maestro %}<img alt="Maestro" src="{{ 'maestro.png' | asset_url }}"/>{% endif %}
+              {% if settings.mastercard %}<img alt="MasterCard" src="{{ 'mastercard.png' | asset_url }}"/>{% endif %}
+              {% if settings.paypal %}<img alt="PayPal" src="{{ 'paypa.png' | asset_url }}"/>{% endif %}  
+              {% if settings.solo %}<img alt="Solo" src="{{ 'solo.png' | asset_url }}"/>{% endif %}  
+              {% if settings.visa %}<img alt="Visa" src="{{ 'visa.png' | asset_url }}"/>{% endif %}
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="clear"></div>
+    {% include 'foursixty-cart-gallery' %}
+
+    <div class="clear"></div>
+    <div id="looked-at" class="desktop-12 mobile-half">
+      {% include 'recently-viewed' %}
+    </div>
+
+    {% endif %}
+
+
+  </div>
+
+</div>
+<style>
+  #continue-shopping {
+    padding: 0 0 20px 16px;
+    text-align: right;
+  }
+  
+  .tandc {
+    float: right;
+    font-size: 13px;
+    text-align: left;
+    width: 90%;
+  }
+  .button, button, input[type="submit"], input[type="reset"], input[type="button"] {
+    max-width: 90%;
+    margin:0;
+  }
+  #cart-notes label {
+    display: inline-block;
+  }
+  #cart-notes > span {
+    color: red;
+  }
+  @media(max-width:1220px) {
+    .button, button, input[type="submit"], input[type="reset"], input[type="button"] {
+      max-width: 100%;
+    } 
+    .tandc {
+      width: 100%;
+    }
+  }
+  @media(max-width:767px) {
+    .tandc > input {
+      min-width: auto;
+      width: auto;
+    }
+    .tandc {
+      float: left;
+    }
+  }
+</style>
+<!-- Google Ads Dynamic Remarketing by M6 -->
+<script>
+  gtag('event', 'page_view', {
+    'send_to': 'AW-784257465',
+	'ecomm_pagetype': 'cart',
+	'ecomm_prodid': [{% for item in cart.items %}'shopify_US_{{ item.product_id }}_{{ item.variant_id }}',{% endfor %}],
+	'ecomm_totalvalue': {{ cart.total_price | money_without_currency | remove:',' }}
+  });
+</script>
+<!-- End Google Ads Dynamic Remarketing by M6 -->

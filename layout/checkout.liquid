@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="{{ locale }}" dir="{{ direction }}" class="{{ checkout_html_classes }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, user-scalable=0">
+    <meta name="referrer" content="origin">
+
+    <!-- Start BounceX tag. Deploy at the beginning of document head. -->
+<script>
+	(function(d) {
+		var e = d.createElement('script');
+		e.src = d.location.protocol + '//tag.bounceexchange.com/4079/i.js';
+		e.async = true;
+		d.getElementsByTagName("head")[0].appendChild(e);
+	}(document));
+</script>
+<!-- End BounceX tag -->
+    
+    
+    <title>{{ page_title }}</title>
+
+    {{ content_for_header }}
+
+    {{ checkout_stylesheets }}
+    <style>
+      
+      span.product__description__variant.order-summary__small-text{
+        display:none;
+      }
+      
+      body, .btn, .content-box, .content-box__row:first-child .map,
+      .paypal-button.paypal-button-shape-rect, .shopify-cleanslate, .logged-in-customer-information__avatar, .dynamic-checkout__title::before, .dynamic-checkout__title::after, .dynamic-checkout__content, .field__input {
+        border-radius: 0px;
+      }
+      
+      .product-thumbnail, .product-thumbnail__wrapper, .product-thumbnail::after {
+        border: 0px;
+      }
+      
+      .product-thumbnail__quantity {
+        right: -4px;
+        top: -10px;
+        background-color: rgba(0, 0, 0, 1);
+      }
+      
+      input[type="checkbox"] {
+    	display: inline-block;
+    	position: relative;
+    	padding-left: 35px;
+    	cursor: pointer;
+    	font-size: 1.4rem;
+    	line-height: 20px;
+    	color: #333;
+        -webkit-appearance: checkbox;
+    	-moz-appearance: checkbox;
+    	appearance: checkbox;
+	  }
+      
+      #checkboxes {
+        margin: 50px 0px 0px 0px;
+      }
+      
+      .custom_checkbox {
+        margin: 0px 0px 10px 0px;
+      }
+      
+      .custom_checkbox [type="checkbox"]:not(:checked), .custom_checkbox [type="checkbox"]:checked {
+    	position: absolute;
+    	left: -9999px;
+	  }
+      
+      .custom_checkbox [type="checkbox"]:not(:checked)+label, .custom_checkbox [type="checkbox"]:checked+label {
+    	display: inline-block;
+    	position: relative;
+    	padding-left: 30px;
+    	cursor: pointer;
+    	line-height: 20px;
+    	color: #333;
+        font-family: 'Montserrat', sans-serif;
+    	-webkit-text-size-adjust: 100%;
+    	-ms-text-size-adjust: 100%;
+    	-webkit-font-smoothing: antialiased;
+    	text-rendering: optimizeLegibility;
+	   }
+      
+      .custom_checkbox [type="checkbox"]:not(:checked)+label:before, .custom_checkbox [type="checkbox"]:checked+label:before {
+    	content: '';
+    	position: absolute;
+    	left: 0;
+    	top: 0px;
+    	width: 18px;
+    	height: 18px;
+    	background: #FFFFFF;
+    	border-radius: 0px;
+    	border: 1px solid #000;
+	  }
+      
+      .custom_checkbox [type="checkbox"]:not(:checked)+label:after, .custom_checkbox [type="checkbox"]:checked+label:after {
+    	content: '';
+    	position: absolute;
+    	top: 4px;
+    	left: 4px;
+    	margin: auto;
+    	width: 12px;
+    	height: 12px;
+    	background-color: #000;
+    	transition: all .2s;
+      }
+
+    </style>
+
+    {{ checkout_scripts }}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  </head>
+  <body>
+    {{ skip_to_content_link }}
+
+    <div class="banner" data-header>
+      <div class="wrap">
+        {{ content_for_logo }}
+      </div>
+    </div>
+
+    {{ order_summary_toggle }}
+
+    <div class="content" data-content>
+      <div class="wrap">
+        <div class="main" role="main">
+          <div class="main__header">
+            {{ content_for_logo }}
+            {{ breadcrumb }}
+            {{ alternative_payment_methods }}
+          </div>
+          <div class="main__content">
+            {{ content_for_layout }}
+            
+            <div id="checkboxes" class="hidden">
+              <div class="custom_checkbox">  
+                <input id="agree_1" type="checkbox" checked />
+                <label for="agree_1"> I have reviewed my shipping address and it is correct</label>
+              </div>
+              <div class="custom_checkbox">  
+                <input id="agree_2" type="checkbox" checked />
+                <label for="agree_2"> I have reviewed my email and it is correct</label>
+              </div>
+              <div class="custom_checkbox checkout_checkbox">  
+                <input id="agree_2" type="checkbox" checked />
+                <label for="agree_2"> I have reviewed my order and it is correct</label>
+              </div>
+            </div>   
+            
+            <div class="main__disclaimer">
+              <style>
+                .sidebar__disclaimer { margin-top: 4em; display: inline-block; }
+                .main__disclaimer { margin-top: 4em; display: none; }
+                .order-summary__sections { height: auto; }
+                @media (max-width: 1000px) {
+                  .sidebar__disclaimer { display: none; }
+                  .main__disclaimer { display: block; }
+                }
+              </style>
+              <p>NOTE: Due to our high order volume, all orders that are placed successfully go directly to the shipping floor within minutes after the order is placed to get it shipped to you as quickly as possible. We are unable to modify or cancel your order once it has been placed and handed over to our warehouse for processing.</p>
+              <p><strong>IMPORTANT NOTE TO ALL CUSTOMERS OUTSIDE OF USA: To place an International order - Please choose your shipping country from the drop down menu at the top of the main page to access our international checkout page.</strong></p>
+			</div>
+          </div>
+          <div class="main__footer">
+            {{ content_for_footer }}
+          </div>
+        </div>
+        <div class="sidebar" role="complementary">
+          <div class="sidebar__header">
+            {{ content_for_logo }}
+          </div>
+          <div class="sidebar__content">
+            {{ content_for_order_summary }}            
+          </div>
+          <div class="sidebar__disclaimer">
+            <style>
+              .sidebar__disclaimer { margin-top: 4em; display: inline-block; }
+              .main__disclaimer { margin-top: 4em; display: none; }
+              .order-summary__sections { height: auto; }
+              @media (max-width: 1000px) {
+                .sidebar__disclaimer { display: none; }
+                .main__disclaimer { display: block; }
+              }
+            </style>
+            <p>PLEASE NOTE: Due to our high order volume, all orders that are placed successfully go directly to the shipping floor within minutes after the order is placed to get it shipped to you as quickly as possible. We are unable to modify or cancel your order once it has been placed and handed over to our warehouse for processing.</p>
+            <p><strong>IMPORTANT NOTE TO ALL CUSTOMERS OUTSIDE OF USA: To place an International order - Please choose your shipping country from the drop down menu at the top of the main page to access our international checkout page.</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {{ tracking_code }}
+    <script type="text/javascript">
+      function updateVariantText() {
+
+        if(!$('span.product__description__variant.order-summary__small-text').length) {
+          setTimeout(function(){
+            updateVariantText();
+          },500);
+        } else {
+          $('span.product__description__variant.order-summary__small-text').each(function(){
+            var aa = $(this).text().split(' / ');
+            if(aa.length > 2) {
+              $(this).text(aa[0]+' / '+aa[1]).show().addClass('setIt');	
+            } else {
+              $(this).show().addClass('setIt');	
+            }
+
+          });
+        }
+      }
+      window.onload = function() {
+        updateVariantText();
+      }
+    </script>
+	{% if settings.checkout_customization_n5 %}
+    <script>
+      $(document).on('page:load page:change', function() {
+        if (Shopify.Checkout.step === 'payment_method') {
+          $('#checkboxes').removeClass('hidden');
+        } else {
+          $('#checkboxes').addClass('hidden');
+        }
+        if ($('#checkout_shipping_address_country').val() === 'United States') {
+          $('tr.total-line.total-line--shipping > td > span').html('Free Shipping');
+        }
+        $('#checkout_shipping_address_country').on('change', function() {
+          if (this.value === 'United States') {
+            $('tr.total-line.total-line--shipping > td > span').html('Free Shipping');
+          } else {
+            $('tr.total-line.total-line--shipping > td > span').html('Calculated at next step');
+          }
+        });
+      });
+    </script>
+    {% endif  %}
+  </body>
+</html>

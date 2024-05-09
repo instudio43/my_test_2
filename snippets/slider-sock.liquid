@@ -1,0 +1,182 @@
+<div class="slider_sock">
+  <div id="product-section" class="new-home-banner ">
+    <div id="homepage-products" class="home-banner-section desktop-12">
+      <div id="owl-example" class="owl-carousel">
+        {% for i in (1..7) %}
+        {% capture image %}hbi_img{{ i }}.jpg{% endcapture %}
+        {% capture link %}hbi_link{{ i }}{% endcapture %}
+        {% capture texts %}hbi_text{{ i }}{% endcapture %}
+        {% capture bimage %}hbi_img1{{ i }}.jpg{% endcapture %}
+        <div class="setrelative">
+          <a href="{{ settings[link] }}" class="hover-img">
+            <img src="{{ image | asset_url }}" alt="Shop Now" class="base-first" />
+          </a>
+          {% comment %}
+          <p class="btm-text">{{ settings[texts] }}</p>
+          {% endcomment %}
+          {% if collection.handle == 'sock-leggings' %}
+          <div id="product-info">
+            {% assign p = settings[link] | remove: '/products/' %}
+            <h3>{{ all_products[p].title }}</h3>
+            <div class="price">
+              <div class="prod-price">{{ all_products[p].price | money }}</div>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <script>
+    $(document).ready(function() {
+      $("#owl-example").owlCarousel({
+        singleItem: true,
+        items:1,
+        navigation: true,
+        paginationNumbers: false,
+        scrollPerPageNav: true,
+        slideSpeed: 800,
+        pagination: true,
+        autoHeight: true,
+        autoPlay: false,
+        navigationText:[" "," "],
+        afterInit: function() {
+          //return slider.eventListeners();
+        },
+        afterAction: function() {
+          //slider.alignCaption();
+          //return slider.alignPlayButton();
+        },
+        scrollPerPage: true,
+
+
+
+
+      });
+    });
+  </script>
+  <style>
+  .owl-theme .owl-controls .owl-page.active span, .owl-theme .owl-controls.clickable .owl-page:hover span {
+    opacity: 1;
+  }
+
+  .owl-pagination .active {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+  }
+
+  .owl-page.active > span {
+    background: #000000 none repeat scroll 0 0;
+  }
+
+  .owl-theme .owl-controls .owl-page span {
+    border: 1px solid #000000;
+    border-radius: 20px;
+    display: block;
+    height: 12px;
+    margin: 3px;
+    width: 12px;
+  }
+
+  .owl-pagination {
+    float: left;
+    margin-top: 11px;
+    text-align: center;
+    width: 100%;
+  }
+
+  .owl-theme .owl-controls .owl-page {
+    display: inline-block;
+  }
+
+  .owl-item {
+    padding: 0 6px;
+  }
+
+  .owl-buttons div {
+    position: absolute;
+    height: 48px;
+    width: 48px;
+  }
+
+  .owl-buttons > div {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    color: #000000;
+    display: inline-block;
+    font-family: FontAwesome;
+    font-size: 3rem;
+    line-height: 30px;
+    padding: 10px 15px;
+    text-align: center;
+    transition: background-color 300ms ease-in-out 0s;
+    opacity: 0.7;
+  }
+
+  .owl-next {
+    right: -36px;
+    top: 50%;
+  }
+
+  .owl-prev {
+    left: -36px;
+    top: 50%;
+  }
+
+  .owl-buttons > div:hover {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    color: #000000;
+    opacity: 1;
+  }
+
+  .flexslider .slides img {
+    border: 1px solid #ddd;
+    border-top: 0;
+  }
+
+  .btm-text {
+    /*font-family: Playfair Display;*/
+    font-size: 1.8rem;
+    text-align: center;
+    color: #000;
+  }
+
+  .setrelative {
+    position: relative;
+    text-align: center;
+  }
+
+  .new-home-banner img {
+    margin: 3px 0;
+    /*width:100%;*/
+  }
+
+  .shopnowtext::after {
+    content: ">>";
+    font-family: Comic Sans MS;
+    font-size: 1.6rem;
+    letter-spacing: -1px;
+    padding: 0 8px 0 4px;
+    vertical-align: top;
+  }
+
+  .shopnowtext {
+    background: #f0f0f0 none repeat scroll 0 0;
+    bottom: 20px;
+    font-size: 1.4rem;
+    right: 1px;
+    padding-left: 3px;
+    position: absolute;
+    text-align: center;
+  }
+
+  .new-home-banner {
+    clear: both;
+  }
+
+  @media (max-width: 480px) {
+    .shopnowtext {
+      font-size: 1.2rem;
+    }
+  }
+  </style>
+</div> <!--middle slider -->

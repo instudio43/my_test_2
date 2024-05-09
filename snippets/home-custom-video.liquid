@@ -1,0 +1,133 @@
+<section id="homepage-custom-video-block">
+  <div class="left-content custom-video-prt {% if settings.homepage-custom-video.type == 'vimeo' %}video_vimeo{% endif %}" id="videoContainer">
+    <div class="custom-video-info">
+      <div class="video_text">
+        <div class="mystory" style="color:{{ settings.title-color-video }}">{{ settings.homepage-custom-video-title }}</div>
+        <a href="#" class="v-valenti-btn" style="color:{{ settings.caption-color-video }}">{{ settings.homepage-custom-video-caption }}</a> 
+      </div>
+      <a class="introVid" aria-label="Homepage Video" href="javascript:void(0);"></a>
+    </div>
+    <img src="{{ 'homepage-custom-video-thumb.jpg' | asset_url }}" title="bombshell" alt="bombshell"/>
+    {% if settings.homepage-custom-video.type == 'vimeo' %}
+    <script>
+      $(document).ready(function(){
+        $('a.introVid').click(function(){
+          autoPlayVideo('{{ settings.homepage-custom-video.id }}','946','auto');
+                        });
+        });
+        /*--------------------------------
+				  Swap video with autoplay video
+				---------------------------------*/
+
+        function autoPlayVideo(vcode, width, height){
+          "use strict";
+          if( $(window).width() > 767){
+            height = $('.right-content.productsCollection-prt').height();
+          }else{
+            height = $('div#videoContainer').height();
+          }
+          console.log($('.right-content.productsCollection-prt').height());
+          $("#videoContainer").html('<iframe width="'+width+'" src="https://player.vimeo.com/video/'+vcode+'?autoplay=1&title=false&byline=false&portrait=false&loop=0&autopause=0&rel=0&wmode=transparent&controls=0" frameborder="0" allowfullscreen></iframe>');
+          $('#videoContainer iframe, .left-content.custom-video-prt > img').attr('style', 'height: '+height+"px !important");
+        }
+    </script>
+    {% elsif settings.homepage-custom-video.type == 'youtube' %}
+
+    <script>
+      $(document).ready(function(){
+        $('a.introVid').click(function(){
+          autoPlayVideo('{{ settings.homepage-custom-video.id }}','946','auto');
+                        });
+        });
+        /*--------------------------------
+				  Swap video with autoplay video
+				---------------------------------*/
+
+        function autoPlayVideo(vcode, width, height){
+          "use strict";
+          if( $(window).width() > 767){
+            height = $('.right-content.productsCollection-prt').height();
+          }else{
+            height = $('div#videoContainer').height();
+          }
+          console.log($('.right-content.productsCollection-prt').height());
+          $("#videoContainer").html('<iframe width="'+width+'" src="https://www.youtube.com/embed/'+vcode+'?autoplay=1&loop=1&rel=0&wmode=transparent" frameborder="0" allowfullscreen wmode="Opaque"></iframe>');
+          $('#videoContainer iframe, .left-content.custom-video-prt > img').attr('style', 'height: '+height+"px !important");
+        }
+
+
+        /* $(document).ready(function(){
+					if($(window).width() > 768){
+					  setTimeout(function(){
+						var height = $('.right-content.productsCollection-prt').height();
+						$('.left-content.custom-video-prt').css('height', height);
+						$('.left-content.custom-video-prt > img').css('height', '100%');
+						$('.videoContainer iframe').css('height', height);
+					  }, 1000);
+					}
+				  }); */
+
+    </script>
+    {% else %}
+    Uploaded video url is not supprted.
+    {% endif %}
+  </div>
+  <div class="right-content productsCollection-prt mobile-hide">
+    {% assign productsCollection = settings.homepage-custom-video-collection %}
+    <div id="product-loop">
+      {% if productsCollection != blank %}
+      {% if collections[productsCollection].products_count != 0 %}
+      <div class="content-block">
+        <div class="product-slider owl-carousel" id="custom-video-collection-linked-products">
+          {% for product in collections[productsCollection].products limit: 5 %}
+          <div class="item product">
+            {% include 'product-listing' %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+<div class="clear"></div>
+<script>
+  $(document).ready(function(){
+    var $owl = $('#custom-video-collection-linked-products');
+
+    $owl.on('resized.owl.carousel', function(event){
+      if( $(window).width() > 767){
+        var height123 = $('.right-content.productsCollection-prt').height();
+        if($('#videoContainer iframe').length){
+          $('#videoContainer iframe').attr('style', 'height: '+height123+"px !important");
+        }
+        if($('.left-content.custom-video-prt > img').length){
+          $('.left-content.custom-video-prt > img').attr('style', 'height: '+height123+"px !important");
+        }
+      }
+    });
+
+    $owl.owlCarousel({
+      loop:true,
+      nav:true,
+      items: 1,
+      margin:10,
+      lazyLoad: true,
+      responsiveClass:true,
+      responsive:{
+        0:{
+          items:2
+        },
+        768:{
+          items:1
+        },
+        1000:{
+          items:1
+        }
+      }
+    });
+
+
+  });
+</script>

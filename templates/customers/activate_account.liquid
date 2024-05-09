@@ -1,0 +1,31 @@
+<div id="content" class="row" >
+{% layout settings.customer_layout %}
+<div id="customer-wrapper" class="desktop-12 mobile-3">
+
+<div id="template">
+  <div class="template_header">
+    <h2 class="title">{{ 'customer.activate_account.title' | t }}</h2>
+    <p class="note">{{ 'customer.activate_account.subtext' | t }}</p>
+  </div>
+
+  {% form 'activate_customer_password' %}
+    {{ form.errors | default_errors }}
+
+    <div id="password" class="clearfix large_form">
+      {% comment %}<label class="large" for="password">{{ 'customer.activate_account.password' | t }}</label>{% endcomment %}
+      <input type="password" value="" name="customer[password]" id="customer_password" class="large password" size="16" placeholder="{{ 'customer.activate_account.password' | t }}" />
+    </div>
+    <div id="password_confirm" class="clearfix large_form">
+      {% comment %}<label class="large" for="password_confirmation">{{ 'customer.activate_account.password_confirm' | t }}</label>{% endcomment %}
+      <input type="password" value="" name="customer[password_confirmation]" id="customer_password_confirmation" class="large password" size="16" placeholder="{{ 'customer.activate_account.password_confirm' | t }}" />
+    </div>
+    <div class="action_bottom">
+      <input aria-label="Activate account" class="secondary button" type="submit" value="{{ 'customer.activate_account.submit' | t }}" />
+      <span class="note"> - </span>
+      <input aria-label="Cancel activation" type="submit" class="cancel" name="decline" id="customer_decline" value="{{ 'customer.activate_account.cancel' | t }}" />
+    </div>
+  {% endform %}
+</div>
+</div>
+
+</div>

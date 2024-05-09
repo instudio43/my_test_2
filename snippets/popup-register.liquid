@@ -1,0 +1,175 @@
+<div id="register-popup" style="display:none">
+
+  <div class="popup-form">
+    <div class="h22">{{ settings.form_heading }}</div>
+
+    <div id="" class="popup-form-div">
+      <form accept-charset="UTF-8" id="create_customer" action="/account" method="post">
+        <input type="hidden" name="checkout_url" value="{{ shop.url }}" />
+        <input type="hidden" name="form_type" value="create_customer">
+        <input type="hidden" value="✓" name="utf8">
+        {{ form.errors | default_errors }}
+        <div id="first_name" class="clearfix large_form">
+          <input aria-label="First name" placeholder="First name" type="text" value="" name="customer[first_name]" id="first_name" class="large" size="30" />
+        </div>
+
+        <div id="last_name" class="clearfix large_form">
+          <input aria-label="Last name" placeholder="Last name" type="text" value="" name="customer[last_name]" id="pop_last_name" class="large" size="30" />
+        </div>
+
+        <div id="email" class="clearfix large_form">
+          <input aria-label="Email address" placeholder="Email Address" type="email" value="" name="customer[email]" id="pop_email" class="large" size="30" />
+        </div>
+
+        <div id="password" class="clearfix large_form">
+          <input aria-label="Password" placeholder="Password" type="password" value="" name="customer[password]" id="pop_password" class="large password" size="30" />
+        </div>
+
+        <div class="action_bottom">
+          <input aria-label="Submit" type="submit" value="{{ settings.reg_button_text }}" />
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+<style>
+  #register-popup {
+    border: 15px solid #666;
+    border-radius: 5px;
+    background: #fff none repeat scroll 0 0;
+  }
+  .complete-img {
+    border-bottom: 1px solid #dedede;
+    margin: 12px 0;
+    text-align: center;
+  }
+  .complete-img > p {
+    font-size: 1.2rem;
+    line-height: 16px;
+  }
+  .popup-form {
+    margin: 0 auto;
+    max-width: 600px;
+  }
+  .privacy-statment {
+    font-size: 1.1rem;
+    color:#a8a8a8;
+    text-align: center;
+    padding: 10px 0 !important;
+  }
+  .popup-form > h3 {
+    color: #cc0000;
+    text-align: center;
+    text-transform: none;
+  }
+  .popup-form-div input {
+    border-radius: 2px;
+    margin: 6px auto;
+    max-width: 500px;
+    padding: 10px 0 !important;
+  }
+  .popup-form-div input {
+    border-radius: 2px;
+    display: block;
+    margin: 6px auto;
+    max-width: 500px;
+    padding: 10px 0 !important;
+  }
+  .popup-form {
+    margin: 0 auto;
+    max-width: 600px;
+    padding: 0 10px 20px;
+  }
+  #ztb-submit-button {
+    -webkit-appearance: none;
+  }
+  @media(max-width:480px) {
+    .popup-form-div input {
+      padding: 5px 0 !important;
+    }
+  }
+</style>
+<script>
+
+   jQuery(document).ready(function(){
+      jQuery('.reg-popup').on('click', function(){
+        jQuery('#ztb-ecp-show-widget').trigger('click');
+      });
+    });
+
+    jQuery.fn.simulateClick = function() {
+      return this.each(function() {
+        if('createEvent' in document) {
+          var doc = this.ownerDocument,
+              evt = doc.createEvent('MouseEvents');
+          evt.initMouseEvent('click', true, true, doc.defaultView, 1, 0, 0, 0, 0, false, false, false, false, 0, null);
+          this.dispatchEvent(evt);
+        } else {
+          this.click(); // IE Boss!
+        }
+      });
+    }
+
+
+
+  $(document).ready(function(){
+
+
+    $('.reg-popup').on('click',function(e){
+      e.preventDefault();
+      $('#ztb-ecp-show-widget').trigger('click');
+    });
+
+
+
+   /*
+
+    $('.popup-form-div > form').submit(function(e){
+      //e.preventDefault();
+      var ln = $('#pop_last_name');
+      var em = $('#pop_email');
+      var pw = $('#pop_password');
+      var re = /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm;
+      if(ln.val() == null || ln.val() == '' ) {
+        ln.css('border-color','red');
+        return false;
+      }
+      else {
+        ln.css('border-color','#dddddd');
+      }
+      if(em.val() == null || em.val() == '' || !re.test(em.val())) {
+        em.css('border-color','red');
+        return false;
+      }
+      else {
+        em.css('border-color','#dddddd');
+      }
+      if(pw.val() == null || pw.val() == '' ) {
+        pw.css('border-color','red');
+        return false;
+      }
+      else {
+        pw.css('border-color','#dddddd');
+      }
+
+
+
+      $.ajax({
+        type: 'POST',
+        url: $(this).attr('action'),
+        data: $(this).serialize(),
+        dataType: 'json',
+        error: function(jqXHR, textStatus, errorThrown){
+         var response = $.parseJSON(jqXHR.responseText);
+          $('.popup-form-div').prepend('<p>'+response.errors+'</p>');
+          console.log(jqXHR);
+        },
+        success: function() {
+           setTimeout(function(){ window.location = '/account'; }, 2000);
+        }
+      });
+*/
+
+    });
+</script>

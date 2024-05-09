@@ -1,0 +1,888 @@
+{% include 'common-variables' %}
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+<link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<head>
+  <script type="text/javascript" async="" src="https://d38xvr37kwwhcm.cloudfront.net/js/grin-sdk.js?shop=bombshell-sportswear.myshopify.com"></script>
+
+{% render 'orbislabs_sitemap_noindex' %}
+  
+  <!-- Start BounceX tag. Deploy at the beginning of document head. -->
+<script>
+	(function(d) {
+		var e = d.createElement('script');
+		e.src = d.location.protocol + '//tag.bounceexchange.com/4079/i.js';
+		e.async = true;
+		d.getElementsByTagName("head")[0].appendChild(e);
+	}(document));
+</script>
+<!-- End BounceX tag -->
+  
+  <!-- GOOGLE TAG MANAGER -->
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','GTM-K87G5BN');
+  </script> 
+  <!-- GOOGLE TAG MANAGER END -->
+  
+  <!-- GOOGLE ANALYTICS -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-53610418-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-53610418-1');
+  </script>
+  <!-- GOOGLE ANALYTICS END -->
+
+  <!-- GOOGLE ADS -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-784257465"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-784257465');
+  </script>
+  <!-- GOOGLE ADS END -->
+  
+  <!-- GOOGLE MERCHANT CENTER -->
+  <meta name="google-site-verification" content="5AOq253ws-KQb6wCiubWenkOrAcj87ZR8D9ttjolm1Y" />
+  <!-- GOOGLE MERCHANT CENTER END -->
+  
+  <!-- SEO META DATA -->
+  {%assign pageTitle = page_title | replace: " │ Bombshell Sportswear","" %}
+  
+  <title>{{ pageTitle }}{%if current_page > 1%} - page {{current_page}}{%endif%} │ Bombshell Sportswear</title>
+  <link rel="shortcut icon" href="{{ 'favicon.png' | asset_url }}" />
+  <link rel="canonical" href="{{ canonical_url }}" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+ <meta name="tapcart-banner:appIcon" content="https://storage.googleapis.com/tapcart-150607.appspot.com/580382b914824bdaa0f7ceff284dab8f_appIcon.png">
+  {%- if page_description -%}
+  <meta name="description" content="{{ page_description | escape }} {%if current_page > 1%}- page {{current_page}}{%endif%}" />
+  {%- endif -%}
+  <meta name='author' content="Bombshell Sportswear" />
+  {% comment %}
+  <meta name='keywords' content="workout clothes, women's activewear, sexy fitness wear, sexy activewear, fit wear, workout wear, fitness apparel, fitness outfit, designer sportswear, sports bra, crop pants, yoga, pilates, gym, bodybuilding, fitness attire" />
+  {% endcomment %}
+  <!-- SEO META DATA END -->
+  
+  <!-- SOCIAL META DATA -->
+  {% include 'social-media-meta-tags' %}
+  <!-- SOCIAL META DATA END-->
+
+  <!-- CSS -->
+  {{ 'stylesheet.scss.css' | asset_url | stylesheet_tag }}
+  {{ 'custom.scss.css' | asset_url | stylesheet_tag }}
+  {{ 'readmore.min.css' | asset_url | stylesheet_tag }}
+  <!--[if IE 8 ]>{{ 'ie8.css' | asset_url | stylesheet_tag }}<![endif]-->
+  <!--[if IE 7]>
+  {{ 'font-awesome-ie7.css' | asset_url | stylesheet_tag }}
+  <![endif]-->
+  <!-- CSS END -->
+  
+  <!-- JS -->
+  {{ 'theme.js' | asset_url | script_tag }}
+
+  <script src="//cdn.codeblackbelt.com/js/modules/also-bought/main.min.js?shop=bombshell-sportswear.myshopify.com"></script>
+
+  
+  {{ 'option_selection.js' | shopify_asset_url | script_tag }}
+  {% if template == 'index' %}
+  {% if settings.slideshow == 'backstretch' %}
+  {{ 'jquery.backstretch.min.js' | asset_url | script_tag }}
+  {% endif %}
+  {% endif %}
+  {% if template contains 'product' %}
+  {{ 'jquery.bxslider.min.js' | asset_url | script_tag }}
+  {% endif %}
+  {{ 'instafeed.js' | asset_url | script_tag }}
+  {% comment %} {{ 'cloudzoom.js' | asset_url | script_tag }}
+  {{ 'cloudzoom.css' | asset_url | stylesheet_tag }}{% endcomment %}
+  <!-- JS END -->
+
+  {% if template contains 'customers' %}
+  {{ "shopify_common.js" | shopify_asset_url | script_tag }}
+  {{ "customer_area.js"  | shopify_asset_url | script_tag }}
+  {% endif %}
+  {{ 'owl.carousel.css' | asset_url | stylesheet_tag }}
+  {{ "owl.carousel.js"  | asset_url | script_tag }}
+  {{ content_for_header }}
+{%- render 'bold-common' -%}
+
+  {% include "loyaltylion" %}
+
+  {% comment %}
+  {% include "livechat_monitoring_code" %}
+  {% endcomment %}
+
+  <!-- spurit_dm-added -->
+  <link rel="stylesheet" type="text/css" href="https://s3.amazonaws.com/shopify-apps/discount-manager/store/b6aca72f3412718db37bb416ec2e1fa7.css">
+  <!-- /spurit_dm-added -->
+  
+  {{ 'bombshell.scss.css' | asset_url | stylesheet_tag }}
+  <!-- {{ 'bombshell-amit.scss.css' | asset_url | stylesheet_tag }}
+  {{ 'bombshell-bhargav.scss.css' | asset_url | stylesheet_tag }} -->
+  {{ 'media.scss.css' | asset_url | stylesheet_tag }}
+  <!-- BeginWishyAddon --><script>  Shopify.wishy_btn_settings = {"button_setting":"","btn_append":"before","btn_display":"block","btn_width":"auto","btn_margin_top":5,"btn_margin_left":5,"btn_margin_right":5,"btn_margin_bottom":5,"btn_margin_unit":"px","btn_placer_element":null,"btn_background_color":"#ffffff","btn_border_color":"#b9b9b9","btn_border_width":1,"btn_text":"♡ Add to wishlist","btn_color":"#1b1b1b","remove_btn_background_color":"#5c6ac4","remove_btn_border_color":"#3f4eae","remove_btn_border_width":1,"remove_btn_color":"#ffffff","new_theme_published_at":null,"installed":true,"heart_icon_margin_right":15,"heart_icon_margin_bottom":15,"heart_icon_location":"bottom-right","heart_icon_margin_top":15,"heart_icon_margin_left":15,"setting_force_login":false,"heart_icon_url_match":"","heart_icon_enabled":true,"reviewed_at":null,"review_email_1_sent_at":null,"shop_params":{},"status":null,"spf_record":null,"floating_favorites_enabled":false,"floating_favorites_location":"right","floating_favorites_margin_top":50,"floating_favorites_url_match":"","floating_favorites_background_color":"#ffffff","floating_favorites_border_color":"#b9b9b9","floating_favorites_border_width":1,"floating_favorites_text":"♥ Favorites","floating_favorites_color":"#1b1b1b","heart_icon_type":"default","heart_icon_typedefault_background_color":"#ff8989","heart_icon_typedefault_border_color":"#ff9c9c","heart_icon_typedefault_border_width":2,"heart_icon_typedefault_icon_color":"#ffffff","heart_icon_show_count":true,"heart_icon_typecustom_image_url":"https://cc-swim.herokuapp.com/wishlist.png","btn_text_size":"16.0","email_feature_available":false,"email_feature_available_sent_at":null,"email_setting_clicked":0};  Shopify.wishy_button_css_json = "";  {% if customer %}  Shopify.customer_email = "{{ customer.email }}" ;  {% else %}  Shopify.customer_email = "" ;  {% endif %}</script><!-- EndWishyAddon -->
+  {{ 'slick.css' | asset_url | stylesheet_tag }}
+  {{ 'slick.js' | asset_url | script_tag }}
+  <link id="GEPIStyles" rel="stylesheet" href="//gepi.global-e.com/proxy/css/413" />
+  <!--begin-bc-sf-filter-css-->
+  {{ 'bc-sf-filter.css' | asset_url | stylesheet_tag }}
+  <!--end-bc-sf-filter-css-->
+
+  <script type="text/javascript" data-cfasync="false">
+    (function(W,i,s,e,P,o,p){W['WisePopsObject']=P;W[P]=W[P]||function(){
+      (W[P].q=W[P].q||[]).push(arguments)},W[P].l=1*new Date();o=i.createElement(s),
+      p=i.getElementsByTagName(s)[0];o.async=1;o.src=e;p.parentNode.insertBefore(o,p)
+                            })(window,document,'script','//loader.wisepops.com/get-loader.js?v=1&site=kXCWwbNfF3','wisepops');
+  </script>
+  
+  <!-- NUMBER 5 ANALYTICS START-->
+  <script type="text/javascript">
+  var _number5 = _number5 || [];
+  var meta = {
+    {% if shop.customer_accounts_enabled %}
+      {% if customer %}
+        customer_id : '{{ customer.id }}',
+        email: '{{ customer.email }}',
+        first_name: '{{ customer.first_name }}',
+        last_name: '{{ customer.last_name }}'
+      {% endif %}
+  {% endif %}
+  };
+
+  _number5.push(['trackPageView', document.title || '{{ page_title }}', meta]);
+  _number5.push(['trackConversionEvent', '7f834c57-55e8-4545-a779-dab97515b1e3', 'goal', meta]);
+  (function() {
+    var u="//api.number5.com/";
+    _number5.push(['setTrackerUrl', u+'analytics/api/events/push']);
+    _number5.push(['setSiteId', 'S-HY3RRGYUY']);
+    _number5.push(['trackAllContentImpressions']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'public/number520190214b.min.js'; s.parentNode.insertBefore(g,s);
+  })();
+  </script>
+  <!-- NUMBER 5 ANALYTICS END-->
+
+  </head>
+
+  <body class="gridlock shifter {{ template }} {% if template contains 'page' %}template_page page-{{page.handle}}{% endif %} " id="{{collection.handle}}">
+  
+  <!-- GOOGLE TAG MANAGER -->
+	<noscript>
+      <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K87G5BN" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>    
+  <!-- GOOGLE TAG MANAGER END --> 
+    {% comment %}
+    {% if template == 'index' %}<h1 class="screen-reader-onlytext">Bombshell Sportswear Home</h1>{% endif %}
+    {% endcomment %}
+  {% include 'timber-cart' %}
+  <div class="shifter-page is-moved-by-drawer" id="PageContainer">
+    <div class="page-wrap">
+      {% section 'header' %}
+      <div id="phantom"></div>
+      {% comment %}
+      {% if template contains 'collection' %}
+      {% if collection.description contains '[banner]' %}
+      {% capture banner %}{{ collection.handle }}.jpg{% endcapture %}
+      {% capture alt %}{{ collection.title }}{% endcapture %}
+      <div class="collection-banner">
+        <img src="{{ banner | file_url }}" alt="{{ collection.title }}">
+      </div>
+      {% endif %}
+      {% endif %}
+      {% endcomment %}
+
+      {% if template != 'index' %}
+      <div class="{% if template contains 'page.' or template == 'page' %}pageContentContainer{% endif %} {% if template contains 'collection' or template contains 'product'%}{% if settings.full-width-header %} gridlock-fluid{% endif %}{% endif %}">
+
+        {% if settings.breadcrumb %}
+        {% include 'breadcrumb' %}
+        {% endif %}
+        {{ content_for_layout }}
+
+        {% if template contains 'collection' or template contains 'product' or page.title == 'Size Chart' or page.title == 'Our Fabrics' %}
+        <div class="clear"></div>
+        {% include 'homepage-instagram' %}
+        {% endif %}
+
+      </div>
+      {% else %}
+      {{ content_for_layout }}
+      {% endif %}
+
+    </div>
+    <footer>
+      <div class="social-share">
+        <div class="container">
+          <div class="row">
+            <div class="left">Follow Us</div>
+            <div class="right">
+              <ul id="footer-icons">
+                {% if settings.show_twitter %}
+                <li>
+                  <a href="{{ settings.twittername }}" target="_blank" aria-label="Twitter">
+                    <i class="icon-twitter icon-2x"></i>
+                  </a>
+                </li>
+                {% endif %}
+
+                {% if settings.show_facebook %}
+                <li>
+                  <a href="{{ settings.facebook_url }}" target="_blank" aria-label="Facebook">
+                    <i class="icon-facebook-sign icon-2x"></i>
+                  </a>
+                </li>
+                {% endif %}
+
+                {% if settings.show_pinterest %}
+                <li>
+                  <a href="{{ settings.pinterest_url }}" target="_blank" aria-label="Pinterest">
+                    <i class="icon-pinterest icon-2x"></i>
+                  </a>
+                </li>
+                {% endif %}
+
+                {% if settings.show_tumblr %}
+                <li>
+                  <a href="{{ settings.tumblr_url }}" target="_blank" aria-label="Tumblr">
+                    <i class="icon-tumblr icon-2x"></i>
+                  </a>
+                </li>
+                {% endif %}
+
+                {% if settings.show_youtube %}
+                <li>
+                  <a href="{{ settings.youtube_url }}" target="_blank" aria-label="YouTube">
+                    <i class="icon-youtube icon-2x"></i>
+                  </a>
+                </li>
+                {% endif %}
+
+                {% if settings.show_googleplus %}
+                <li>
+                  <a href="{{ settings.googleplus_url }}" target="_blank" aria-label="Google Plus">
+                    <i class="icon-google-plus icon-2x"></i>
+                  </a>
+                </li>
+                {% endif %}
+
+                {% if settings.show_instagram %}
+                <li>
+                  <a href="{{ settings.instagram-id }}" target="_blank" aria-label="Instagram">
+                    <i class="icon-instagram icon-2x"></i>
+                  </a>
+                </li>
+                {% endif %}
+
+                {% if settings.show_snapchat %}
+                <li>
+                  <a href="http://snapchat.com/add/{{ settings.snapchat-id }}" target="_blank" aria-label="Snapchat">
+                    <i class="icon-snapchat icon-2x"></i>
+                  </a>
+                </li>
+                {% endif %}
+                
+                {% if settings.show_tiktok %}
+                <li>
+                  <a href="{{ settings.tiktok-id }}" target="_blank" aria-label="TikTok">
+                    <i class="icon-2x">{% include 'icon-tiktok' %}</i>
+                  </a>
+                </li>
+                {% endif %}
+                
+
+                {% if settings.show_rss %}
+                <li>
+                  <a href="{{ shop.url }}/blogs/news.atom" target="_blank" aria-label="RSS Feed">
+                    <i class="icon-rss icon-2x"></i>
+                  </a>
+                </li>
+                {% endif %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="clear"></div>
+
+      <div class="newsletter-block">
+
+        <div class="container">
+          <div class="row">
+            <!--             <form method="post" action="{{ settings.mailchimp }}" name="mc-embedded-subscribe-form" id="email_signup" >
+<input type="hidden" name="g" value="N2bBuY">
+<div class="left ftr-logo">
+{% if settings.use_logo_image %}
+<a href="/"><img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" style="border: 0;"/></a>
+{% else %}
+<a href="/">{{ shop.name }}</a>
+{% endif %}
+</div>
+<div class="right ftr-sign-newsletter">
+<div class="ftr-sign-title	">SIGN UP TO RECEIVE 10% OFF YOUR FIRST ORDER</div>
+<div class="input-box">
+<input type="email" name="EMAIL" id="k_id_email" placeholder="Email Address" title="Enter email address" class="input-text required-entry validate-email"/>
+<button type="submit" name="subscribe" title="Join" class="button"><span><span>Join</span></span></button>
+<div class="clear"></div>
+</div>
+<div id="subscribe-result"></div>
+<div class="klaviyo_messages">
+<div class="success_message" style="display:none;"></div>
+<div class="error_message" style="display:none;"></div>
+</div>
+</div>
+</form> -->
+            <form id="email_signup" action="{{ settings.mailchimp }}" method="POST">
+              <input type="hidden" name="g" value="JKcmiE">
+              <div class="left ftr-logo">
+                {% if settings.use_logo_image %}
+                <a href="/"><img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" style="border: 0;"/></a>
+                {% else %}
+                <a href="/">{{ shop.name }}</a>
+                {% endif %}
+              </div>
+              <div class="right ftr-sign-newsletter">
+                <div class="ftr-sign-title	">JOIN THE SQUAD AND RECEIVE 10% OFF YOUR FIRST ORDER</div>
+                <div class="input-box">
+                  <input aria-label="Email address" required type="email" value="" name="email" id="k_id_email" placeholder="YOUR EMAIL" />
+                  <button type="submit" name="subscribe" title="Join" class="button"><span><span>Join</span></span></button>
+                  <div class="clear"></div>
+                </div>
+                <div class="klaviyo_messages">
+                  <div class="success_message" style="display:none;"></div>
+                  <div class="error_message" style="display:none;"></div>
+                </div>
+              </div>
+            </form>
+            <script type="text/javascript" src="//www.klaviyo.com/media/js/public/klaviyo_subscribe.js"></script> 
+            <script type="text/javascript">
+              KlaviyoSubscribe.attachToForms('#email_signup', {
+                hide_form_on_success: true,
+                success_message: "Thank you for signing up! Your special offer is on its way!"
+                // console.log('False')
+              });
+
+              //               $('#email_signup').on('submit', function(e){
+              //                 e.preventDefault();
+              //                 var email = $('#k_id_email').val();
+              //                 var settings = {
+              //                   "async": true,
+              //                   "crossDomain": true,
+              //                   "url": "https://manage.kmail-lists.com/ajax/subscriptions/subscribe",
+              //                   "method": "POST",
+              //                   "headers": {
+              //                     "content-type": "application/x-www-form-urlencoded",
+              //                     "cache-control": "no-cache"
+              //                   },
+              //                   "data": {
+              //                     "g": "Q9ADrq",
+              //                     "$fields": "$source,LOYALTY_MEMBER,SM_ACCOUNT,$phone_number,Mobile Opt In,$consent,$consent_id,$consent_method,$consent_timestamp,instagram_handle",
+              //                     "email": email,
+              //                     "$source": "Homepage Popup",
+              //                     "LOYALTY_MEMBER": "True",
+              //                     "SM_ACCOUNT": "N"
+              //                   }
+              //                 };
+              //                 console.log(settings);
+              //                 //console.log(IPAddress);
+              //                 //debugger;
+              //                 // use ajax to sign the user up
+              //                 $.ajax(settings).done(function(response){
+              //                   //debugger
+              //                   console.log(response);
+              //                 })
+              //               });
+            </script>
+
+          </div>
+        </div>
+      </div>
+      {{ 'jquery.ajaxchimp.js' | asset_url | script_tag }}
+      <script type="text/javascript">
+
+        /* jQuery(document).on('submit', '#subscribe-form-footer', function(event) {
+            event.preventDefault();
+			return false;
+        }); */
+
+        jQuery(document).ready(function(){
+          jQuery('#subscribe-form-footer').ajaxChimp({
+            callback: function(response){
+              // response = jQuery.parseJSON(response);
+              // console.log(response);
+              if(response.result == 'error'){
+                if(response.msg.includes("0 - ")){
+                  var customMsg = response.msg.split("0 - ")[1];
+                }else{
+                  var customMsg = response.msg;
+                }
+                jQuery('#subscribe-result').html(customMsg).addClass('error').removeClass('success');
+              }else{
+                jQuery('#subscribe-result').html(response.msg).addClass('success').removeClass('error');
+              }
+              setTimeout(function(){
+                jQuery('#subscribe-result').html('').removeAttr('class');
+              }, 5000);
+            }
+          });
+        });
+	
+         
+      </script>
+      <div class="clear"></div>
+
+      <div id="footer-wrapper">
+        <div id="footer">
+
+          <div class="container">
+            <div class="row">
+              {% assign grid = 0 %}
+              {% assign grid = grid | plus: 1 %}
+              {% if settings.footer-2-links != '' %}{% assign grid = grid | plus: 1 %}{% endif %}
+              {% if settings.footer-3-links != '' %}{% assign grid = grid | plus: 1 %}{% endif %}
+              {% assign grid = grid | plus: 1 %}
+              {% if grid > 0 %}
+
+              {% if settings.footer-1-links != '' %}
+              <div class="desktop-{{ 12 | divided_by: grid }} tablet-2 mobile-one-whole">
+                {% if settings.footer-1-links != '' %}
+                <div class="accordion h44">{{ linklists[settings.footer-1-links].title }}</div>
+                {% endif %}
+                <ul class="accordion-panel">
+                  {% for link in linklists[settings.footer-1-links].links %}
+                  <li>{{ link.title | link_to: link.url }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+              {% endif %}
+
+              {% if settings.footer-2-links != '' %}
+              <div class="desktop-{{ 12 | divided_by: grid }} tablet-2 mobile-one-whole">
+                {% if settings.footer-2-links != '' %}
+                <div class="accordion h44">{{ linklists[settings.footer-2-links].title }}</div>
+                {% endif %}
+                <ul class="accordion-panel">
+                  {% for link in linklists[settings.footer-2-links].links %}
+                  <li>{{ link.title | link_to: link.url }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+              {% endif %}
+
+              {% if settings.footer-3-links != '' %}
+              <div class="desktop-{{ 12 | divided_by: grid }} tablet-2 mobile-one-whole footer-account">
+                <div class="accordion h44">Account</div>
+                <div class="accordion-panel">
+                {% if shop.customer_accounts_enabled %}
+                {% if customer  %}
+                <ul>
+                  <li><a href="/account">{{ 'customer.account.title' | t }}</a></li>
+                  <li><a href="/account#order-history">Order Status</a></li>
+                </ul>
+                {% else %}
+                <ul>
+                  <li><a href="/account/register">Sign Up</a></li>
+                  <li><a href="/pages/order-status">Order Status</a></li>
+                </ul>
+                {% endif %}
+                {% endif %}
+                <ul class="special">
+                  {% for link in linklists['below-account-footer'].links %}
+                  <li>{{ link.title | link_to: link.url }}</li>
+                  {% endfor %}
+                </ul>
+                </div>
+              </div>
+              {% endif %}
+
+              {% if settings.footer-4-links != '' %}
+              <div class="desktop-{{ 12 | divided_by: grid }} tablet-2 mobile-one-whole footer-support-container">
+                {% if settings.footer-4-links != '' %}
+                <div class="footer-support h44">{{ linklists[settings.footer-4-links].title }}</div>
+                {% endif %}
+                <ul>
+                  {% for link in linklists[settings.footer-4-links].links %}
+                  <li>{{ link.title | link_to: link.url }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+
+          {% endif %}
+          <div class="clear"></div>
+
+
+        </div>
+      </div>
+      <div class="ftr-bottom-scn">
+
+        <div class="container">
+          <div class="row">
+            <ul class="special-links">
+              {% for link in linklists['above-copyright-footer'].links %}
+              <li>{{ link.title | link_to: link.url }}</li>
+              {% endfor %}
+            </ul>
+
+            <p>
+              {% comment %}•  {{ 'layout.footer.copyright' | t }} &copy; {{ 'now' | date: "%Y" }} {{ shop.name | link_to: '/' }} • {% endcomment %}
+              &copy; {{ "now" | date: "%Y" }} Bombshell Sportswear All Rights Reserved.
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    {% include 'popup' %}
+
+    <div style='display:none'>
+      <div id='search_popup' style='padding:30px;'>
+        <p class="box-title">SEARCH THIS STORE<p>
+        <!-- BEGIN #subs-container -->
+        <div id="subs-container" class="clearfix">
+          <div id="search">
+            <form action="/search" method="get">
+              <input aria-label="Search" type="text" name="q" id="q" placeholder="{{ 'general.search.placeholder' | t }}" />
+              <input type="hidden" name="type" value="product">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% include 'mobile-navigation' %}
+
+
+
+  <a href="#" class="scrollup"><i class="icon-angle-up icon-2x"></i> TOP</a>
+
+  <!-- Begin Recently Viewed Products
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[
+
+// Including api.jquery.js conditionnally.
+if (typeof Shopify.resizeImage === 'undefined') {
+document.write({{ "api.jquery.js" | shopify_asset_url | script_tag | json }});
+}
+
+//]]>
+</script>
+-->
+    
+  {{ 'jquery.products.min.js' | asset_url | script_tag }}
+
+  {% if template contains 'product' %}
+
+  <script type="text/javascript" charset="utf-8">
+    //<![CDATA[
+    Shopify.Products.recordRecentlyViewed();
+    //]]>
+  </script>
+  {% endif %}
+
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=127142210767229";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+  {% include 'currencies' %}
+
+  {% if settings.ajax_cart_method == "drawer" %}
+  {{ 'handlebars.min.js' | asset_url | script_tag }}
+  {% include 'ajax-cart-template' %}
+  {{ 'ajax-cart.js' | asset_url | script_tag }}
+  <script>
+    jQuery(function($) {
+      ajaxCart.init({
+        formSelector: '#AddToCartForm',
+        cartContainer: '#CartContainer',
+        addToCartSelector: '#AddToCart',
+        cartCountSelector: '.CartCount',
+        cartCostSelector: '.CartCost',
+        moneyFormat: {{ shop.money_format | json }},
+        onToggleCallback: function(cart) {
+        Currency.convertAll(shopCurrency, Currency.currentCurrency);
+        jQuery('.selected-currency').text(Currency.currentCurrency);
+      }
+                    });
+    });
+    jQuery('body').on('ajaxCart.afterCartLoad', function(evt, cart) {
+      // Bind to 'ajaxCart.afterCartLoad' to run any javascript after the cart has loaded in the DOM
+      timber.RightDrawer.open();
+    });
+  </script>
+  {% endif %}
+  {{ 'script.js' | asset_url | script_tag }}
+  
+  <!-- CRITEO START -->
+  {% include 'criteo-tracking' %}
+  <!-- CRITEO END -->
+
+  {% include 'swymSnippet' %}
+  {% unless customer %}
+  <!-- wishlist custom pop up start -->
+  <div id="wishlist-overlay"></div>
+  <div id="wishlist-pop">
+    <div class="c-head">
+      <span tabindex="0" class="close" onkeypress="$('#wishlist-pop, #wishlist-overlay').fadeOut();$('body').removeClass('wl-pop-open');" onclick="$('#wishlist-pop, #wishlist-overlay').fadeOut();$('body').removeClass('wl-pop-open');">x</span>
+    </div>
+    <div class="wishlist-content">
+      <div class="title">Please login/register to add products in your favorite list!</div>
+      <div class="action">
+        <a href="/account/login" class="login button" >Login</a>
+        <a href="/account/register" class="register button" >Register</a>
+      </div>
+    </div>
+  </div>
+  <!-- wishlist custom pop up start -->
+  {% endunless %}
+
+  <!-- Start of LiveChat (www.livechatinc.com) code -->
+  <script type="text/javascript">
+    window.__lc = window.__lc || {};
+    window.__lc.license = 8671411;
+    (function() {
+      var lc = document.createElement('script'); lc.type = 'text/javascript'; lc.async = true;
+      lc.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.livechatinc.com/tracking.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(lc, s);
+    })();
+  </script>
+  <noscript>
+    <a href="https://www.livechatinc.com/chat-with/8671411/">Chat with us</a>,
+    powered by <a href="https://www.livechatinc.com/?welcome" rel="noopener" target="_blank">LiveChat</a>
+  </noscript>
+  <!-- End of LiveChat code -->
+
+  {% if customer.id  %}
+  <input type="hidden" name="customer_id" id="customer_id" value="{{ customer.id }}_{{ customer.id | append: "!#Gl0b@lE-$3cr3t!)%1#" | sha1 }}" />
+  {% endif %}
+
+  <script>
+	$( document ).ready(function() {
+      $("#main-nav li").hover(function(){
+        if($(this).hasClass("dropdown")){
+        	$(this).find(".submenu").css("display","block");
+        }
+      },function(){
+        $(this).find(".submenu").css("display","none");  
+          	 
+        });
+      
+  	});
+</script>
+  
+  <script id="globaleScript">
+    (function () {
+      var s = document.createElement('script');
+      s.type = 'text/javascript';
+      s.async = true;
+      s.src = '//gepi.global-e.com/proxy/get/413';
+      document.getElementsByTagName('head')[0].appendChild(s);
+    })();
+
+    window.onload = function() {
+      var src = $('.ge_img').attr('src');
+      $('.ge_img').attr("alt", "Shipping To:");
+      $('.glDefaultPopupContainer .glClose').attr("aria-label", "Close");
+       if(src.indexOf('us') > -1) {
+        $('#banner-message').show();
+        $('#banner-message-other').css('display','none');
+        $('.announcementSlider1').slick({
+           slidesToShow: 1,
+           slidesToScroll: 1,
+           arrows: false,
+           dots:false,
+           centerMode:false,
+           autoplay: true,
+           autoplaySpeed: 5000
+         });
+        $('.tandc-main').css({visibility: 'visible'});
+        $('#product-right p.afterpay-paragraph').css({visibility: 'visible', opacity: '1' , maxHeight: "initial"});
+        $('#shopping-cart p.afterpay-paragraph').css({visibility: 'visible'});
+      } else {
+        $('#banner-message').hide();
+        $('#banner-message-other').css('display','block');
+        $('.tandc-main').css({visibility: 'visible'});
+         $('.announcementSlider2').slick({
+           slidesToShow: 1,
+           slidesToScroll: 1,
+           arrows: false,
+           dots:false,
+           centerMode:false,
+           autoplay: true,
+           autoplaySpeed: 5000
+         });
+        $('.tandc-main').addClass('tandc-main-show');
+        $('#product-right p.afterpay-paragraph').css({visibility: 'hidden', maxHeight: "0"});
+        $('#shopping-cart p.afterpay-paragraph').css({visibility: 'hidden', maxHeight: "0"});
+      }
+      $('.globale_popup_wrapper').attr("role","dialog");
+    }
+  </script>
+    <!--begin-bc-sf-filter-js-->
+  {% include 'bc-sf-filter' %}
+  <!--end-bc-sf-filter-js-->
+
+  <script async type="text/javascript" id="stamped-script-widget" data-api-key="pubkey-44BeH0TJ56UBr5np2VZ09y6TubR9Bt" src="https://cdn-stamped-io.azureedge.net/files/widget.min.js"></script>
+
+
+{% include 'spurit_dmr_theme_snippet' %}
+
+	<!-- Google Ads Dynamic Remarketing by M6 -->
+  {% if template contains 'product' or template contains 'collection' or template contains 'index' or template contains 'search' %}
+  <script>
+    gtag('event', 'page_view', {
+      'send_to': 'AW-784257465',
+      'ecomm_pagetype': '{% if template contains 'collection' %}category{% elsif template contains 'product' %}product{% elsif template contains 'search' %}{% elsif template contains 'index' %}home{% endif %}',
+      {% if template contains 'product' %}
+      'ecomm_prodid': 'shopify_US_{{ product.id }}_{{ product.selected_or_first_available_variant.id }}',
+      {% endif %}
+      {% if template contains 'product' %}'ecomm_totalvalue': {{ product.price_min | money_without_currency | remove:',' }},{% endif %}
+      {% if template contains 'product' %}'ecomm_category': "{{ product.type }}" ,{% endif %}
+    });
+  </script>
+  {% endif %}
+  <!-- End Google Ads Dynamic Remarketing by M6 -->
+    {% comment %}
+{% include 'register-side-panel' %}
+    {% endcomment %}
+
+<!-- Back in Stock helper snippet -->
+{% render 'back-in-stock-helper' %}
+<!-- End Back in Stock helper snippet -->
+<style>
+@media only screen and (max-width: 600px) {
+  #stamped-main-widget {
+    padding-left: 19px;
+    padding-right: 19px;
+  }
+  .stamped-content {
+    padding-top: 16px;
+}
+  .stamped-file-uploader-btn {
+    padding: 8px 10px !important;
+    top: 6px !important;
+    position: relative !important;
+  }
+}    
+.stamped-file-uploader-btn {
+    padding: 11px 10px !important;
+    top: 1px;
+    position: relative !important;
+  }
+</style>
+</body>
+
+
+<script type="text/javascript">
+  $(window).load(function() {
+    $(".loader").fadeOut("slow");
+  })
+
+
+
+</script>
+
+</html>
+{% comment %}
+{% include 'livechat_chat_window' %}
+{% endcomment %}
+
+<!-- http://static.secure-afterpay.com.au/shopify-afterpay-javascript.html -->
+
+<!-- Begin Shopify-Afterpay JavaScript Snippet (v1.0.1) -->
+<script type="text/javascript">
+  // Editable fields:
+  var afterpay_min = 0.04;            // As per your Afterpay contract.
+  var afterpay_max = 1000.00;         // As per your Afterpay contract.
+  var afterpay_logo_theme = 'colour'; // Can be 'colour', 'black' or 'white'.
+
+  // Overrides (jQuery CSS Selectors)
+  var afterpay_product_selector = '.hidemobile-pname';
+  // var afterpay_cart_integration_enabled = true;
+  var afterpay_cart_static_selector = '.subtotal-price-main';
+  // var afterpay_variable_price_fallback_selector = '#ProductPrice';
+  // var afterpay_variable_price_fallback = true; // Requires afterpay_product_selector
+
+  // Non-editable fields:
+  var afterpay_shop_currency = {{ shop.currency | json }};
+  var afterpay_shop_money_format = {{ shop.money_format | json }};
+  var afterpay_shop_permanent_domain = {{ shop.permanent_domain | json }};
+  var afterpay_theme_name = {{ theme.name | json }};
+  var afterpay_product = {{ product | json }};
+  var afterpay_current_variant = {{ product.selected_or_first_available_variant | json }};
+  var afterpay_cart_total_price = {{ cart.total_price | json }};
+  var afterpay_js_snippet_version = '1.0.1';
+</script>
+<script type="text/javascript" src="https://static.secure-afterpay.com.au/shopify-afterpay-javascript.js"></script>
+<!-- End Shopify-Afterpay JavaScript Snippet (v1.0.1) -->
+
+<style type="text/css">
+  p.afterpay-paragraph {
+    font-size: 1.2rem !important;
+    max-width: 100% !important;
+  }
+  .afterpay-logo {
+    width: 70px !important;
+    height: auto !important;
+  }
+  .tandc-main.tandc-main-show .custom_checkbox [type="checkbox"] + label {
+    display: inline !important;
+  }
+  p.afterpay-paragraph.afterpay-paragraph-minicart{
+    display:none;
+  }
+  .tandc-main.tandc-main-show input#agree {
+    display: inline !important;
+  }
+  .ajaxcart__footer a.agree-checkout,
+  .ajaxcart__footer label,
+  .ajaxcart__footer input#agree,
+  .ajaxcart__footer .custom_checkbox{
+    display: block !important;
+  }
+  .ajaxcart__footer p.afterpay-paragraph {
+    text-align: center;
+  }
+</style>
+<script>
+  /* $(document).ready(function() {
+    var timer = setInterval(function() {
+      let moreInfo = $('.afterpay-link-inner');
+      if (moreInfo) {
+        moreInfo.html('&#9432;');
+        if (country !== "US") {
+          $('p.afterpay-paragraph').css({visibility: 'hidden', maxHeight: "0"});
+        }
+        clearInterval(timer);
+      }
+    }, 100);
+  })*/
+  
+$(document).ready(function(){let n=0,e=setInterval(function(){(document.cookie.indexOf("sub%22%3A1")>-1||n>20)&&clearInterval(e);let t=$(".SignupPopupBlockReadOnly__InnerSubmitButton-sc-1e69em2-3.dQyKsu");n++,t&&t.length>0&&(t.click(function(){gtag("event","conversion",{send_to:"AW-784257465/M8BWCI-nwakBELmj-_UC"})}),clearInterval(e))},250)}); 
+</script>
+
+{{ 'readmore.min.js'  | asset_url | script_tag }}
+
+<script>
+  new ContentReadMore({btn: {content: {expanded: 'show more'}}});
+</script>

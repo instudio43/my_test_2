@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="22px" viewBox="0 0 32 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>hamburgermenu</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="ShoppingBag-Copy-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-292.000000, -25.000000)" stroke-linecap="square">
+        <g id="hamburgermenu" transform="translate(293.000000, 25.000000)" stroke="#000000" stroke-width="2">
+            <path d="M0,1 L30,1" id="Line-5-Copy"></path>
+            <path d="M0,11 L30,11" id="Line-5-Copy-2"></path>
+            <path d="M0,21 L30,21" id="Line-5-Copy-3"></path>
+        </g>
+    </g>
+</svg>

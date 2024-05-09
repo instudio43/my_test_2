@@ -1,0 +1,31 @@
+<div id="customer-fields" {% unless customer %}data-registration="true"{% endunless %}>
+    {% form 'create_customer' %}
+      <input type="hidden" name="shop" value="{{ shop.permanent_domain }}">
+      <div class="fields"><!-- Fields loaded from server --></div>
+      <div class="form-footer"></div>
+      <script>
+        var Customr = {
+          baseUrl: "https://customr.heliumdev.com",
+          {% if customer %}
+            shopifyCustomer: {
+              id: {{ customer.id }},
+              token: {{ customer.metafields.customr_auth.token | json }}
+            }
+          {% endif %}
+        };
+		
+		{% comment %}
+		//$('body').on('DOMNodeInserted', '#customer-fields .fields', function(){
+		$('body').on('change', '#customer-fields .fields .custom_checkbox input', function(){
+			if ( $(this).is(':checked') ) {
+				$('#customer-fields .fields .custom_checkbox').removeClass('checked');
+			} else {
+				$('#customer-fields .fields .custom_checkbox').addClass('checked');
+			}
+		});
+		{% endcomment %}
+		
+      </script>
+      <script src="https://cdn-customr.heliumdev.com/assets/v2/embed.js"></script>
+    {% endform %}
+</div>

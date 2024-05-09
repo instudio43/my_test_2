@@ -1,0 +1,176 @@
+
+
+<form action="/cart/add" method="post" data-money-format="{{ shop.money_format }}" enctype="multipart/form-data" id="AddToCartForm">
+  {% if product.options.size > 1 %}
+
+
+  <div class="select">
+    <select id="product-select-{{ product.id }}" name='id'>
+      {% for variant in product.variants %}
+      <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  {% elsif product.options.size == 1 and product.variants.size > 1 %}
+  <div class="select">
+    <label>{{ product.options[0] }}</label>
+    <select id="product-select-{{ product.id }}" name='id'>
+      {% for variant in product.variants %}
+      <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  {% else %}
+  <div class="what-is-it">
+    {% if product.options.first != 'Title' %}
+    <label>{{ product.options.first }}:</label>{% for variant in product.variants %}<span class="it-is">{{ variant.option1 | escape }}</span>{% endfor %}
+    {% endif %}
+  </div>
+  <div class="product-variants"></div><!-- product variants -->
+  <input  type="hidden" id="{{ variant.id }}" name="id" data-sku="{{ variant.sku }}" value="{{ product.variants[0].id }}" />
+  {% endif %}
+
+
+{% if product.variants.size > 1 %}
+  {% assign has_size = false %}
+	<div class="p-options">
+	{% for option in product.options %}
+      	{% assign downcased_option = option | downcase %}
+		{% include 'swatch' with option %}
+        {% if downcased_option contains 'size' %}
+          {% assign has_size = true %}
+        {% endif %}
+	{% endfor %}
+	</div>
+  <div class="sizechartcontainer">
+  {% if has_size %}
+	  <div class="sizing-wrapper">
+			<a class="sizing-link" data-fancybox="bottoms" href="#size-chart-pop">Size Chart</a>
+	  </div>
+	  <div id="size-chart-pop" role="dialog" aria-modal="true" aria-label="Size chart" style="display: none; width: 97%; height: 95%;">
+		{{ pages.size-chart.content }}
+	  </div>
+	{% endif %}
+</div>
+{% endif %}
+
+  {% if product.available %}
+
+  {% if product.template_suffix == 'customizable' %}
+  <div>
+    <label for="monogram">{{ 'products.product.monogram' | t }}</label>
+    <input type="text" id="monogram" name="properties[Monogram]">
+  </div>
+  {% endif %}
+
+
+  {% comment %}
+  <div class="product-add-new clearfix">
+    <div class="regcontainer"><span class="regClose">X</span>Register and get 10% Off <a href="/account/register">Register</a></div>
+  </div>
+  {% endcomment %}
+  <div class="product-add clearfix">
+	<div class="smartwishlist-container">
+		{% if customer %}
+      {% comment %}Disabling wishlist due to compliance issues 07/05/2019 {% endcomment %}
+<!-- 			<div id="smartwishlist" data-product="{{ product.id }}" data-variant="{{ product.variants.first.id }}"></div> -->
+		{% else %}
+<!-- 			<a tabindex="0" aria-label="Toggle wishlist" href="javascript:void(0);" class="smartwishlist-label" onkeypress="$('#wishlist-pop, #wishlist-overlay').fadeIn();$('body').addClass('wl-pop-open');" onclick="$('#wishlist-pop, #wishlist-overlay').fadeIn();$('body').addClass('wl-pop-open');"><span class="fa fa-heart-o"></span></a> -->
+		{% endif %}
+	</div>
+    {% comment %}
+	<div class="qty-box-container">
+		<label for="quantity">Quantity</label>
+		<input min="1" type="number" class="quantity" name="quantity" value="1" />
+	</div>
+    {% endcomment %}
+
+    <input type="submit" name="button" class="add" id="AddToCart" value="{{ 'products.product.add_to_cart' | t }}" onclick="pintrk('track', 'addtocart', {value: {{ product.selected_variant.price | money_without_currency}}, order_quantity: 1});"/>
+  </div>
+
+  {% else %}
+   <div class="product-add">
+
+    <input aria-label="Submit" type="submit" name="button" class="add" id="AddToCart" value="soldout" disabled />
+
+  </div>
+  {% endif %}
+
+  <script>
+    var _addtocart=document.getElementById("AddToCart");_addtocart&&_addtocart.addEventListener("click",function(){gtag("event","conversion",{send_to:"AW-784257465/jy9uCN6uwakBELmj-_UC"})});
+  </script>  
+</form>
+
+<a class="button notification-bis" id="BIS_trigger" href="#" style="display: none;">Email me when my size is back in stock!</a>
+
+<script>
+
+
+
+
+
+  // Shopify Product form requirement
+var selectCallback = function(variant, selector) {
+    // BEGIN SWATCHES
+if (variant) {
+  var form = jQuery('#' + selector.domIdPrefix).closest('form');
+  for (var i=0,length=variant.options.length; i<length; i++) {
+    var radioButton = form.find('.swatch[data-option-index="' + i + '"] :radio[value="' + variant.options[i] +'"]');
+    if (radioButton.size()) {
+      radioButton.get(0).checked = true;
+    }
+  }
+}
+// END SWATCHES
+    var $product = $('#product-' + selector.product.id);
+    if (variant && variant.available == true) {
+      if(variant.compare_at_price > variant.price){
+        $('.was', $product).html(Shopify.formatMoney(variant.compare_at_price, $('form', $product).data('money-format')))
+      } else {
+        $('.was', $product).text('')
+      }
+      $('.product-price', $product).html(Shopify.formatMoney(variant.price, $('form', $product).data('money-format')))
+      $('.add', $product).removeClass('disabled').removeAttr('disabled').val('{{ 'products.product.add_to_cart' | t }}');
+	  $('#BIS_trigger').hide();
+    } else {
+     var message = variant ? "{{ 'products.product.sold_out' | t }}" : "{{ 'products.product.sold_out' | t }}";
+     $('.was', $product).text('')
+      //$('.product-price', $product).text(message);
+      $('.add', $product).addClass('disabled').attr('disabled', 'disabled').val(message);
+      $('#BIS_trigger').show();
+    }
+
+    if (variant && variant.featured_image) {
+      var original_image = $("#bigimage-{{ product.id }} img"), new_image = variant.featured_image;
+        Shopify.Image.switchImage(new_image, original_image[0], function (new_image_src, original_image, element) {
+
+        $(element).attr('src', new_image_src);
+        $('.thumbnail[data-image-id="' + variant.featured_image.id + '"]').trigger('click');
+      });
+    }
+
+    {% if settings.show-sku %}
+    if (variant) {
+      $('.variant-sku').text('STYLE: '+variant.sku);
+    }
+    else {
+      $('.variant-sku').empty();
+    }
+    {% endif %}
+
+  };
+</script>
+
+{% if product.variants.size > 1 or product.options.size > 1 %}
+<script type="text/javascript">
+
+  $(function() {
+    $product = $('#product-' + {{ product.id }});
+     new Shopify.OptionSelectors("product-select-{{ product.id }}", { product: {{ product | json }}, onVariantSelected: selectCallback{% if template contains 'product'%}, enableHistoryState: true{% endif %} });
+    //$(".single-option-selector").selecter();
+  });
+
+
+</script>
+{% endif %}

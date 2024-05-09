@@ -1,0 +1,133 @@
+
+
+
+<nav class="shifter-navigation" role="dialog" aria-modal="true" aria-label="Menu">
+  <button type="button" class="mobileNavClose btnnostyle" aria-label="Navigation Close">{% include 'icon-close' %}</button>
+  {% comment %}
+  <div class="search">
+    <form action="/search" method="get">
+      <input aria-label="Search" type="text" name="q" id="q" placeholder="search" autofocus="false" />
+      <button aria-label="Submit" class="search-submit" type="submit" name="submit"><i class="icon-search"></i></button>
+    </form>
+  </div>
+  {% endcomment %}
+  <script type="text/javascript">
+    $(document).ready(function($) {
+      $('#accordion').find('.accordion-toggle').click(function(){
+        //Expand or collapse this panel
+        $(this).next().slideToggle('fast');
+        //Hide the other panels
+        $(".accordion-content").not($(this).next()).slideUp('fast');
+      });
+
+      $('#accordion').find('.accordion-toggle2').click(function(){
+        //Expand or collapse this panel
+        $(this).addClass('open');
+        $(this).next().slideToggle('fast');
+        //Hide the other panels
+        $(".accordion-content2").not($(this).next()).slideUp('fast');
+      });
+    });
+  </script>
+
+  {% if settings.show_multiple_currencies %}{% include 'currencies-switcher' %}{% endif %}
+
+  <ul id="accordion">
+	{% for mainLinks in linklists.mega-menu.links %}
+		{% assign submenuHandle = mainLinks.title | handleize %}
+		{% assign hasChild = false %}
+		{% for topLinks in linklists %}
+			{% if topLinks.handle == submenuHandle %}
+				{% if topLinks.links.size > 0 %}
+					{% assign hasChild = true %}
+				{% endif %}
+			{% endif %}
+		{% endfor %}
+	<li {% if hasChild == true %}class="mobile-first-li"{% endif %} >
+		<a href="{{ mainLinks.url }}">{{ mainLinks.title }}{% if hasChild == true %}<span tabindex="0" class="slideMobileMenu expand" aria-label="Expand">+</span>{% endif %}</a>
+		{% for topLinks in linklists %}
+			{% if topLinks.handle == submenuHandle %}
+				{% if topLinks.links.size > 0 %}
+				<ul>
+				{% for l in topLinks.links %}
+					{% capture highlights_child_list_handle %}{{ l.title | handleize }}-{{ highlight_suffics_mega_menu }}{% endcapture %}
+					{% if linklists[highlights_child_list_handle] and linklists[highlights_child_list_handle].links.size > 0 %}
+						{% continue %}
+					{% elsif l.links.size > 0 %}
+						<li class="nest">
+							{% if l.title != topLinks.title %}
+								<a href="{{ l.url }}">{{ l.title }}<span tabindex="0" class="slideMobileMenu expand" aria-label="Expand">+</span></a>
+							{% endif %}
+							<ul class="nested">
+							{% for sub_l in l.links %}
+								<li><a href="{{ sub_l.url }}">{{ sub_l.title }}</a></li>
+							{% endfor %}
+							</ul>
+						</li>
+					{% else %}
+					<li><a href="{{ l.url }}">{{ l.title }}</a></li>
+					{% endif %}
+				{% endfor %}
+				</ul>
+			{% endif %}
+			{% endif %}
+		{% endfor %}
+		{% comment %}
+		{% if linklists[submenuHandle].links.size > 0 %}
+			<ul>
+			{% for l in linklists[submenuHandle].links %}
+				{% capture highlights_child_list_handle %}{{ l.title | handleize }}-{{ highlight_suffics_mega_menu }}{% endcapture %}
+				{% if linklists[highlights_child_list_handle] and linklists[highlights_child_list_handle].links.size > 0 %}
+					{% continue %}
+				{% elsif l.links.size > 0 %}
+				<li class="nest">
+					<a href="{{ l.url }}">{{ l.title }}<span class="slideMobileMenu expand">+</span></a>
+					<ul class="nested">
+					{% for sub_l in l.links %}
+						<li><a href="{{ sub_l.url }}">{{ sub_l.title }}</a></li>
+					{% endfor %}
+					</ul>
+				</li>
+				{% else %}
+				<li><a href="{{ l.url }}">{{ l.title }}</a></li>
+				{% endif %}
+			{% endfor %}
+			</ul>
+		{% endif %}
+		{% endcomment %}
+	</li>
+	{% endfor %}
+    <li>
+     {% if customer  %}
+    <a href="/account">{{ 'customer.account.title' | t }}</a>
+    {% else %}
+    <a href="/account/login">login</a></li>
+	<li><a href="/account/register">sign up</a>
+    {% endif %}
+    </li>
+    {% comment %}<li><a href='/pages/rewards-program'>Bombshell Rewards (<span data-lion-points>0</span>)</a></li>{% endcomment %}
+
+  </ul>
+
+</nav>
+<script>
+	$(document).ready(function(hasChild){
+		$('.slideMobileMenu').click(function(event){
+			event.preventDefault();
+			if($(this).html() == '+'){
+				$(this).html('-').addClass('collapse').removeClass('expand');
+			}else{
+				$(this).html('+').addClass('expand').removeClass('collapse');
+			}
+			var nextUl = $(this).parent().next();
+			if(nextUl.length){
+				nextUl.slideToggle();
+			}
+		});
+    $('.slideMobileMenu').keypress(function(event){
+      if(event.keyCode == 13){
+        $(this).click();
+      }
+    });
+	});
+</script>

@@ -1,0 +1,99 @@
+
+<div id="breadcrumb" class="desktop-12">
+  <nav aria-label="breadcrumbs">
+  <a href="/" class="homepage-link" title="{{ 'general.breadcrumbs.home' | t }}">{{ 'general.breadcrumbs.home' | t }}</a>
+  {% if template contains "product" %}
+  
+       
+  
+  {%assign prod_col = product.collections %}
+  {%assign last_col = prod_col|last %}
+  
+  {%-for pro in product.collections -%}
+	{%if pro.url contains "product-feed" or pro.url contains "new-filter-test" or pro.url contains "/new" 
+    or pro.url contains "-colorgroup"%}
+  		{% continue %}
+  	{%endif%}
+  
+  	{%assign chosen_bread = pro %}
+  {%-endfor-%}
+  
+  <script>
+    $(document).ready(function() {
+      
+      var collections_ = {
+        {%-for pro in product.collections -%}
+          {%-if last_col.title == pro.title -%}
+            "{{pro.title}}" : "{{pro.url}}"
+          {%-else-%}
+            "{{pro.title}}" : "{{pro.url}}",
+          {%-endif-%}
+        {%-endfor-%}
+      };
+
+      function getCookie(name) {
+          var nameEQ = name + "=";
+          var ca = document.cookie.split(';');
+          for(var i=0;i < ca.length;i++) {
+              var c = ca[i];
+
+              while (c.charAt(0)==' ') c = c.substring(1,c.length);
+
+              if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+          }
+          return null;
+      }
+      
+      if ( getCookie("collectionVisited") && typeof collections_[getCookie("collectionVisited")] == "string" ) {
+      	$("#cookieBreadcrumb").html(getCookie("collectionVisited"));
+      	$("#cookieBreadcrumb").attr("href", "{{shop.secure_url}}" + collections_[getCookie("collectionVisited")]);
+      }
+
+      
+    });
+    </script>
+      <span class="separator">/</span> <span><a id="cookieBreadcrumb" href="{{chosen_bread.url}}">{{chosen_bread.title}}</a></span>
+      
+      <span class="separator">/</span> <span class="page-title">{{ product.title }}</span>
+  {% elsif template == "article" %}
+  <span class="separator">/</span> 
+  {{ blog.title | link_to: blog.url }}
+  <span class="separator">/</span>
+  <span class="page-title">{{ article.title }}</span>
+  {% elsif template contains "collection" %}
+  <script>
+    $(document).ready(function() {
+
+      function setCookie(name,value,days) {
+        var expires = "";
+        if (days) {
+          var date = new Date();
+          date.setTime(date.getTime() + (days*24*60*60*1000));
+          expires = "; expires=" + date.toUTCString();
+        }
+
+        document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+      }
+
+      setCookie("collectionVisited", "{{ collection.title }}", 1);
+                });
+  </script>
+  <span class="separator">/</span>
+  <span class="page-title">{{ collection.title }}</span>
+    {% comment %}
+  <h1 class="SR-Only">{{ collection.title }}</h1>
+    {% endcomment %}
+  {% elsif template contains "cart" %}
+  <span class="separator">/</span>
+  <span class="page-title">Cart</span>
+  {% elsif template contains "search" %}
+  <span class="separator">/</span>
+  <span class="page-title">Search</span>
+  {% else %}
+  <span class="separator">/</span>
+  <span class="page-title">{{ page.title }}</span>
+  {% endif %}
+  </nav>
+</div>
+
+<div class="clear"></div>

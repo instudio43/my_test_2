@@ -1,0 +1,17 @@
+<section id="homepage-pages-five" class="{% if settings.parallax %}parallax parallax-window{% endif %} no-fouc"  {% if settings.parallax %}data-parallax="scroll" data-image-src="{{ 'parallax-background-5.jpg' | asset_url }}"{% endif %}>    
+  <article class="row">
+    <div class="pages-left-content desktop-12 tablet-6 mobile-3 {% unless settings.parallax %}parallax_inactive_width{% endunless %}">
+      {% if settings.pages-5-content == 'text' %}
+      <div class="parallax-text">{% if settings.pages-5-link != blank %}<a href="{{ settings.pages-5-link }}">{{ settings.pages-5-text }}</a>{% else %}{{ settings.pages-5-text }}{% endif %}</div>
+      {% elsif settings.pages-5-content == 'page-content' %}
+      {{ pages[settings.pages-5].content }}     
+      {% else %}
+      {% endif %}
+              {% unless settings.parallax %}
+        <img alt="background" class="tester" src="{{ 'parallax-background-5.jpg' | asset_url }}"/>
+        {% endunless %}
+    </div>
+  </article>
+</section>
+<div class="clear"></div>
+

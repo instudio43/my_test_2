@@ -1,0 +1,37 @@
+<div class="{{ page.title | handleize | append: '-page'}}">
+<div class="section-title desktop-12 mobile-3">
+  <h1>{{ page.title }}</h1>
+</div>
+<div id="content" class="row" >	
+<div id="page" class="desktop-12 tablet-6 mobile-3">
+{{ page.content }}
+ {% if page.title == 'Contact' or page.title == 'Customer Service' %}
+   <div  class=" desktop-7 tablet-3 mobile-3 form">
+    {% include 'contact' %}
+  </div>
+  {% endif %}
+</div>
+ </div>
+</div>
+<style>
+  #customer-background input[type="text"], #customer-background input[type="password"], #customer-background input[type="email"], #customer-background input[type="url"], #customer-background input[type="number"] {
+    margin-bottom:8px;
+    padding:9px 0;
+  }
+  #create-customer, #customer {
+    margin-top: 0px;
+}
+  #customer-background h2 {
+    font-size:18px;
+  }
+  #customer-background input[type="submit"] {
+    padding:5px 0;
+  }
+  .desktop-push-2.desktop-5.mobile-3 {
+    margin-left: 7%;
+    width: 50%;
+  }
+  .secondary.button {
+    width:100%;
+  }
+</style>

@@ -1,0 +1,199 @@
+<div class="ambassadore-prg">
+  <div class="contain-full">
+    <div class="left-side column-half">
+      {{ page.content }}
+
+    </div>
+    <div class="row">
+      <div class="right-side column-half">
+        <div class="form-contain">
+          <h1>{{ page.title }}</h1>
+
+          <p>Do you have what it takes to become a Bombshell Sportswear Ambassador? Please fill out the application form and tell us why! Due to overwhelming interest please allow 1-2 weeks for a response and we do also request at least 10K followers on a social media platform.</p>
+
+          {% form 'contact' %}
+          {% if form.posted_successfully? %}
+          <div class="successForm feedback">
+            <p>Thanks for contacting us! We'll get back to you as soon as possible.</p>
+          </div>
+          {% endif %}
+
+          {% if form.errors %}
+          <div class="errorForm feedback">
+            <!-- {{ form.errors.size }} or {{ form.errors | size }} -->
+            <p>Oops, sorry. We were unable to submit your inquiry because it contained {{ form.errors | size | pluralize: 'an error', 'a few errors' }}. Please correct the following and submit again:</p>
+            {% for field in form.errors %}
+            <p>The {{ field | capitalize | replace: 'Body', 'Message' }} field {{ form.errors.messages[field] }}.</p>
+            {% endfor %}
+          </div>
+          {% endif %}
+
+          <div class="form-all">
+
+            <label for="contactFormName">Name<span class="requiredField">*</span></label>
+            <input aria-label="Name" type="text" id="contactFormName" name="contact[Name]" placeholder="Name" required/>
+            <div class="form-field-half">
+            <label for="contactFormCity">City<span class="requiredField">*</span></label>
+            <input aria-label="City" type="text" id="contactFormCity" name="contact[City]" placeholder="City" required/>
+            </div>
+            <input aria-label="Date of birth" type="hidden" id="DateOfBirth" readonly name="contact[DateOfBirth]" placeholder="Date of Birth"/>
+            <div class="custom-select form-field-half" >
+              <label for="City/State">State<span class="requiredField">*</span></label>
+              <select aria-label="State" id="City/State" name="contact[State]" data-default="" required>
+                <option value="" selected>State</option>
+                <option value="AL">Alabama</option>
+                <option value="AK">Alaska</option>
+                <option value="AZ">Arizona</option>
+                <option value="AR">Arkansas</option>
+                <option value="CA">California</option>
+                <option value="CO">Colorado</option>
+                <option value="CT">Connecticut</option>
+                <option value="DE">Delaware</option>
+                <option value="DC">District Of Columbia</option>
+                <option value="FL">Florida</option>
+                <option value="GA">Georgia</option>
+                <option value="HI">Hawaii</option>
+                <option value="ID">Idaho</option>
+                <option value="IL">Illinois</option>
+                <option value="IN">Indiana</option>
+                <option value="IA">Iowa</option>
+                <option value="KS">Kansas</option>
+                <option value="KY">Kentucky</option>
+                <option value="LA">Louisiana</option>
+                <option value="ME">Maine</option>
+                <option value="MD">Maryland</option>
+                <option value="MA">Massachusetts</option>
+                <option value="MI">Michigan</option>
+                <option value="MN">Minnesota</option>
+                <option value="MS">Mississippi</option>
+                <option value="MO">Missouri</option>
+                <option value="MT">Montana</option>
+                <option value="NE">Nebraska</option>
+                <option value="NV">Nevada</option>
+                <option value="NH">New Hampshire</option>
+                <option value="NJ">New Jersey</option>
+                <option value="NM">New Mexico</option>
+                <option value="NY">New York</option>
+                <option value="NC">North Carolina</option>
+                <option value="ND">North Dakota</option>
+                <option value="OH">Ohio</option>
+                <option value="OK">Oklahoma</option>
+                <option value="OR">Oregon</option>
+                <option value="PA">Pennsylvania</option>
+                <option value="RI">Rhode Island</option>
+                <option value="SC">South Carolina</option>
+                <option value="SD">South Dakota</option>
+                <option value="TN">Tennessee</option>
+                <option value="TX">Texas</option>
+                <option value="UT">Utah</option>
+                <option value="VT">Vermont</option>
+                <option value="VA">Virginia</option>
+                <option value="WA">Washington</option>
+                <option value="WV">West Virginia</option>
+                <option value="WI">Wisconsin</option>
+                <option value="WY">Wyoming</option>
+              </select>
+            </div>
+            <label for="contactFormPhone">Phone Number<span class="requiredField">*</span></label>
+            <input aria-label="Phone number" type="tel" id="contactFormPhone" name="contact[Phone]" placeholder="Phone Number" required/>
+            <label for="contactFormEmail">Email Address<span class="requiredField">*</span></label>
+            <input aria-label="Email address" type="email" id="contactFormEmail" name="contact[email]" placeholder="Email Address" required/>
+            <label for="InstagramURL">Instagram URL<span class="requiredField">*</span></label>
+            <input aria-label="Instagram URL" type="text" id="InstagramURL" name="contact[InstagramURL]" placeholder="Instagram URL" required/>
+            <label for="InstagramFollowers">Instagram Followers<span class="requiredField">*</span></label>
+            <input aria-label="Instagram Followers" type="text" id="InstagramFollowers" name="contact[InstagramFollowers]" placeholder="Instagram Followers" required/>
+            <label for="YouTubeURL">YouTube URL<span class="requiredField">*</span></label>
+			<input aria-label="YouTube URL" type="text" id="YouTubeURL" name="contact[YouTubeURL]" placeholder="YouTube URL" required/>
+            <label for="YouTubeSubscribers">YouTube Subscribers<span class="requiredField">*</span></label>
+            <input aria-label="YouTube Subscribers" type="text" id="YouTubeSubscribers" name="contact[YouTubeSubscribers]" placeholder="YouTube Subscribers" required/>                        
+            <div class="DateofBirth-main"><label for="" class="f-left">Date of Birth<span class="requiredField">*</span></label>
+              <div class="DateofBirth-input f-right">
+                <input aria-label="Birth month" type="number" id="BirthMonth" class="not-qty" name="contact[BirthMonth]" placeholder="MM" min="1" max="12" required/>
+                <input aria-label="Birth date" type="number" id="BirthDate" class="not-qty day-input" name="contact[BirthDate]" placeholder="DD" min="1" max="31" required/>
+                <input aria-label="Birth year" type="number" id="BirthYear"  class="not-qty year-input" name="contact[BirthYear]" placeholder="YY" min="00" max="99" required/>
+              </div>
+            </div>
+
+            <!--<label>Tells us a little about yourself (Hobbies, interest, etc...)</label>-->
+            <label for="AboutYourself">About yourself<span class="requiredField">*</span></label>
+            <textarea aria-label="About yourself" rows="15" cols="90" id="AboutYourself" name="contact[AboutYourself]" placeholder="About yourself" required style="border: solid 1px #000; font-size: 1.2rem;"></textarea>
+
+            <div class="ambassadore-btn f-left"><button aria-label="Submit" id="input_2" type="submit" class="form-submit-button" > Submit </button></div>
+          </div>
+          {% endform %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* function validateForm() {
+		var y = document.getElementById("BirthYear").value;
+		var m = document.getElementById("BirthMonth").value;
+		var d = document.getElementById("BirthDate").value;
+		var errorCode = 0;
+		if(d < 1 || d > 31){
+			errorCode += 3;
+		}
+		if(m < 1 || d > 12){
+			errorCode += 5;
+		}
+		if(d < 1 || d > 99){
+			errorCode += 7;
+		}
+		if(y > 0 && y < 50){
+			y = '20' + y;
+		}else if( y ){
+			y = '19' + y;
+		}
+		var error = 0;
+		$('#contact_form input').each(function(){
+			if( $(this).attr('required') !== '' ){
+				if( $(this).val() == '' ){
+					error++;
+				}
+			}
+		});
+		if(error){
+			// alert("please fill up required fields!");
+			return false;
+		}else{
+			if(isValidDate( m+'/'+d+'/'+y ) === false ){
+				alert("please check your birth date!");
+				return false;
+			}else{
+				$('#DateOfBirth').val( m+'/'+d+'/'+y );
+				return true;
+			}
+		}
+	} */
+
+  // Validates that the input string is a valid date formatted as "mm/dd/yyyy"
+  /* function isValidDate(dateString)
+	{
+		// First check for the pattern
+		if(!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString))
+			return false;
+
+		// Parse the date parts to integers
+		var parts = dateString.split("/");
+		var day = parseInt(parts[1], 10);
+		var month = parseInt(parts[0], 10);
+		var year = parseInt(parts[2], 10);
+
+		// Check the ranges of month and year
+		if(year < 1000 || year > 3000 || month == 0 || month > 12)
+			return false;
+
+		var monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
+
+		// Adjust for leap years
+		if(year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
+			monthLength[1] = 29;
+
+		// Check the range of the day
+		return day > 0 && day <= monthLength[month - 1];
+	}; */
+
+</script>

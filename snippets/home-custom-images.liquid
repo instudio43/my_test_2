@@ -1,0 +1,122 @@
+<style>
+  #homepage-custom-images-block .left-content .clt-link, #homepage-custom-images-block .left-content .clt-title, #homepage-custom-images-block>div.left-content.desktop-6.tablet-6.mobile-6>a>div>p	{
+    color: {{ settings.home-custom-1-text-color }} !important;
+  }
+  #homepage-custom-images-block .left-content .clt-link{
+    /*border: {{ settings.home-custom-1-text-color }} 2px solid;*/
+  }
+  #homepage-custom-images-block .left-content .clt-link:hover{
+    color: {{ settings.home-custom-1-text-color-hover }} !important;
+    /*border: {{ settings.home-custom-1-text-color-hover }} 2px solid;*/
+   /*  background: {{ settings.home-custom-1-text-color }};*/
+  } 
+  #homepage-custom-images-block .right-content .top-container .clt-title, #homepage-custom-images-block>div.right-content.desktop-6.tablet-6.mobile-6>div.top-container>a>div>div.clt-link>span{
+    color: {{ settings.home-custom-2-text-color }} !important;
+    border-color:{{ settings.home-custom-2-text-color }};
+  }
+  #homepage-custom-images-block .right-content .top-container .clt-link:hover{
+    color: {{ settings.home-custom-2-text-color-hover }} !important;
+  }
+  #homepage-custom-images-block .right-content .bottom-container .clt-title, #homepage-custom-images-block>div.right-content.desktop-6.tablet-6.mobile-6>div.bottom-container>a>div>div.clt-link>span{
+    color: {{ settings.home-custom-3-text-color }} !important;
+    border-color:{{ settings.home-custom-3-text-color }};
+  }
+  #homepage-custom-images-block .right-content .bottom-container .clt-link:hover{
+    color: {{ settings.home-custom-3-text-color-hover }} !important;
+  }
+  #homepage-custom-images-block>div.right-content.desktop-6.tablet-6.mobile-6>div.top-container>a>div.over-lay-text,
+  #homepage-custom-images-block>div.right-content.desktop-6.tablet-6.mobile-6>div.bottom-container>a>div.over-lay-text{
+    padding-right:0px;
+  }
+  #homepage-custom-images-block>div.right-content.desktop-6.tablet-6.mobile-6>div.top-container>a>div.over-lay-text{
+    text-align:{{settings.home-custom-2-desktop-text-align}};
+    top:{{settings.home-custom-2-desktop-top}}%;
+    left:{{settings.home-custom-2-desktop-left}}%;
+    right:unset;
+  }
+  #homepage-custom-images-block>div.right-content.desktop-6.tablet-6.mobile-6>div.bottom-container>a>div.over-lay-text{
+    text-align:{{settings.home-custom-3-desktop-text-align}};
+    top:{{settings.home-custom-3-desktop-top}}%;
+    left:{{settings.home-custom-3-desktop-left}}%;
+    right:unset;
+  }
+  .left-content .over-lay-text{
+    text-align:{{settings.home-custom-1-desktop-text-align}};
+    top:{{settings.home-custom-1-desktop-top}}%;
+    left:{{settings.home-custom-1-desktop-left}}%;
+    right:unset;
+  }
+  @media screen and (max-width: 699px) {
+    #homepage-custom-images-block>div.right-content.desktop-6.tablet-6.mobile-6>div.top-container>a>div.over-lay-text{
+      text-align:{{settings.home-custom-2-mobile-text-align}};
+      top:{{settings.home-custom-2-mobile-top}}%;
+      left:{{settings.home-custom-2-mobile-left}}%;
+    }
+    #homepage-custom-images-block>div.right-content.desktop-6.tablet-6.mobile-6>div.bottom-container>a>div.over-lay-text{
+      text-align:{{settings.home-custom-3-mobile-text-align}};
+      top:{{settings.home-custom-3-mobile-top}}%;
+      left:{{settings.home-custom-3-mobile-left}}%;
+    }
+    .left-content .over-lay-text{
+      text-align:{{settings.home-custom-1-mobile-text-align}};
+      top:{{settings.home-custom-1-mobile-top}}%;
+      left:{{settings.home-custom-1-mobile-left}}%;
+      right:unset;
+    }
+  }
+
+</style>
+<section id="homepage-custom-images-block" class="homepage-custom-scn">
+  <div class="left-content desktop-6 tablet-6 mobile-6">
+    <a href="{{ settings.home-custom-1-link }}">
+
+      <img {% if settings.home-show-mobile-image %}class="for-desktop"{% endif %} src="{{ 'home-custom-left-image.jpg' | asset_url }}" alt="Performance Wraps" />
+      {% if settings.home-show-mobile-image %}
+      <img class="for-mobile" src="{{ 'home-custom-mobile-left-image.jpg' | asset_url }}" alt="Performance Wraps" />
+      {% endif %}
+
+      <div class="over-lay-text">
+        {% if settings.home-custom-1-text != blank %}
+        <div class="clt-title">{{ settings.home-custom-1-text }}</div>
+        {% endif %}
+        {% if settings.home-custom-1-caption != blank %}
+        <p class="caption">{{ settings.home-custom-1-caption }}</p>
+        {% endif %}
+        {% if settings.home-custom-1-label != blank %}
+        <div class="clt-link" ><span>{{ settings.home-custom-1-label }}</span></div>
+        {% endif %}
+      </div>
+    </a>
+  </div>
+  <div class="right-content desktop-6 tablet-6 mobile-6">
+    <div class="top-container">
+      <a href="{{ settings.home-custom-2-link }}">
+        <img class="for-desktop" src="{{ 'home-custom-right-top-image.jpg' | asset_url }}" alt="All Tops" />
+        <img class="for-mobile" src="{{ 'home-custom-mobile-top-image.jpg' | asset_url }}" alt="All Tops" />
+        <div class="over-lay-text">
+          {% if settings.home-custom-2-text != blank %}
+          <div class="clt-title" >{{ settings.home-custom-2-text }}</div>
+          {% endif %}
+          {% if settings.home-custom-2-label != blank %}
+          <div class="clt-link" ><span>{{ settings.home-custom-2-label }}</span></div>
+          {% endif %}
+        </div></a>
+    </div>
+    <div class="bottom-container">
+      <a href="{{ settings.home-custom-3-link }}"> 
+        <img class="for-desktop" src="{{ 'home-custom-right-bottom-image.jpg' | asset_url }}" alt="All Bottoms" />
+        <img class="for-mobile" src="{{ 'home-custom-mobile-bottom-image.jpg' | asset_url }}" alt="All Bottoms" />
+        <div class="over-lay-text">
+          {% if settings.home-custom-3-text != blank %}
+          <div class="clt-title" style="color: {{ rightBottomTextColor }}">{{ settings.home-custom-3-text }}</div>
+          {% endif %}
+          {% if settings.home-custom-3-label != blank %}
+          <div class="clt-link" style="color: {{ rightBottomTextColor }} !important;"><span>{{ settings.home-custom-3-label }}</span></div>
+          {% endif %}
+        </div></a>
+    </div>
+
+    </article>
+</section>
+<div class="clear"></div>
+

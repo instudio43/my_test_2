@@ -1,0 +1,142 @@
+<div id="content" class="row" >
+{% paginate search.results by 24 %}
+<div class="section-title desktop-12 mobile-3">
+  <h1>{{ 'general.search.title' | t }}</h1>
+</div>
+<div id="page" class="desktop-12 tablet-6 mobile-3">
+  <div id="search-bar">
+    <form action="/search" method="get">
+      {% if search.performed %}
+      {% if search.results_count == 0 %}
+      <p>{{ 'general.search.no_results_html' | t: terms: search.terms }}</p>
+      {% else %}
+      <p>{{ 'general.search.results_for_html' | t: terms: search.terms }}</p>
+      {% endif %}
+      {% endif %}
+      <div class="search-bar__field">
+        <input aria-label="Search" type="text" name="q" id="q" placeholder="{{ 'general.search.placeholder' | t }}"/>
+        <button aria-label="Submit" class="search-submit" type="submit" name="submit"><i class="icon-search"></i></button>
+      </div>
+    </form>
+  </div>
+</div>
+{% if search.performed %}
+<div class="desktop-12 tablet-6 mobile-3" id="four-per-row">
+  <div id="bc-sf-filter-products">
+    {% for item in search.results %}
+
+
+    <div class="item-product product desktop-4 tablet-2 mobile-half name-auto-resize" id="prod-{{ item.id }}" data-alpha="{{ item.title }}" data-price="{{ item.price }}">
+
+	<div class="first-time-hover">
+		<div class="ci">
+
+			<div class="smartwishlist-container">
+				{% if customer %}
+					<span class="smartwishlist" data-product="{{ item.id }}" data-variant="{{ item.variants.first.id }}"></span>
+				{% else %}
+					<a aria-label="Toggle Wishlist" href="javascript:void(0);" class="smartwishlist-label" onkeypress="$('#wishlist-pop, #wishlist-overlay').fadeIn();$('body').addClass('wl-pop-open');" onclick="$('#wishlist-pop, #wishlist-overlay').fadeIn();$('body').addClass('wl-pop-open');"><span class="fa fa-heart-o"></span></a>
+				{% endif %}
+			</div>
+
+			<div class="reveal">
+				<a href="{{ item.url }}" title="{{ item.title | escape }}" class="product-link" >
+					<div class="front">
+
+                      <img src="{{ item.featured_image.src | img_url: '100x' }}"
+                       alt="{{ item.featured_image.src.alt }}"
+                       data-sizes="auto"
+                       data-src="{{ item.featured_image.src | img_url: '900x' }}"
+                       data-srcset="{{ item.featured_image.src | img_url: '300x' }} 300w,
+                                    {{ item.featured_image.src | img_url: '400x' }} 400w,
+                                    {{ item.featured_image.src | img_url: '500x' }} 500w,
+                                    {{ item.featured_image.src | img_url: '600x' }} 600w,
+                                    {{ item.featured_image.src | img_url: '700x' }} 700w,
+                                    {{ item.featured_image.src | img_url: '800x' }} 800w,
+                                    {{ item.featured_image.src | img_url: '900x' }} 900w,
+                                    {{ item.featured_image.src | img_url: '1920x' }} 1920w"
+                       class="img-fluid lazyload">
+
+					</div>
+				</a>
+				{% assign secondImage = item.images[0] %}
+				{% if item.images[1] %}
+					{% assign secondImage = item.images[1] %}
+				{% endif %}
+				<div class="image-slider"><a href="{{ item.url }}"><img src="{{ secondImage | img_url: '1368X1859' }}" alt="{{ secondImage.alt | escape }}" /></a></div>
+                {% assign size_index = '' %}
+                {% for product_options in item.options %}
+              		{% if product_options == 'Size' %}
+              			{% capture size_index %}option{{ forloop.index }}{% endcapture %}
+              			{% break %}
+              		{% endif %}
+              	{% endfor %}
+              	{% if size_index != '' %}
+              		<div class="varients">
+						<ul>
+							{% for variant in item.variants %}
+								<li class="{% if variant.available == false %}out-of-stock{% endif %}"><a href="javascript:void(0);" class="add-to-cart-dynamic" data-variant="{{ variant.id }}">{{ variant.option1 }}</a></li>
+							{% endfor %}
+						</ul>
+					</div>
+              	{% endif %}
+			</div>
+		</div>
+
+		<div class="product-info">
+			<a href="{{ item.url }}" title="{{ item.title | escape }}">
+				<span class="product_bg">
+					<div class="product-details">
+						<h3>{{ item.title }}</h3>
+						{% if settings.vendor %}<h4>{{ item.vendor }}</h4>{% endif %}
+						{% assign color_index = '' %}
+						{% for product_options in item.options %}
+							{% if product_options == 'Color' %}
+								{% capture color_index %}option{{ forloop.index }}{% endcapture %}
+								{% break %}
+							{% endif %}
+						{% endfor %}
+						<div class="product-color">{{ item.variants.first[color_index] }}</div>
+						<div class="grid-link__meta price">
+							{% if item.price < item.compare_at_price %}
+								<div class="grid-link__sale_price onsale">{{ item.price | money }}</div>
+								<div class="grid-link__sale_price was">{{ item.compare_at_price | money }}</div>
+							{% else %}
+								<div class="prod-price">{% if item.price_varies %} {{ 'products.general.from' | t }} {{ item.price_min | money }} - {{ item.price_max | money }} {% else %}{{ item.price | money }}{% endif %}</div>
+							{% endif %}
+						</div>
+					</div>
+				</span>
+			</a>
+		</div>
+
+
+		</div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% include 'pagination' %}
+{% endif %}
+{% endpaginate %}
+</div>
+
+<script>
+	jQuery(document).ready(function(){
+	  jQuery('#bc-sf-filter-products').on('mouseenter', '.first-time-hover', function(){
+			jQuery(this).removeClass('first-time-hover');
+			var imageSliderElem = jQuery(this).find('.image-slider');
+			// imageSliderElem.html("loading");
+			var productUrl = jQuery(this).find(".product-link").attr('href');
+			createImageListByAjax(productUrl, function(output){
+				// console.log(output);
+				if(output){
+					imageSliderElem.append(output);
+					createCarousel(imageSliderElem);
+				}
+			});
+	  });
+
+  });
+
+</script>

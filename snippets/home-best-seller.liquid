@@ -1,0 +1,57 @@
+<section id="homepage-best-seller-block" class="homepage-best-seller">
+  <h2 class="best-seller-title">{{settings.homepage-best-seller-title}}</h2>
+  <div class="homepage-best-item">
+    {% assign bestsellers = settings.homepage-best-seller-collection %}
+    {% if bestsellers != blank %}
+      {% if collections[bestsellers].products_count != 0 %}
+      <div class="content-block best-seller-main-slider">
+        {% for product in collections[bestsellers].products limit: 6 %}
+        <div tabindex="0" class="item-product owl-item name-auto-resize" role="group" aria-label="{{product.title}} carousel">
+          {% include 'product-listing-home-best-seller' %}
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    {% endif %}
+  </div>
+</section>
+<div class="clear"></div>
+
+<script>
+	jQuery(document).ready(function(){
+	  jQuery('#homepage-best-seller-block').on('mouseenter', '.first-time-hover', function(){
+			jQuery(this).removeClass('first-time-hover');
+			var imageSliderElem = jQuery(this).find('.image-slider');
+			// imageSliderElem.html("loading");
+			var productUrl = jQuery(this).find(".product-link").attr('href');
+			createImageListByAjax(productUrl, function(output){
+				// console.log(output);
+				if(output){
+					imageSliderElem.append(output);
+					createCarousel(imageSliderElem);
+				}
+			});
+	  });
+      
+    
+      jQuery('.best-seller-main-slider').slick({
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        arrows: true,
+        dots:false,
+      responsive: [
+        {
+          breakpoint: 768,
+          settings: {
+            arrows: false,
+            useTransform: false,
+            slidesToShow: 2,
+        slidesToScroll: 1
+          }
+        }
+      ]
+      });
+	  
+  });
+  
+</script>

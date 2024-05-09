@@ -1,0 +1,194 @@
+<title>{{ collection.title }}</title>
+{% comment %}I can not access these variables even though they are imported in theme file {% endcomment %}
+{% include 'common-variables' %}
+
+{% assign number = settings.products_per_page %}
+{% paginate collection.products by number %}
+{% comment %} {% endcomment %}
+
+<div id="content" class="row product-list-wrap {% if collection.all_products_count < 1 %}no-products{% endif %}" >
+  {% if settings.show_collection_sidebar %}
+  {% include 'collection-sidebar' %}
+  {% endif %}
+
+  <div class="{% if settings.show_collection_sidebar %}desktop-10{% else %}desktop-12{% endif %} tablet-6 mobile-3" id="bside">
+
+    {% comment %}  {% if collection.description != blank %}
+    <div id="collection-description">
+      <div class="rte">{{ collection.description | remove: "[banner]" }}</div>
+    </div>
+    {% endif %}{% endcomment %}
+
+    <div class="clear"></div>
+    <div id="product-loop">
+      <div class="left-filters desktop-2 tablet-3 mobile-12 ">
+        <div id="bc-sf-filter-top-sorting"></div>
+        <div id="collection-filters-block" style="display: none;">
+          <div class="collection-filter-block-title" >Collection</div>
+
+          {% assign urlParts = canonical_url | split: '/' %}
+          {% assign collectionType = '' %}
+          {% for urlPart in urlParts %}
+          {% if urlPart contains 'all-bottoms' %}
+          {% assign collectionType = 'bottoms' %}
+          {% break %}
+          {% endif %}
+          {% if urlPart contains 'all-tops' %}
+          {% assign collectionType = 'tops' %}
+          {% break %}
+          {% endif %}
+          {% endfor %}
+
+          {% if collectionType != '' %}
+          <ul class="level type-1">
+            {% for l in linklists[collectionType].links %}
+            {% if linklists[collectionType].title == l.title or l.title contains 'ategories' %}
+            {% for l_child in l.links %}
+            <li {% if canonical_url contains l_child.handle %}class="active"{% endif %}>
+              <a href="{{ l_child.url }}">{{ l_child.title }}</a>
+            </li>
+            {% endfor %}
+            {% endif %}
+            {% endfor %}
+          </ul>
+          {% endif %}
+
+          {% comment %}
+
+          {% assign hide_collection_filter_block = 0 %}
+          {% assign match_found = 0 %}
+          {% for link in linklists.mega-menu.links %}
+
+          {% if link.url == collection.url %}
+          {% assign match_found = 1 %}
+          {% endif %}
+
+          {% assign child_list_handle = link.title | handlize %}
+          {% if linklists[child_list_handle] and linklists[child_list_handle].links.size > 0 %}
+
+          {% for l in linklists[child_list_handle].links %}
+          {% if l.url == collection.url and l.title != fabric_types_menu %}
+          {% assign match_found = 1 %}
+          {% if l.links.size > 0 %}
+          <ul class="level type-1">
+            {% for l_child in l.links %}
+            <li><a href="{{ l_child.url }}">{{ l_child.title }}</a></li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+          {% elsif l.url != collection.url and l.title != fabric_types_menu %}
+          {% if l.links.size > 0 %}
+          <ul class="level type-2">
+            {% for l_child in l.links %}
+            <li class="{% if l_child.url == collection.url %}{% assign match_found = 1 %}active{% endif %}"><a href="{{ l_child.url }}">{{ l_child.title }}</a></li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+          {% endif %}
+          {% endfor %}
+
+          {% else %}
+          {% if match_found == 1 %}
+          {% assign hide_collection_filter_block = 1 %}
+          {% endif %}
+          {% endif %}
+
+          {% if match_found == 1 %}{% break %}{% endif %}
+
+          {% endfor %}
+
+          <script>
+            var collectionFiltersBlockHtml = '';
+            jQuery(document).ready(function(){
+              if({{ collectionType }}){
+                collectionFiltersBlockHtml = '<div id="collection-filters-block">' + jQuery("#collection-filters-block").html() + '</div>';
+              }
+              // jQuery("#collection-filters-block").insertBefore( "#bc-sf-filter-tree #bc-sf-filter-options-wrapper" );
+            });
+          </script>
+
+          {% endcomment %}
+
+
+          <script>
+            var collectionFiltersBlockHtml = '';
+            jQuery(document).ready(function(){
+              if( '{{ collectionType }}' != '' ){
+                 collectionFiltersBlockHtml = '<div id="collection-filters-block">' + jQuery("#collection-filters-block").html() + '</div>';
+              collectionFiltersBlockHtml += '<div class="color-filters">' + jQuery(".color-filters").html() +'</div>';
+            }
+                                   // jQuery("#collection-filters-block").insertBefore( "#bc-sf-filter-tree #bc-sf-filter-options-wrapper" );
+                                   });
+          </script>
+        </div>
+
+        <div class="color-filters" style="display: none;">
+          {% assign colors = settings.filter_colors | replace: ' ', '' | split: ',' %}
+          {% assign filterUrl = collection.url | append: '/' %}
+          {% assign currColor = '' %}
+          {% if current_tags %}
+          {% for current_tag in current_tags %}
+          {% if colors contains current_tag %}
+          {% assign currColor = current_tag %}
+          {% else%}
+          {% assign _current_tag = current_tag | handleize %}
+          {% assign filterUrl = filterUrl | append: _current_tag | append: '+' %}
+          {% endif %}
+          {% endfor %}
+          {% endif %}
+          <div class="bc-sf-filter-block-title"><h3><span>Color</span></h3></div>
+          <ul id="custom-colors-filters" >
+            {% for color in colors %}
+            <li {% if currColor == color %}class="active"{% endif %} >
+              <a aria-label="{{ color }}" href="{{ filterUrl | append: color }}" >
+                <img src="{{ color | prepend: 'Color ' | handleize | append: '.png' | file_url }}" alt="{{ color }}" title="{{ color }}" />
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div id="bc-sf-filter-tree-mobile"></div>
+        <div id="bc-sf-filter-tree"></div>
+      </div>
+      <div class="pr-list desktop-10 tablet-9 mobile-12 {% unless collection.image %}no-main-banner{% endunless %}">
+
+        <div class="section-title desktop-12 mobile-3">
+
+          <h1>{{ collection.title }}</h1>
+          {% if collection.description and collection.description != '' %}<div class="collection-desc" >{{ collection.description }}</div>{% endif %}
+
+          {% if collection.image %}
+          <div class="featured-wrap desktop-8 mobile-3">
+            <div class="featured-img" style="background-image: url({{ collection.image | img_url:'629x' }})">
+              <img src="{{ collection.image | img_url:'629x' }}" alt="{{ collection.title }}" />
+            </div>
+          </div>
+          {% endif %}
+
+          <div id="bc-sf-filter-products">
+            {% for product in collection.products %}
+            <div class="product desktop-4 tablet-2 mobile-half name-auto-resize" id="prod-{{ product.id }}" data-alpha="{{ product.title }}" data-price="{{ product.price }}">
+              {% include 'product-listing' %}
+            </div>
+            {% endfor %}
+          </div>
+
+        </div>
+        <div id="bc-sf-filter-bottom-pagination"></div>
+      </div>
+    </div>
+    <div class="clear"></div>
+
+    {% comment %}{% include 'pagination' %}{% endcomment %}
+    {% comment %}{% include 'size-chart' %}{% endcomment %}
+
+
+    {% endpaginate %}
+
+    {% comment %}{% include "foursixty-collection-gallery" %}{% endcomment %}
+
+    {% include 'bcSfFilterConfig' %}
+    {% include 'bc-sf-filter' %}
+
+  </div>
+</div>

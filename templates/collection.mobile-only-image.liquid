@@ -1,0 +1,244 @@
+<title>{{ collection.title }}</title>
+{% comment %}I can not access these variables even though they are imported in theme file {% endcomment %}
+{% include 'common-variables' %}
+
+{% assign number = settings.products_per_page %}
+{% paginate collection.products by number %}
+{% comment %} {% endcomment %}
+{% comment %}
+<style>
+.collection-Image{
+  background:url({{'Untitled-3.jpg' | asset_url}}) no-repeat center center fixed;
+  height:509px;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}  
+</style>
+
+<div class="collection-Image">
+</div>
+{% endcomment %}
+<style>
+  {% if collection.handle == 'matching-sets' %}
+  .smartwishlist-container{display:none;}
+  {% endif %}
+</style>
+<div id="content" class="row product-list-wrap {% if collection.all_products_count < 1 %}no-products{% endif %}" >
+  {% if settings.show_collection_sidebar %}
+  {% include 'collection-sidebar' %}
+  {% endif %}
+
+  <div class="{% if settings.show_collection_sidebar %}desktop-10{% else %}desktop-12{% endif %} tablet-6 mobile-3" id="bside">
+
+    {% comment %}  {% if collection.description != blank %}
+    <div id="collection-description">
+      <div class="rte">{{ collection.description | remove: "[banner]" }}</div>
+    </div>
+    {% endif %}{% endcomment %}
+
+    <div class="clear"></div>
+    <div id="product-loop">
+      <div class="left-filters desktop-2 tablet-3 mobile-12 ">
+        <div id="bc-sf-filter-top-sorting"></div>
+        <div id="collection-filters-block" style="display: none;">
+          <div class="collection-filter-block-title" >Collection</div>
+
+          {% assign urlParts = canonical_url | split: '/' %}
+          {% assign collectionType = '' %}
+          {% for urlPart in urlParts %}
+          {% if urlPart contains 'all-bottoms' %}
+          {% assign collectionType = 'bottoms' %}
+          {% break %}
+          {% endif %}
+          {% if urlPart contains 'all-tops' %}
+          {% assign collectionType = 'tops' %}
+          {% break %}
+          {% endif %}
+          {% endfor %}
+
+          {% if collectionType != '' %}
+          <ul class="level type-1">
+            {% for l in linklists[collectionType].links %}
+            {% if linklists[collectionType].title == l.title or l.title contains 'ategories' %}
+            {% for l_child in l.links %}
+            <li {% if canonical_url contains l_child.handle %}class="active"{% endif %}>
+              <a href="{{ l_child.url }}">{{ l_child.title }}</a>
+            </li>
+            {% endfor %}
+            {% endif %}
+            {% endfor %}
+          </ul>
+          {% endif %}
+
+          {% comment %}
+
+          {% assign hide_collection_filter_block = 0 %}
+          {% assign match_found = 0 %}
+          {% for link in linklists.mega-menu.links %}
+
+          {% if link.url == collection.url %}
+          {% assign match_found = 1 %}
+          {% endif %}
+
+          {% assign child_list_handle = link.title | handlize %}
+          {% if linklists[child_list_handle] and linklists[child_list_handle].links.size > 0 %}
+
+          {% for l in linklists[child_list_handle].links %}
+          {% if l.url == collection.url and l.title != fabric_types_menu %}
+          {% assign match_found = 1 %}
+          {% if l.links.size > 0 %}
+          <ul class="level type-1">
+            {% for l_child in l.links %}
+            <li><a href="{{ l_child.url }}">{{ l_child.title }}</a></li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+          {% elsif l.url != collection.url and l.title != fabric_types_menu %}
+          {% if l.links.size > 0 %}
+          <ul class="level type-2">
+            {% for l_child in l.links %}
+            <li class="{% if l_child.url == collection.url %}{% assign match_found = 1 %}active{% endif %}"><a href="{{ l_child.url }}">{{ l_child.title }}</a></li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+          {% endif %}
+          {% endfor %}
+
+          {% else %}
+          {% if match_found == 1 %}
+          {% assign hide_collection_filter_block = 1 %}
+          {% endif %}
+          {% endif %}
+
+          {% if match_found == 1 %}{% break %}{% endif %}
+
+          {% endfor %}
+
+          <script>
+            var collectionFiltersBlockHtml = '';
+            jQuery(document).ready(function(){
+              if({{ collectionType }}){
+                collectionFiltersBlockHtml = '<div id="collection-filters-block">' + jQuery("#collection-filters-block").html() + '</div>';
+              }
+              // jQuery("#collection-filters-block").insertBefore( "#bc-sf-filter-tree #bc-sf-filter-options-wrapper" );
+            });
+          </script>
+
+          {% endcomment %}
+
+
+          <script>
+            var collectionFiltersBlockHtml = '';
+            jQuery(document).ready(function(){
+              if( '{{ collectionType }}' != '' ){
+                 collectionFiltersBlockHtml = '<div id="collection-filters-block">' + jQuery("#collection-filters-block").html() + '</div>';
+              collectionFiltersBlockHtml += '<div class="color-filters">' + jQuery(".color-filters").html() +'</div>';
+              collectionFiltersBlockHtml += '<div class="custom-menu-list">' + jQuery(".custom-menu-list").html() +'</div>';
+            }
+                                   // jQuery("#collection-filters-block").insertBefore( "#bc-sf-filter-tree #bc-sf-filter-options-wrapper" );
+                                   });
+          </script>
+        </div>
+        <div class="color-filters" style="display:none;">
+          {% assign colors = settings.filter_colors | replace: ' ', '' | split: ',' %}
+          {% assign filterUrl = collection.url | append: '/' %}
+          {% assign currColor = '' %}
+          {% if current_tags %}
+          {% for current_tag in current_tags %}
+          {% if colors contains current_tag %}
+          {% assign currColor = current_tag %}
+          {% else%}
+          {% assign _current_tag = current_tag | handleize %}
+          {% assign filterUrl = filterUrl | append: _current_tag | append: '+' %}
+          {% endif %}
+          {% endfor %}
+          {% endif %}
+          <div class="bc-sf-filter-block-title"><h3><span>Color</span></h3></div>
+          <ul id="custom-colors-filters" >
+            {% for color in colors %}
+            <li {% if currColor == color %}class="active"{% endif %} >
+              <a aria-label="{{ color }}" href="{{ filterUrl | append: color }}" >
+                <img src="{{ color | prepend: 'Color ' | handleize | append: '.png' | file_url }}" alt="{{ color }}" title="{{ color }}" />
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="custom-menu-list" style="display:none;">
+          <h3><span>{{settings.custom_sidebar_menu_1_title}}</span></h3>
+          <ul>
+            {% for link in linklists[settings.custom_sidebar_menu_1].links %}
+            <li>{{ link.title | link_to: link.url }}</li>
+            {% endfor %}
+          </ul>
+          
+          <h3><span>{{settings.custom_sidebar_menu_2_title}}</span></h3>
+          <ul>
+            {% for link in linklists[settings.custom_sidebar_menu_2].links %}
+            <li>{{ link.title | link_to: link.url }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div id="bc-sf-filter-tree-mobile"></div>
+        <div id="bc-sf-filter-tree"></div>
+      </div>
+      <div class="pr-list desktop-10 tablet-9 mobile-12 {% unless collection.image %}no-main-banner{% endunless %}">
+
+        <div class="section-title desktop-12 mobile-3">
+
+          <h1>{{ collection.title }}</h1>
+
+          {% if collection.image %}
+          <div class="featured-wrap desktop-12 mobile-3">
+            <div class="featured-img" style="background-image: url({{ collection.image | img_url:'original' }})">
+              <img src="{{ collection.image | img_url:'original' }}" alt="{{ collection.title }}" />
+            </div>
+          </div>
+          {% endif %}
+
+          <div id="bc-sf-filter-products">
+            {% for product in collection.products %}
+            <div class="product desktop-4 tablet-2 mobile-half name-auto-resize" id="prod-{{ product.id }}" data-alpha="{{ product.title }}" data-price="{{ product.price }}">
+              {% include 'product-listing' %}
+            </div>
+            {% endfor %}
+          </div>
+
+        </div>
+        <div id="bc-sf-filter-bottom-pagination"></div>
+        
+        <div class="collection-desc" class="pr-list desktop-10 tablet-9 mobile-12 no-main-banner" style="padding: 0px 18px 0px 18px; margin: auto; align: right;" >
+      <div class="oreadmore" data-collapsed-height='22'>
+        <div class='rm-container' style="">
+          <div class="rm-content" style="text-justify: auto; text-align: justify;">
+            {%if collection.url == "/collections/matching-sets"%}
+            	<p>Don't you just love when an outfit perfectly matches? It makes getting ready for the gym or day a breeze knowing that the pieces complement one another. You'll love our collection of high-quality matching workout sets! You'll find a variety of colorways that each have their own shorts, top, sports bra, and hoodie. The designs differ from set to set, so be sure to check them all out to find the right ones for your style!</p>
+<p>With looks that are gym-ready, you can choose a few matching sets to wear during the week that will having you feeling confident and beautiful. Some sets offer one or several complementary pieces. For example, our Black colorway includes two pieces in the set, whereas the Autumn has five. Worried these will all look the same? Each matching set features different designs, so you'll never tire of these unique, one-of-a-kind styles. Want to have one of our soft, premium cropped hoodies for the fall? See the Steel Blue, Autumn, Bronze, Topaz Blue, and Jade sportswear sets. Every set featured here includes the super soft and flattering Shape Shorts, which look amazing with any of our workout tops. Since the majority of our sets feature multiple pieces, you can create different looks with them with our other apparel offerings! You'll be able to showcase your chic matching sets in and out the gym, as well as on the 'gram and other social media. With stylish looks and comfortable fabrics like ours, they're meant to be worn any time of the week! From spa days to class, our apparel to meant to be your go-to for everyday athleisure wear. Add our signature style to your workout gear with these sports-luxe matching sets.</p>
+<p>Before placing your order, please refer to our size chart for each piece in the matching set to determine the perfect fit for you. Sign up for our newsletter to stay up to date on our latest designs, sales, and other announcements. For questions related to our sportswear, orders, or shipping, please visit our FAQ page or contact customer service for further assistance.</p>
+            {%else%}
+            	{{collection.description}}
+            {%endif%}
+          </div>
+        </div>
+      </div>
+    </div>
+        
+      </div>
+    </div>
+    <div class="clear"></div>
+
+    {% comment %}{% include 'pagination' %}{% endcomment %}
+    {% comment %}{% include 'size-chart' %}{% endcomment %}
+
+
+    {% endpaginate %}
+
+    {% comment %}{% include "foursixty-collection-gallery" %}{% endcomment %}
+
+    {% include 'bcSfFilterConfig' %}
+    {% include 'bc-sf-filter' %}
+
+  </div>
+</div>

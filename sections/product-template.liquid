@@ -1,0 +1,1054 @@
+{% unless collection %}
+{% assign collection = product.collections[0] %}
+{% endunless %}
+<!-- templates/product.liquid -->
+<meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
+<meta itemprop="image" content="{{ product.featured_image.src | img_url: 'grande' }}">
+<title>{{ product.title }}</title>
+
+
+{% assign isGiftcard = false %}
+{% if product.tags contains 'giftcard' %}
+{% assign isGiftcard = true %}
+<!-- <img class="hidemob" src="//cdn.shopify.com/s/files/1/0580/1077/files/Christmas_gift_card_banner-3_copy.jpg?499253152107244523"/> -->
+{% endif %}
+
+{% for tag in product.tags %}
+{% if tag contains 'video;' %}
+{% assign video = tag | split: ';' | last %}
+{% endif %}
+{% if tag contains 'videothumb;' %}
+{% assign videothumb = tag | split: ';' | last %}
+{% endif %}
+{% if tag contains 'fabric:' %}
+{% assign fabric = tag | split: ':' | last %}
+{% endif %}
+{% endfor %}
+
+{% assign is_top = false %}
+{% assign is_bottom = false %}
+
+{% for link in linklists.top-types.links %}
+{% if link.title == product.type %}
+{% assign is_top = true %}
+{% endif %}
+{% endfor %}
+
+{% for link in linklists.bottom-types.links %}
+{% if link.title == product.type %}
+{% assign is_bottom = true %}
+{% endif %}
+{% endfor %}
+
+{% if product.type == 'Sports Top' %}
+{% assign is_top = true %}
+{% endif %}
+
+{% if product.type == 'Bottoms' %}
+{% assign is_bottom = true %}
+{% endif %}
+
+{% for product_options in product.options %}
+{% if product_options == 'Color' %}
+{% capture color_index %}option{{ forloop.index }}{% endcapture %}
+{% break %}
+{% endif %}
+{% endfor %}
+
+
+<div id="content" class="row prdt-cont-main" >
+  <div itemscope itemtype="http://schema.org/Product" id="product-{{ product.id }}" class="product-page">
+
+    <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
+    <meta itemprop="image" content="{{ product.featured_image.src | img_url: 'grande' }}">
+
+    <div class="clear"></div>
+
+    <div class="mobile-hide">
+      {% if settings.show_product_sidebar %}
+      {% include 'collection-sidebar' %}
+      {% endif %}
+    </div>
+
+    <div id="bside" class="bside {% if settings.show_product_sidebar %}{% else %}{% endif %} {% if isGiftcard == true %}giftcard-bside{% endif %}">
+      {% comment %}  
+
+      <!-- START MAGICZOOMPLUS IMAGES -->
+      {% include 'magiczoomplus' %}
+
+      <!-- END MAGICZOOMPLUS IMAGES -->
+
+      {% endcomment %}
+
+      {% if isGiftcard == false %}
+      <div id="product-gallery" class="desktop-8 mobile-3 product-photos-prt">
+        <!--- Mobile Slider --->
+        <div class="mob-thumbs-slider">
+          <div class="slider slider-for" role="region" aria-label="product image carousel">
+            {% for image in product.images %}
+            {% if forloop.index == 2 %}
+            {% if video %}
+            <div class="product-default hvideo">
+              {% comment %}
+              <video id="product-video-mobile" preload="metadata" class="product-video-mobile video-js vjs-fill" autoplay="" loop="" muted="" playsinline="" preload="auto">
+                <source type="video/mp4" src="{{ video }}">
+                <source type="video/webm" src="{{ video }}">
+              </video>
+              {% endcomment %}
+              <video poster="" width="400" height="400" id="product-video-mobile" class="product-video-mobile video-js vjs-fill" autoplay="" loop="" muted="" playsinline="" preload="auto">
+                <source src="{{ video }}" type="video/webm; codecs=vp8,vorbis">
+                <source src="{{ video }}" type="video/mp4; codecs=avc1.42E01E,mp4a.40.2">
+                <div class="vjs-no-js">
+                  To view this video please enable JavaScript, and consider upgrading to a web browser that
+                  <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                </div>
+              </video>
+
+            </div>
+            {% endif %}
+            {% endif %}
+            <div class="product-default product-default-image">
+              {% if product.tags contains "10OFF" %}
+              <div class="relative">
+                <p class="sale_title" style="display: block !important;">10% OFF</p>
+              </div>
+              {% endif %}
+              {% if product.tags contains "20OFF" %}
+              <div class="relative">
+                <p class="sale_title" style="display: block !important;">20% OFF</p>
+              </div>
+              {% endif %}
+              {% if product.tags contains "35OFF" %}
+              <div class="relative">
+                <p class="sale_title" style="display: block !important;">35% OFF</p>
+              </div>
+              {% endif %}
+              <a class="other-image-link" data-fancybox="image-gallery-mobile" href="{{ image | product_img_url: 'master' }}">
+                <img src="{{ image | img_url: 'master' }}" title="{{ product.title }}" alt="{{ product.title }}" />
+              </a>
+            </div>
+            {% endfor %}
+          </div>
+
+          <div class="slider slider-nav" role="region" aria-label="product thumb image carousel">
+            {% for image in product.images %}
+            {% if forloop.index == 2 %}
+            {% if video %}
+            <div class="product-thumbs video" id="videoThumbMobile">
+              <img src="{{ videothumb }}" title="{{ product.title }}" alt="{{ product.title }}" />
+            </div>
+            {% endif %}
+            {% endif %}
+            <div class="product-thumbs">
+              <img src="{{ image | img_url: 'master' }}" title="{{ product.title }}" alt="{{ product.title }}" />
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!--- Mobile Slider Over --->
+
+
+        <div id="product-item" class="product-item-main" style="display:none;">
+
+          {% assign totalImageCount = 0 %}
+          {% assign groupIndex = 1 %}
+          <!-- add active class here -->
+          <div class="group" data-groupindex="{{ groupIndex }}" id="groupIndex_{{ groupIndex }}">
+            <div class="product-img first-product-image">
+              <a class="featured-image-link" data-fancybox="image-gallery" href="{{ product.featured_image | img_url: 'master' }}">
+                <img src="{{ product.featured_image | img_url: 'master' }}" title="{{ product.title }}" alt="{{ product.title }}" />
+              </a>
+              {% assign totalImageCount = 1 %}
+              {% assign groupCounter = 1 %}
+            </div>
+            {% if video %}
+            <div class="product-img product-video">
+              {% comment %}
+              <span id="video-play-button" onclick="videoControls();">play</span>
+              {% endcomment %}
+
+
+              <video playsinline autoplay loop muted preload="auto" id="product-video" onclick="videoControls()" >
+                <source type="video/mp4" src="{{ video }}">
+                <source type="video/webm" src="{{ video }}">
+                Your browser does not support HTML5 video.
+              </video>
+
+            </div>
+            {% assign groupCounter = 2 %}
+            {% endif %}
+            {% if product.images.size > 1 %} 
+
+            {% if video %}
+            {% assign __limit = 2 %}
+            {% else %}
+            {% assign __limit = 3 %}
+            {% endif %}
+            {% for image in product.images offset:1 limit: __limit %}
+            <div class="product-img">
+              <a class="other-image-link" data-fancybox="image-gallery" href="{{ image | product_img_url: 'master' }}">
+                <img src="{{ image | img_url: 'master' }}" title="{{ product.title }}" alt="{{ product.title }}" />
+              </a>
+            </div>
+            {% assign totalImageCount = totalImageCount | plus : 1 %}
+            {% assign groupCounter = groupCounter | plus : 1 %}
+            {% endfor %}
+            {% endif %}
+          </div>
+          {% if groupCounter >= 4 %}
+          {% for image in product.images offset:totalImageCount %}
+          {% assign moduleCheck = forloop.index | modulo:4 %}
+          {% if moduleCheck == 1 %}
+          {% assign groupIndex = groupIndex | plus: 1 %}
+          <div class="group" data-groupindex="{{ groupIndex }}" id="groupIndex_{{ groupIndex }}" >
+            {% endif %}
+            <div class="product-img" {{ moduleCheck }}>
+              <a class="other-image-link" data-fancybox="image-gallery" href="{{ image | product_img_url: 'master' }}">
+                <img src="{{ image | img_url: 'master' }}" title="{{ product.title }}" alt="{{ product.title }}" />
+              </a>
+            </div>
+            {% if moduleCheck == 0 or forloop.last == true %}
+          </div>
+          {% endif %}
+          {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+
+      {% else %}
+      <div id="product-gallery" class="desktop-8 mobile-3 product-photos-prt">
+        <img src="{{ product.featured_image | img_url: 'master' }}" title="{{ product.title }}" alt="{{ product.title }}" />
+      </div>
+      {% endif %}
+      
+      <div class="prd-title-price only-mobile">
+        <div class="product-mobile-header">
+        <div itemprop="name" class="product-name-mobile">{{ product.title }}</div>
+        <div class="p-color p-type">{{ product.variants.first[color_index] }}</div>
+        {% if settings.show-sku %}<div class="p-color"><span class="variant-sku"></span></div>{% endif %}
+        </div>
+        {% comment %}
+        {% if settings.vendor %}<h3>{{ 'products.product.designer' | t }}: {{ product.vendor }}</h3>{% endif %}
+        {% endcomment %}
+        <div class="product-price-review">
+        <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+          <p id="product-price" class="product-price23">
+            {% if product.available %}
+            {% if product.compare_at_price > product.price %}
+            <span id="onsale" class="product-price true onsale" itemprop="price">{{ product.price | money }}</span>&nbsp;<span class="was compare-price">{{ product.compare_at_price | money }}</span>
+            {% else %}
+            <span class="product-price false" itemprop="price">{{ product.price | money }}</span>
+            {% endif %}
+            {% else %}
+            <span class="product-price" itemprop="price">{{ product.price | money }}</span>{% if product.compare_at_price > product.price %}&nbsp;<span class="compare-price ">{{ product.compare_at_price | money }}</span>{% endif %}
+            {% endif %}
+          </p> 
+          <!--product-price-->
+        </div>
+        {% if isGiftcard == false %}
+          <span class="stamped-product-reviews-badge stamped-main-badge" data-id="{{ product.id }}">{{ product.metafields.stamped.badge }}</span> 
+
+          {% endif %}
+        </div>
+
+      </div>
+
+
+      <script>
+        $(document).ready(function(){
+          var $owl = $('#product-item');
+          {% if groupCounter >= 4 %} 
+          $owl.on('initialize.owl.carousel', function(event){ 
+            // Do something
+            {% if video %}
+            resizeVideo();
+            {% endif %}
+          });
+          $owl.on('resized.owl.carousel', function(event){
+            //$(this).data('owlCarousel').autoHeight();
+            // Do something
+            {% if video %}
+            resizeVideo();
+            {% endif %}
+            // console.log('auto height');
+            //$('#product-item').trigger('refresh.owl.carousel');
+          });
+          $owl.owlCarousel({
+            loop: false,
+            nav: true,
+            items: 1,
+            lazyLoad: true,
+            autoHeight: false,
+            navRewind: false,
+            responsive:{
+              0:{
+                items:1,
+                autoHeight: true,
+              },
+              600:{
+                items:1
+              },
+              1000:{
+                items:1
+              }
+            }
+          });
+          {% endif %}
+        });
+
+
+
+      </script>
+
+
+
+      {% if video %}
+      <script>
+        function videoControls(){
+          var elem = document.getElementById("product-video");
+          var elem2 = document.getElementById("product-video-mobile"); 
+          // $('#video-thumb').remove();
+          // $(elem).show();
+          if(elem.paused){
+            elem.play();
+            $('#video-play-button').hide();
+          } else {
+            elem.pause();
+            $('#video-play-button').show();
+          }
+
+          var vid = document.getElementById('product-video');
+          vid.addEventListener('ended', function(e) {
+            this.load();
+            $('#video-play-button').show();
+          }, false);
+        }
+
+        $(document).ready(function(){
+          // checkNextAvail();
+          // preNextAvail();
+          $('.first-product-image img').load(function(){
+            resizeVideo();
+          });
+          $( window ).resize(function() {
+            resizeVideo();
+            {% if groupCounter >= 4 %} 
+            $('#product-item').trigger('refresh.owl.carousel');
+            {% endif %}
+          });
+        });
+
+        function resizeVideo(){
+          var ref = $('.first-product-image');
+          var refHeight = ref.height();
+          var refWidth = ref.width();
+
+          var ref_mob = $('.product-default-image');
+          var refHeight_mob = ref_mob.height();
+          var refWidth_mob = ref_mob.width();
+
+          console.log("width: " + refWidth + " | height" + refHeight );
+          console.log("width: " + refWidth_mob + " | height" + refHeight_mob );
+          // $('.product-video img').height(refHeight).width(refWidth);
+          document.getElementById("product-video-mobile").style.setProperty( 'height', refHeight_mob + 'px', 'important' );
+          //$('#product-video-mobile').css( 'height', refHeight_mob + 'px', 'important' );
+          document.getElementById("product-video").style.setProperty( 'height', refHeight + 'px', 'important' );
+          // $('.product-video img, .product-video video').css({"width": refWidth + 'px !important', "height": refHeight + 'px !important' });
+        }
+      </script>
+      {% endif %}
+
+      <script>
+        $(window).load(function() {
+          $('.shifter-navigation').insertAfter('#PageContainer');
+        });
+      </script>
+
+      <div id="product-right" class="desktop-4 mobile-3 product-info-prt">
+
+        {% comment %}
+        {% if collection %} 
+        <div class="desktop-1 right mobile-hide">
+          {% if collection.previous_product %}
+          {{ '<i class="icon-angle-left icon-2x"></i>' | link_to: collection.previous_product }}
+          {% endif %}
+          &nbsp;
+          {% if collection.next_product %}
+          {{ '<i class="icon-angle-right icon-2x"></i>' | link_to: collection.next_product }}
+          {% endif %}
+        </div>
+        {% endif %}
+        {% endcomment %}
+
+        <div id="product-description">
+          <div class="prd-title-price hidemobile-pname">
+            <h1 itemprop="name">{{ product.title }}</h1>
+            <div class="p-color">{{ product.variants.first[color_index] }}</div>
+            {% if settings.show-sku %}<div class="p-color"><span class="variant-sku"></span></div>{% endif %}
+            
+            {% if settings.vendor %}<h3>{{ 'products.product.designer' | t }}: {{ product.vendor }}</h3>{% endif %}
+            <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+              <p id="product-price" class="product-price">
+                {% if product.available %}
+                {% if product.compare_at_price > product.price %}
+                <span class="product-price onsale" itemprop="price">{{ product.price | money }}</span>&nbsp;<span class="product-price was">{{ product.compare_at_price | money }}</span><div class="was qf112419">{{ product.compare_at_price | money }}</div>
+                
+                {% else %}
+                <span class="product-price" itemprop="price">{{ product.price | money }}</span>
+                {% endif %}
+                {% else %}
+                <span class="" itemprop="price">{{ product.price | money }}</span>{% if product.compare_at_price > product.price %}&nbsp;<span class="was">{{ product.compare_at_price | money }}</span>{% endif %}
+                {% endif %}
+              </p> 
+              <!--product-price-->
+
+              {% if isGiftcard == false %}
+              <span class="stamped-product-reviews-badge stamped-main-badge" data-id="{{ product.id }}" style="float:right;">{{ product.metafields.stamped.badge }}</span> 
+
+              {% endif %}
+
+            </div>
+          </div>
+
+          <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+          <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
+
+          {% if settings.product-note != blank and false %}
+          <p class="product-note">
+            {{ settings.product-note }}
+          </p>
+          {% endif %}
+          {% comment %}
+          <div class="" id="mobDescription"></div>
+          {% endcomment %}
+          {% include 'short-form' %}  
+			 {% for collection in product.collections %}
+                {%if collection.title == "All Tops"%}
+                   
+                    <script>
+                     
+                            document.getElementById("tops").setAttribute("aria-selected", "true");
+                            document.getElementById("bottoms").setAttribute("aria-selected", "false");
+                            $("#tops-tab").removeAttr('hidden');
+                            $("#bottoms-tab").attr("hidden",true);
+                     
+
+   					</script>
+   
+                {%endif%}
+                 {% if collection.title == 'All Bottoms' %}
+                 
+                     <script>
+                     
+                      
+                            document.getElementById("tops").setAttribute("aria-selected", "false");
+                            document.getElementById("bottoms").setAttribute("aria-selected", "true");
+                            $("#bottoms-tab").removeAttr('hidden');
+                            $("#tops-tab").attr("hidden",true);  
+                        $("#tops").css("background","white");
+                      $("#tops").css("color","black");
+                       
+
+   					</script>
+
+                {%endif%}
+            {% endfor %}
+          <div class="social-and-policy-container">
+            <div class="social-container">
+              {% include 'social' with product %}
+            </div>
+            <div class="policy-links">
+              <ul>
+                {% if isGiftcard == false %}
+                <li>
+                  <a data-fancybox="shipping-rates" href="#shipping-rates-pop" >Shipping</a>
+                  <div id="shipping-rates-pop" role="dialog" aria-modal="true" aria-label="Shipping rates and times" style="display: none;">
+                    {% include "shipping-rates" %}
+                  </div>
+                </li>
+                {% endif %}
+                <li>
+                  <a href="/pages/returns-exchanges" >Returns</a>
+                </li>
+              </ul>
+              <div id="shipping-policy-content" style="display:none;">
+                {{ pages.returns-exchanges.content }}
+              </div>
+              <div id="return-policy-content" style="display:none;">
+                {{ pages.shipping-information.content }}
+              </div>
+            </div>
+          </div>
+        {% comment %}
+        <div class="policy-text" style="clear:both;">
+          <ul>
+            <li class="icon-return">Easy Return & Exchange</li>
+            <li class="icon-ship">Free, Fast Domestic Shipping</li>
+          </ul>
+        </div>
+        {% endcomment %}
+
+          <!---00000--->
+          <div class="pdp_tabs" id="pdp_tabs">
+            {% assign my_value = product.metafields.sf_product.fit %}
+            {% if my_value %}
+            <div class="pdp_tab space_remove">
+              <div class="pdp_tab_title">
+                <button aria-controls="prod-details" class="btnnostyle" type="button">DETAILS</button>
+              </div>
+              <div id="prod-details" class="pdp_tab_text" aria-expanded="false">
+                <div class="product-desc-container">
+                  <div class="product-desc">
+                    {{ my_value }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+            <div class="pdp_tab space_remove">
+              <div class="pdp_tab_title">
+                <button aria-controls="prod-about" class="btnnostyle" type="button">ABOUT</button>
+              </div>
+              <div id="prod-about" class="pdp_tab_text" aria-expanded="false">
+                <div class="product-desc-container">
+                  <div class="product-desc">
+                    {{ product.description }}
+                  </div>
+                  <a href="javascript:void(0);" class="desc-slider show-less">- Less Details</a>
+                </div>
+              </div>
+            </div>
+            {% assign my_value_fabrics = product.metafields.sf_product.fabrics %}
+            {% if my_value_fabrics %}
+            <div class="pdp_tab space_remove">
+              <div class="pdp_tab_title">
+                <button aria-controls="prod-fabrics" class="btnnostyle" type="button">FABRIC INFO</button>
+              </div>
+              <div  id="prod-fabrics" class="pdp_tab_text" aria-expanded="false">
+                <div class="product-desc-container">
+                  <div class="product-desc">
+                    {{ my_value_fabrics }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endif %}          
+          </div> 
+           {% unless product.title contains 'Gift Card' or product.title contains 'GIFT CARD' %}
+
+          <div class="pdp_review_main">
+            <div class="pdp_review_fit">SIZE</div>
+            <div id="neklo-review-slider" class="{% for col in product.collections%}{% if col.title contains 'Seamless Pullover' or col.title contains 'Sports Bras' %}move_left{% break %}{% endif %}{% endfor %} pdp_review_trueToSize ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all">
+              {% assign style = 'style2' %}
+              {% for tag in product.tags %}
+              
+              {% if tag contains '@' %}
+              {% assign p = tag | remove: '@' %}
+              {% assign style_pos = p %}       
+              {% endif %}
+
+              
+              {% endfor %}
+              <div class="pdp_review_trueToSize_left">Tight</div>
+              <div class="pdp_review_trueToSize_right">Large</div>
+              <div class="pdp_review_trueToSize_center">True to Size</div>
+              <span class="ui-slider-handle ui-state-default ui-corner-all {{ style }}" {% if p != blank %} style="left: {{ style_pos }}%;"{% else %}style="left: 50%;"{% endif %} ></span></div>
+          </div>
+          {% endunless %}
+        
+        {% assign my_product_1 = all_products[product.metafields.sf_product.product_pair_1] %}
+        {% assign my_product_2 = all_products[product.metafields.sf_product.product_pair_2] %}
+        {% assign my_product_3 = all_products[product.metafields.sf_product.product_pair_3] %}
+        {% assign my_product_4 = all_products[product.metafields.sf_product.product_pair_4] %}
+        {% unless my_product_1.empty? and my_product_2.empty? and my_product_3.empty? and my_product_4.empty? %}
+        <div class="pairs-with">
+          <div class="pairs-with__title" style="font-size: 26px;
+    text-align: center;
+    margin-bottom: 30px;text-transform: uppercase;
+    color: #000;
+    font-weight: 600;
+    letter-spacing: 2px;
+    line-height: 36px;">Pairs With</div>
+          {% for i in (1..4) %}
+          {% assign pair-product = '' %}
+          {% if forloop.index == 1 and my_product_1 %}
+          	{% assign pair-product = my_product_1 %}
+          {% elsif forloop.index == 2 and my_product_2 %}
+          	{% assign pair-product = my_product_2 %}
+          {% elsif forloop.index == 3 and my_product_3 %}
+          	{% assign pair-product = my_product_3 %}
+          {% elsif forloop.index == 4 and my_product_4 %}
+          	{% assign pair-product = my_product_4 %}
+          {% endif %}
+          {% unless pair-product.empty? %}
+          <div class="row">
+            <div class="desktop-5 tablet-2 mobile-1 pairs-with-image">
+              <a href="{{pair-product.url}}"><img src="{{ pair-product.featured_image.src | img_url: 'original' }}" /></a>
+            </div>
+            <div class="desktop-7 tablet-4 mobile-2">
+              {% assign size_index = '' %}
+              {% assign color_index = '' %}
+              {% for product_options in pair-product.options %}
+                {% if product_options == 'Size' %}
+                	{% capture size_index %}option{{ forloop.index }}{% endcapture %}
+                {% endif %}
+                {% if product_options == 'Color' or product_options == 'color' or product_options == 'Colour' %}
+                	{% capture color_index %}option{{ forloop.index }}{% endcapture %}
+                {% endif %}
+              {% endfor %}
+              <div class="pairs-with__name" style="text-transform: uppercase;">{{pair-product.title}}</div>
+              {% comment %}
+              <div class="p-color">{{ pair-product.type }}</div>
+              {% endcomment %}
+              <div class="p-color">{{ pair-product.variants.first[color_index] }}</div>
+              <p id="pairs-product-price" class="pairs-product-price{{forloop.index}}">
+                {% if pair-product.available %}
+                {% if pair-product.compare_at_price > pair-product.price %}
+                <span id="onsale" class="pairs-product-price true onsale" itemprop="price">{{ pair-product.price | money }}</span>&nbsp;<span class="was1 compare-price1">{{ pair-product.compare_at_price | money }}</span>
+                {% else %}
+                <span class="pairs-product-price false" itemprop="price">{{ pair-product.price | money }}</span>
+                {% endif %}
+                {% else %}
+                <span class="pairs-product-price" itemprop="price">{{ pair-product.price | money }}</span>{% if pair-product.compare_at_price > pair-product.price %}&nbsp;<span class="compare-price ">{{ pair-product.compare_at_price | money }}</span>{% endif %}
+                {% endif %}
+                {% comment %}
+                {% include 'pairs-form' %}
+                {% endcomment %}
+              </p>
+              
+              {% assign pairidprefix = 'pair-' | append:forloop.index %}
+              <form action="/cart/add" method="post" data-money-format="{{ shop.money_format }}" enctype="multipart/form-data" id="AddToCartForm">
+                {% if color_index != '' %}
+                  <div class="pairs-swatch">
+                    <p class="pairs-size">Color</p>
+                    {% assign color_name = pair-product.variants.first[color_index] %}
+                    {% capture color_name %}Color {{ color_name }}{% endcapture %}
+                    {% assign color_img_url = color_name | handle | append: '.png' %}
+                    <img class="colorswatch" src="{{ color_img_url | file_url }}" alt="{{ color_name }}" title="{{ color_name }}" />
+                  </div>
+                {% endif %}
+                
+                
+                {% assign varindex = 0 %}
+                {% if size_index != '' %}
+                <div class="pairs-swatch">
+                  <p class="pairs-size">Size</p>
+                  {% assign ischecked = false %}
+                  {% assign firstavailable = false %}
+                  {% for variant in pair-product.variants %}
+                    {% unless firstavailable %}
+                      {% if variant.available  %}
+                        {% assign ischecked = true %}
+                        {% assign firstavailable = true %}
+                  		{% assign varindex = forloop.index0 %}
+                      {% endif %}
+                    {% endunless %}
+                    {% assign variantid = pairidprefix | append:variant.option1 | handleize %}
+                    <input type="radio" class="{% if variant.available == false %}outofstock{% endif %}" id="{{variantid}}" {% if variant.available == false %} data-available="out-of-stock" {% endif %} data-variant="{{variant.id}}" name="{{pairidprefix}}" value="{{variant.option1}}" {% if ischecked %}checked{% endif %}>
+                    <label for="{{variantid}}">{{variant.option1}}</label>
+                  {% assign ischecked = false %}
+                  {% endfor %}
+                </div>
+                {% endif %}
+                <input class="{{pairidprefix}}-varid" type="hidden" id="{{ pair-product.variants[varindex].id }}" name="id" value="{{ pair-product.variants[varindex].id }}" data-sku="{{ pair-product.variants[varindex].sku }}" />
+                <input {% if pair-product.variants[varindex].available == false %}disabled="disabled"{% endif %} type="submit" name="button" class="{{pairidprefix}}-add pairs-add-to-cart" id="{{pairidprefix}}-AddToCart" value="{% if pair-product.variants[varindex].available == false %}Sold Out{% else %}Add To Bag{% endif %}" onclick="pintrk('track', 'addtocart', {value: {{ pair-product.selected_variant.price | money_without_currency}}, order_quantity: 1});"/>
+              </form>
+            </div>
+          </div>
+          {% endunless %}
+          {% endfor %}
+        </div>
+        {% endunless %}
+
+          <!---00000--->
+
+          {% comment %}
+          <div class="product-desc-container">
+            <div class="product-desc" >
+              {{ product.description }}
+              {% comment %}
+              {% if video %}
+              <video preload="auto" style="display: none;" id="product-video" muted="" playsinline="">
+                <source src="//cdn.shopify.com/s/files/1/0580/1077/files/{{video}}.mp4" type="video/mp4" />
+                <source src="//cdn.shopify.com/s/files/1/0580/1077/files/{{video}}.webm" type="video/webm" />
+              </video>
+              {% endif %}
+              {% endcomment %}
+            </div>
+            <a href="javascript:void(0);" class="desc-slider show-less">- Less Details</a>
+
+          </div>
+          {% endcomment %}
+          {% comment %}
+          <div class="rte">
+            {{ product.description }}
+          </div>   
+          {% endcomment %}
+          {% comment %}
+          <div class="fabric">
+            {% include 'fabric-icons' %}
+          </div>
+          <div class="tab">            
+            <ul id="demoTab" class="resp-tabs-list hor_1">
+              {% if fabric %}
+              <li class="h5">Fabric Info</li>
+              <div class="same">
+                <div class="product-fabrics newf">
+                  <div class="scrollbar-outer" id="scrollouter2">
+                    {% include 'our-fabrics' with fabric %}
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+              <span id="reviews" style="visibility: hidden; height: 0;"></span>
+              <li class="h5">Product Care</li>
+              <div class="same">
+                <div class="scrollbar-outer" id="scrollouter5">
+                  {{ pages.garment-care.content }}
+                </div>
+              </div>
+              {% if product.title contains 'Sock Leggings' %}
+              <li class="h5">FAQ’s</li>
+              {% endif %}
+              {% if product.title contains 'Sock Leggings' %}
+              <div class="same faq">
+                <div class="product-desc newf">
+                  <div class="scrollbar-outer" id="scrollouter6">
+                    {{ pages.sock-leggings-faq-s.content }}
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+            </ul> 
+          </div>
+          {% endcomment %}
+        </div>    
+      </div>
+      {% if isGiftcard == false %}
+      <div class="clear"></div>
+      <div id="stamped-main-widget" class="stamped-main-widget stamped-style-borderless"
+           data-widget-style="standard"
+           data-product-id="{{ product.id }}"
+           data-name="{{ product.title | escape }}"
+           data-url="{{ shop.url }}{{ product.url }}"
+           data-image-url="{{ product.featured_image | product_img_url: "large" |replace: '?', '%3F' | replace: '&','%26'}}"
+           data-description="{{ product.description | escape }}"
+           data-product-sku="{{product.handle}}">
+        {{ product.metafields.stamped.reviews }}
+      </div>
+      {% endif %}
+      <div class="clear"></div>
+      {% include "foursixty-product-gallery" %}
+      {% comment %}
+      <div class="clear"></div>
+      {% if collection %}
+      {% include 'related-products' %}
+      {% endif %}
+      {% if collection %} 
+      <div id="product-navigation" class="desktop-12 mobile-3">
+        <span class="backto">
+          {{ 'products.product.back_to' | t }} {{ collection.title | link_to: collection.url }}
+        </span>
+      </div>
+      {% endif %}
+      {% endcomment %}
+    </div>
+  </div>
+</div>
+
+<script>
+function addEventListenerStamped(el, eventName, handler) { 
+   if (el.addEventListener) { el.addEventListener(eventName, handler); }
+   else { el.attachEvent('on' + eventName, function () { handler.call(el); }); } 
+}
+
+addEventListenerStamped(document, 'stamped:reviews:loaded', function(e) {
+  stampedWidget();
+});
+  
+  
+  function stampedWidget(){
+    $('.stamped-form-title').text('Write a review');
+  }
+  
+</script>
+
+<script>
+  
+
+  $(document).on('change','select',function(){
+    if (!$('#AddToCart').hasClass('disabled') ) {
+      $('.notification-bis').hide();
+    } else {
+      $('.notification-bis').show();
+    }
+  });
+
+  jQuery(document).ready(function(){
+
+  stampedWidget();
+
+    var pdElement = jQuery('.product-desc');
+    var pdTriggerElement = jQuery('.desc-slider');
+    var heightOfPD = pdElement.height();
+    if ( heightOfPD < 350 ) {
+      pdTriggerElement.remove();
+    }
+    pdTriggerElement.click(function(){
+      if(pdTriggerElement.hasClass('show-more')){
+        pdTriggerElement.removeClass('show-more').addClass('show-less').html('- Less Details');
+        pdElement.removeClass('hide-overflow');
+      }else{
+        if(jQuery(window).width() < 768){
+          jQuery('html, body').animate({
+            scrollTop: $(".product-desc-container").offset().top - 200
+          }, 2000, function(){
+            pdTriggerElement.removeClass('show-less').addClass('show-more').html('+ More Details');
+            pdElement.addClass('hide-overflow');
+          });
+        }else{
+          pdTriggerElement.removeClass('show-less').addClass('show-more').html('+ More Details');
+          pdElement.addClass('hide-overflow');
+        }
+      }
+    });
+
+  
+
+    //       var hm = $('#pdp_tabs').html();
+    //       $('#mobDescription').html(hm);
+
+    jQuery('.pdp_tab_title').on('click',function(){
+      jQuery(this).parent().toggleClass('active');
+      if(jQuery(this).parent().hasClass( "active" )){
+        jQuery(this).parent().find(".pdp_tab_text").attr("aria-expanded", "true");
+      }
+      else{
+        jQuery(this).parent().find(".pdp_tab_text").attr("aria-expanded", "false");
+      }
+      if(jQuery('.js_stuck_left').length>0) {
+        leftBlockStuck.scrollHandle();
+      }
+    });
+  });
+</script>
+{{'jquery.fancybox.js' | asset_url | script_tag}}
+{{'jquery.fancybox.css' | asset_url | stylesheet_tag}}
+
+
+<script>
+  $(document).ready(function(e) {
+
+    var slideWrapper = $('.slider-for');
+
+
+    function videoStat(slick) {
+      var currentSlide = slick.find(".slick-current");
+      var slideType = currentSlide.attr("class").split(" ")[1];
+      if (slideType === "youtube") {
+        var pl = currentSlide.find("iframe").get(0);
+        var fid = $(pl).attr('id');
+        var ik_player = new YT.Player(fid);
+        ik_player.addEventListener("onStateChange", function(state){
+          if(state.data == 0 || state.data == 2){
+            slideWrapper.slick("slickNext");
+            slideWrapper.slick('slickPlay');
+          }
+        });
+      } else if (slideType === "hvideo") {
+        var pl = currentSlide.find("video").get(0);
+        pl.onended = function(e) {
+          slideWrapper.slick("slickNext");
+          slideWrapper.slick('slickPlay');
+        };
+        pl.onpause = function() {
+          slideWrapper.slick("slickNext");
+          slideWrapper.slick('slickPlay');
+        }; 
+      }
+    }
+
+    function postMessageToPlayer(player, command){
+      if (player == null || command == null) return;
+      player.contentWindow.postMessage(JSON.stringify(command), "*");
+    }
+
+    function playPauseVideo(slick, control){
+      var currentSlide, slideType, startTime, player, video;
+      currentSlide = slick.find(".slick-current");
+      slideType = currentSlide.attr("class").split(" ")[1];
+      player = currentSlide.find("iframe").get(0);
+      if (slideType === "youtube") {
+        switch (control) {
+          case "play":
+            slideWrapper.slick('slickPause');
+            postMessageToPlayer(player, {
+              "event": "command",
+              "func": "mute"
+            });
+            postMessageToPlayer(player, {
+              "event": "command",
+              "func": "playVideo"
+            });
+            break;
+          case "pause":
+            postMessageToPlayer(player, {
+              "event": "command",
+              "func": "pauseVideo"
+            });
+            break;
+        }
+      } else if (slideType === "hvideo") {
+        video = currentSlide.find("video").get(0);
+        if (video != null) {
+          if (control === "play"){
+            slideWrapper.slick('slickPause');
+            video.play();
+          } else {
+            video.pause();
+            slideWrapper.slick("slickNext");
+            slideWrapper.slick('slickPlay');
+          }
+        }
+      }
+    }
+    slideWrapper.on("beforeChange", function(event, slick) {
+      slick = $(slick.$slider);
+      playPauseVideo(slick,"pause");
+    });
+    slideWrapper.on("afterChange", function(event, slick) {
+
+      slick = $(slick.$slider);
+      playPauseVideo(slick,"play");
+      videoStat(slick);
+    });
+
+    slideWrapper.on("init", function(slick){
+      slick = $(slick.currentTarget);
+      setTimeout(function(){
+        playPauseVideo(slick,"play");
+        videoStat(slick);
+      }, 1000);
+    });
+
+    slideWrapper.slick({
+      infinite: false,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      arrows: true,
+      dots: true,
+      asNavFor: '.slider-nav'
+    });
+
+    $('.slider-nav').slick({
+      infinite: false,
+      slidesToShow: 5,
+      slidesToScroll: 1,
+      asNavFor: '.slider-for',
+      dots: false,
+      arrows: true,
+      focusOnSelect: true,
+      vertical:true,
+      responsive: [
+        {
+          breakpoint: 767,
+          settings: {
+            vertical:false,
+      		slidesToShow: 4
+          }
+        }
+	  ]
+    });
+    
+    $('input[type=radio][name=pair-1]').change(function() {
+      $(".pair-1-varid").val($(this).attr('data-variant'));
+      
+      if($(this).attr('data-available') == 'out-of-stock')
+      {
+        $(".pair-1-add").attr("disabled", "disabled");
+        $(".pair-1-add").val("Sold Out");
+      }
+      else{
+        $(".pair-1-add").removeAttr("disabled");
+        $(".pair-1-add").val("ADD TO BAG");
+      }
+    });
+    $('input[type=radio][name=pair-2]').change(function() {
+      $(".pair-2-varid").val($(this).attr('data-variant'));
+      
+      if($(this).attr('data-available') == 'out-of-stock')
+      {
+        $(".pair-2-add").attr("disabled", "disabled");
+        $(".pair-2-add").val("Sold Out");
+      }
+      else{
+        $(".pair-2-add").removeAttr("disabled");
+        $(".pair-2-add").val("ADD TO BAG");
+      }
+    });
+    $('input[type=radio][name=pair-3]').change(function() {
+      $(".pair-3-varid").val($(this).attr('data-variant'));
+      
+      if($(this).attr('data-available') == 'out-of-stock')
+      {
+        $(".pair-3-add").attr("disabled", "disabled");
+        $(".pair-3-add").val("Sold Out");
+      }
+      else{
+        $(".pair-3-add").removeAttr("disabled");
+        $(".pair-3-add").val("ADD TO BAG");
+      }
+    });
+    $('input[type=radio][name=pair-4]').change(function() {
+      $(".pair-4-varid").val($(this).attr('data-variant'));
+      
+      if($(this).attr('data-available') == 'out-of-stock')
+      {
+        $(".pair-4-add").attr("disabled", "disabled");
+        $(".pair-4-add").val("Sold Out");
+      }
+      else{
+        $(".pair-4-add").removeAttr("disabled");
+        $(".pair-4-add").val("ADD TO BAG");
+      }
+    });
+
+  });
+</script>
+
+<script>
+  $("#tops").click(function(){
+  
+        document.getElementById("tops").setAttribute("aria-selected", "true");
+        document.getElementById("bottoms").setAttribute("aria-selected", "false");
+    	$("#tops-tab").removeAttr('hidden');
+    	$("#bottoms-tab").attr("hidden",true);
+         $("#tops").css("background","black");
+         $("#tops").css("color","white");
+    });
+  
+    $("#bottoms").click(function(){
+  
+        document.getElementById("tops").setAttribute("aria-selected", "false");
+        document.getElementById("bottoms").setAttribute("aria-selected", "true");
+        $("#bottoms-tab").removeAttr('hidden');
+    	$("#tops-tab").attr("hidden",true); 
+         $("#tops").css("background","white");
+         $("#tops").css("color","black");
+      
+    });
+  
+
+</script>
+
+
+{% schema %}
+{
+"name": "Product",
+"settings": []
+
+}
+{% endschema %}
+
+

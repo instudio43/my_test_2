@@ -1,0 +1,45 @@
+<title>{{ page.title }}</title>
+{% layout settings.customer_layout %}
+
+<div class="my-account-wrap">
+
+	<div id="content" class="row" >	
+		<div class="section-title desktop-12 mobile-3">
+			<h1>{{ 'customer.account.title' | t }}</h1>
+		</div>
+
+		<div id="customer-wrapper" class="desktop-12 mobile-3">
+
+			<div id="customer_sidebar" class="desktop-3 mobile-3">
+				<ul>
+					<li><a id="account_details" href="/pages/account-details" class="active" >Account Details</a></li>
+					<li><a id="order_history" href="/account" class="">Order History</a></li>
+					<li><a id="view_address" href="/account/addresses" class="">Addresses</a></li>
+				</ul>
+				<div class="logout"><a href="/account/logout" >Log out</a></div>
+			</div>
+
+			<div id="customer_info" class="desktop-9 mobile-3 main-content">
+				<div class="sub-title">Account Details</div>
+				<div class="info-table">
+					<ul>
+						<li>
+							<span class="strong">First Name</span>
+							<span>{{ customer.first_name }}</span>
+						</li>
+						<li>
+							<span class="strong">Last Name</span>
+							<span>{{ customer.last_name }}</span>
+						</li>
+						<li>
+							<span class="strong">Email</span>
+							<span>{{ customer.email }}</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+	
+		</div>
+
+	</div>
+</div>

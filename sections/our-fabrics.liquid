@@ -1,0 +1,68 @@
+<div class="our-fabrics static-page">
+<ul>
+{% for block in section.blocks %}
+	<li class="column-half left-side">
+		<div class="left-img" style="background-color:{{block.settings.bg_color}};"><img src="{{block.settings.image | img_url : 'master'}}" alt="" /></div>
+        <div class="right-desc">
+          {% if block.settings.html_code != blank %}
+          {{block.settings.html_code}}
+          {% endif %}
+          {% comment %}
+          {% if block.settings.button_url != blank and block.settings.button_text != blank %}
+          <div class="fabric-link"><a href="{{block.settings.button_url}}">{{block.settings.button_text}}</a></div>
+          {% endif %}
+          {% endcomment %}
+        </div>
+	</li>
+{% endfor %}
+  </ul>
+</div>
+
+
+{% schema %}
+  {
+    "name": "Our Fabrics",
+    "settings": [],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Fabrics",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image",
+            "info": "1000 x 1000px .jpg recommended"
+          },
+          {
+            "type": "color",
+            "id": "bg_color",
+            "label": "Background Color"
+          },
+          {
+            "type": "html",
+            "id": "html_code",
+            "label": "HTML Content"
+          },
+          {
+            "type": "text",
+            "id": "button_text",
+            "label": "Button Text",
+			"default": "Shop This Fabric"
+          },
+          {
+            "type": "url",
+            "id": "button_url",
+            "label": "Button Link"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

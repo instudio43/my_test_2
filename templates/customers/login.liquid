@@ -1,0 +1,132 @@
+{% layout settings.customer_layout %}
+<div id="content">
+<div id="customer-wrapper" class="desktop-12 mobile-3">
+
+  <!-- Left Side -->
+
+  <div id="template" class="desktop-5 mobile-3">
+
+    <!-- Guest Checkout login -->
+
+    {% if shop.checkout.guest_login %}
+    <div id="guest" class="desktop-12 mobile-3">
+      <div class="template_header">
+        <h2>{{ 'customer.login.guest_title' | t }}</h2>
+        {% form 'guest_login' %}
+        <input aria-label="Continue" class="secondary button" type="submit" value="{{ 'customer.login.guest_continue' | t }}" />
+        {% endform %}
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="clear"></div>
+
+
+    <!-- End Guest Checkout login -->
+    <!-- Customer Login -->
+
+  <div class="contain-full">
+     <div class="left-side column-half">
+      <img src="{{ 'login-bannerImage.png' | asset_url }}" alt="register-banner">
+     </div>
+      <div class="right-side column-half">
+       <div class="form-contain">
+            <div id="customer">
+              <div class="template_header">
+                 <h2 class="title">{{ 'customer.login.title' | t }}</h2>
+              </div>
+
+              {% form 'customer_login' %}
+              {{ form.errors | default_errors }}
+              {% comment %}
+<script src='//open-signin.okasconcepts.com/customer/script?shop=bombshell-sportswear.myshopify.com'></script>
+              {% endcomment %}
+
+              <div id="login_email" class="clearfix large_form">
+                {% comment %}<label for="customer_email" class="login">{{ 'customer.login.email' | t }}</label>{% endcomment %}
+                <input aria-label="Email address" type="email" value="" name="customer[email]" id="customer_email" class="large" size="30" placeholder="{{ 'customer.login.email' | t }}" />
+              </div>
+
+              {% if form.password_needed %}
+
+              <div id="login_password" class="clearfix large_form">
+                {% comment %}<label for="customer_password" class="login">{{ 'customer.login.password' | t }}</label>{% endcomment %}
+                <input autocomplete="current-password" aria-label="Password" type="password" value="" name="customer[password]" id="customer_password" class="large password" size="16" placeholder="{{ 'customer.login.password' | t }}" />
+                <div id="forgot_password">
+                  <a href="#" onkeypress="showRecoverPasswordForm();return false;" onclick="showRecoverPasswordForm();return false;">{{ 'customer.login.forgot_password' | t }}</a>
+                </div>
+              </div>
+
+              {% endif %}
+
+              <div class="action_bottom">
+                <input aria-label="Log in" class="secondary button" type="submit" value="{{ 'customer.login.sign_in' | t }}" />
+              </div>
+
+              <span class="already-login Create-account-link"><a href="/account/register">Create New Account</a> </span>
+
+              {% endform %}
+            </div>
+        </div>
+      </div>
+    <!-- End Customer Login -->
+    <!-- Password Recovery -->
+
+
+    <div id="recover-password" class="right-side column-half" style='display:none'>
+      <div class="form-contain">
+      <div class="template_header">
+        <h2 class="title">{{ 'customer.recover_password.title' | t }}</h2>
+        <p class="note">{{ 'customer.recover_password.subtext' | t }}</p>
+      </div>
+
+      {% form 'recover_customer_password' %}
+
+      {{ form.errors | default_errors }}
+
+      <div id="recover_email" class="clearfix large_form">
+        {% comment %}<label for="email" class="large">{{ 'customer.recover_password.email' | t }}</label>{% endcomment %}
+        <input type="email" value="" size="30" name="email" id="recover-email" class="large" placeholder="{{ 'customer.recover_password.email' | t }}" />
+      </div>
+
+      <div class="action_bottom">
+        <input aria-label="Recover password now" class="secondary button" type="submit" value="{{ 'customer.recover_password.submit' | t }}" />
+        <span class="note"><a href="#" onkeypress="hideRecoverPasswordForm();return false;" onclick="hideRecoverPasswordForm();return false;">{{ 'customer.recover_password.cancel' | t }}</a></span>
+      </div>
+
+      {% endform %}
+    </div>
+    </div>
+  </div>
+    <!-- End Password Recovery -->
+    <!-- Create Account -->
+
+
+    <!-- Create Customer -->
+
+   <!--div id="create-customer" class="desktop-push-2 desktop-5 mobile-3">
+      <div class="template_header">
+        <h2 class="title">{{ 'customer.register.title' | t }}</h2>
+      </div>
+
+      {% include 'customer-fields' %}
+    </div-->
+
+    <!-- End Create Account -->
+
+</div>
+</div>
+</div>
+<script type="text/javascript">
+  function showRecoverPasswordForm() {
+    document.getElementById('recover-password').style.display = 'block';
+    document.getElementById('customer').style.display='none';
+  }
+
+  function hideRecoverPasswordForm() {
+    document.getElementById('recover-password').style.display = 'none';
+    document.getElementById('customer').style.display = 'block';
+  }
+
+  if (window.location.hash == '#recover') { showRecoverPasswordForm() }
+</script>

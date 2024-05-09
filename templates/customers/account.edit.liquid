@@ -1,0 +1,30 @@
+{% layout settings.customer_layout %}
+<div class="my-account-wrap">
+<div id="content" class="row">
+<div class="section-title desktop-12 mobile-3">
+			<h1>Edit Account</h1>
+		</div>
+	<div id="customer-wrapper" class="desktop-12 mobile-3">
+		<div id="customer_sidebar" class="desktop-3 mobile-3">
+			<ul>
+				<li><a id="account_details" href="/account" class="active">Account Details</a></li>
+				<li><a id="order_history" href="/account#order-history" class="">Order History</a></li>
+				<li><a id="view_address" href="/account/addresses">Addresses</a></li>
+				<li><a id="view_address" href="a/wishlist" class="">Favorites</a></li>
+			</ul>
+			<div class="logout"><a href="/account/logout" >Log out</a></div>
+		</div>
+	
+		<div id="template" class="desktop-9 mobile-3 main-content edit-account-info">
+			<div id="guest">
+				<div class="template_header">
+					{% include 'customer-fields' %}
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</div>
+</div>
+
+

@@ -1,0 +1,269 @@
+
+ <header class="scrollheader">
+   <div class="mobileSearchbox">
+     <form action="/search" method="get">
+       <button aria-label="Submit" class="search-submit" type="submit" name="submit">{% include 'icon-search' %}</button>
+       <input aria-label="Search" type="text" name="q" id="q" placeholder="Search our store"/>
+       <input type="hidden" name="type" value="product">
+       <span class="mobSearchCloseButton">{% include 'icon-close' %}</span>
+     </form>
+   </div>
+        <div class="bannertop{% if settings.full-width-header %} gridlock-fluid{% endif %}">
+		<div class="row">
+          <div class="container">
+            {% if settings.enable_banner %}
+            <div class="desktop-6 tablet-2 mobile-3" id="banner-message" style="display:none;">
+              <div class="announcementSlider1">
+                {% if settings.banner_message != blank %}
+                <div class="announcementMessage1">{{ settings.banner_message }} {{ settings.banner_message_price | money_with_currency | split: '.' | first }}</div>
+                {% endif %}
+                {% if settings.banner_message_2 != blank %}
+                <div class="announcementMessage1"><span>{{ settings.banner_message_2 }}</span></div>
+                {% endif %}
+                {% if settings.banner_message_3 != blank %}
+                <div class="announcementMessage1"><span>{{ settings.banner_message_3 }}</span></div>
+                {% endif %}
+              </div>
+            </div>
+            <div class="desktop-6 tablet-2 mobile-3" id="banner-message-other" style="display:none;">
+              <div class="announcementSlider2">
+                {% if settings.banner_message_other != blank %}
+                <div class="announcementMessage2">{{ settings.banner_message_other }}</div>
+                {% endif %}
+                {% if settings.banner_message_other_2 != blank %}
+                
+                <div class="announcementMessage2">{{ settings.banner_message_other_2 }}</div>
+                {% endif %}
+                {% if settings.banner_message_other_3 != blank %}
+                <div class="announcementMessage2">{{ settings.banner_message_other_3 }}</div>
+                {% endif %}
+              </div>
+              
+              
+            </div>
+            {% endif %}
+
+            <div class="desktop-6 tablet-4 right hdrtop-cart">
+            <ul id="cart">
+              
+              
+			  <li>
+                <a aria-label="Shopping Cart, {{ cart.item_count }} {% if cart.item_count > 1 %}items{% else %}item{% endif %}" href="/cart" class="cart-link-header" >
+                  {% include 'icon-cart' %}
+					<span class="CartCount">{% if cart.item_count != 0 %}{{ cart.item_count }}{% endif %}</span>
+                </a>
+              </li>
+              {% unless customer %}
+              <li class="cust custSignup"><a href="/account/register">sign up</a></li>
+              {% endunless %}
+              <li class="cust custRewards"><a href="/pages/rewards-program">Rewards{% if customer %}(<span data-lion-points="approved"></span>){% endif %}</a></li>
+              {% unless customer %}
+              <li class="cust custLogin"><a href="/account/login">login</a></li>
+              {% endunless %}
+
+			{% comment %}{% include 'ly-languages-switcher' %}{% endcomment %}
+
+              {% if shop.customer_accounts_enabled %}
+              {% if customer  %}
+              <li class="cust">
+                <a href="/account">{{ 'customer.account.title' | t }}</a>
+                </li>
+                {% else %}
+              
+              
+              {% endif  %}
+              {% endif %}
+
+			  <li style="display: none;">
+				<a aria-label="Wishlist" id="bannertop-wishlist" href="http://www.bombshellsportswear.com/a/wishlist">
+                <i class="fa fa-heart"></i>
+                </a>
+              </li>
+
+            </ul>
+            </div>
+            {% comment %} {% include 'mobile-cart' %}{% endcomment %}
+          </div>
+        </div>
+		</div>
+		<div class="logo-nav-main">
+        <div id="navigation"{% if settings.full-width-header %} class="gridlock-fluid clearfix"{% endif %}>
+
+		  <div class="container">
+		   <div class="row">
+            <div class="nav-container desktop-12 tablet-6 mobile-3">
+{% if settings.show_multiple_currencies %}
+                    <div class="lang-container">
+                        {% include 'currencies-switcher' %}
+                    </div>
+                {% endif %}
+              <div id="logo" class="bottom_logo logo-main mobile-3">
+
+                {% if settings.use_logo_image %}
+                <a href="/"><img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" style="border: 0;"/></a>
+                {% else %}
+                <a href="/">{{ shop.name }}</a>
+                {% endif %}
+              </div>
+			</div>
+			</div>
+			</div>
+           <div class="menu-main">
+
+		  <div class="container">
+		  <div class="row">
+              <nav>
+                <ul id="main-nav" role="navigation">
+				  {% comment %}
+                  {% for link in linklists.main-menu.links %}
+					{% include 'navigation' %}
+				  {% endfor %}
+				  {% endcomment %}
+				  {% for link in linklists.mega-menu.links %}
+					{% include 'navigation' %}
+                  {% endfor %}
+                  {% comment %}<li><a href='/pages/rewards-program'>Bombshell Rewards (<span data-lion-points>0</span>)</a></li>{% endcomment %}
+                  <li class="nav-search-form">
+                      <form action="/search" method="get">
+                        <button aria-label="Submit" class="search-submit" type="submit" name="submit"><i class="icon-search"></i></button>
+                        {% if search.performed %}
+                        {% if search.results_count == 0 %}
+                        <p class="search-msg no-result">{{ 'general.search.no_results_html' | t: terms: search.terms }}</p>
+                        {% else %}
+                        <p class="search-msg">{{ 'general.search.results_for_html' | t: terms: search.terms }}</p>
+                        {% endif %}
+                        {% endif %}
+                        <input aria-label="Search" type="text" name="q" id="q" placeholder=""/>
+                        <input type="hidden" name="type" value="product">
+                      </form>
+
+                  </li>
+                </ul>
+              </nav>
+            </div>
+            {% include 'mobile-cart' %}
+          </div>
+		  </div>
+        </div>
+		</div>
+      </header>
+{% schema %}
+  {
+    "name": "Header",
+    "class": "index-section index-section--flush",
+    "max_blocks": 3,
+	"settings": [
+	 {
+        "type": "header",
+		"content": "Mega Menu Title"
+	},
+    {
+      "type": "text",
+      "id": "megadropdown_title",
+      "label": "Mega Menu 1 title"
+    },
+	{
+      "type": "text",
+      "id": "megadropdown_title_1",
+      "label": "Mega Menu 2 title"
+    },
+	{
+      "type": "text",
+      "id": "megadropdown_title_2",
+      "label": "Mega Menu 3 title"
+    }
+	],
+	"blocks": [
+      {
+        "type": "image",
+        "name": "Mega Menu",
+        "settings": [
+		{
+            "type": "text",
+            "id": "megadropdown_link",
+            "label": "Mega drop-down link title"
+          },
+          {
+            "type": "text",
+            "id": "nav_promo_link_1",
+            "label": "Mega drop-down image link 1",
+            "default": "\/collections\/all"
+          },
+          {
+            "type": "text",
+            "id": "nav_promo_title_1",
+            "label": "Mega drop-down image Title 1",
+            "default": "Title"
+          },
+          {
+            "type": "image_picker",
+            "id": "nav_promo_image_1",
+            "label": "Image 1"
+          },
+
+          {
+            "type": "text",
+            "id": "nav_promo_link_2",
+            "label": "Mega drop-down image link 2",
+            "default": "\/collections\/all"
+          },
+			{
+            "type": "text",
+            "id": "nav_promo_title_2",
+            "label": "Mega drop-down image Title 2",
+            "default": "Title"
+          },
+          {
+            "type": "image_picker",
+            "id": "nav_promo_image_2",
+            "label": "Image 2"
+          },
+
+          {
+            "type": "text",
+            "id": "nav_promo_link_3",
+            "label": "Mega drop-down image link 3",
+            "default": "\/collections\/all"
+          },
+		  {
+            "type": "text",
+            "id": "nav_promo_title_3",
+            "label": "Mega drop-down image Title 3",
+            "default": "Title"
+          },
+          {
+            "type": "image_picker",
+            "id": "nav_promo_image_3",
+            "label": "Image 3"
+          },
+
+		 {
+            "type": "text",
+            "id": "nav_promo_link_4",
+            "label": "Mega drop-down image link 4",
+            "default": "\/collections\/all"
+          },
+		 {
+            "type": "text",
+            "id": "nav_promo_title_4",
+            "label": "Mega drop-down image Title 4",
+            "default": "Title"
+          },
+          {
+            "type": "image_picker",
+            "id": "nav_promo_image_4",
+            "label": "Image 4"
+          },
+
+          {
+            "type": "link_list",
+            "id": "mega_1_links",
+            "label": "Choose menu"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+

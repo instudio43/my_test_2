@@ -1,0 +1,470 @@
+<!-- templates/product.liquid -->
+
+
+<meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
+<meta itemprop="image" content="{{ product.featured_image.src | img_url: 'grande' }}">
+<title>{{ product.title }}</title>
+
+{% if product.tags contains 'giftcard' %}
+ <img alt="Christmas Gift Card" class="hidemob" src="//cdn.shopify.com/s/files/1/0580/1077/files/Christmas_gift_card_banner-3_copy.jpg?499253152107244523"/>
+{% endif %}
+
+{% for tag in product.tags %}
+	{% if tag contains 'video;' %}
+		{% assign video = tag | split: ';' | last %}
+	{% endif %}
+	{% if tag contains 'videothumb;' %}
+		{% assign videothumb = tag | split: ';' | last %}
+	{% endif %}
+	{% if tag contains 'fabric:' %}
+		{% assign fabric = tag | split: ':' | last %}
+    {% endif %}
+{% endfor %}
+
+{% assign is_top = false %}
+{% assign is_bottom = false %}
+
+{% for link in linklists.top-types.links %}
+  {% if link.title == product.type %}
+      {% assign is_top = true %}
+  {% endif %}
+{% endfor %}
+
+{% for link in linklists.bottom-types.links %}
+  {% if link.title == product.type %}
+      {% assign is_bottom = true %}
+  {% endif %}
+{% endfor %}
+
+{% if product.type == 'Sports Top' %}
+    {% assign is_top = true %}
+{% endif %}
+
+{% if product.type == 'Bottoms' %}
+    {% assign is_bottom = true %}
+{% endif %}
+
+
+<div id="content" class="row prdt-cont-main" >
+  <div itemscope itemtype="http://schema.org/Product" id="product-{{ product.id }}" class="product-page">
+
+    <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
+    <meta itemprop="image" content="{{ product.featured_image.src | img_url: 'grande' }}">
+
+    <div class="clear"></div>
+
+    <div class="mobile-hide">
+      {% if settings.show_product_sidebar %}
+      {% include 'collection-sidebar' %}
+      {% endif %}
+    </div>
+
+    <div id="bside" class="bside {% if settings.show_product_sidebar %}{% else %}{% endif %}">
+   {% comment %}
+
+      <!-- START MAGICZOOMPLUS IMAGES -->
+
+
+
+      {% include 'magiczoomplus' %}
+
+      <!-- END MAGICZOOMPLUS IMAGES -->
+
+      {% endcomment %}
+
+		<div id="product-gallery" class="desktop-6 mobile-3 product-photos-prt">
+		<div id="product-item" class="product-item-main">
+
+			{% assign groupIndex = 1 %}
+			<!-- add active class here -->
+			<div class="group" data-groupindex="{{ groupIndex }}" id="groupIndex_{{ groupIndex }}">
+				<div class="product-img first-product-image">
+					<a class="featured-image-link" data-fancybox="image-gallery" href="{{ product.featured_image | img_url: 'master' }}">
+						<img src="{{ product.featured_image | img_url: 'master' }}" title="{{ product.title }}" alt="{{ product.title }}" />
+					</a>
+					{% assign groupCountre = 1 %}
+				</div>
+				{% if video %}
+				<div class="product-img product-video">
+					<span id="video-play-button" onkeypress="videoControls();" onclick="videoControls();">play</span>
+					<!-- <img src="{{ videothumb }}" id="video-thumb" width="368" height="500" onclick="videoControls();" /> -->
+					<video preload="auto" id="product-video" onkeypress="videoControls()" onclick="videoControls()" poster="{{ videothumb }}">
+					  <source src="{{ video }}" type="video/mp4">
+					  Your browser does not support HTML5 video.
+					</video>
+					{% assign groupCountre = 2 %}
+				</div>
+				{% endif %}
+				{% if product.images.size > 1 %}
+					{% for image in product.images offset:1 limit: 2 %}
+						<div class="product-img">
+							<a class="other-image-link" data-fancybox="image-gallery" href="{{ image | product_img_url: 'master' }}">
+								<img src="{{ image | img_url: 'master' }}" title="{{ product.title }}" alt="{{ product.title }}" />
+							</a>
+						</div>
+						{% assign groupCountre = groupCountre | plus : forloop.index %}
+					{% endfor %}
+				{% endif %}
+			</div>
+			{% if groupCountre > 4 %}
+				{% if video %}
+					{% assign offsetValue = 1 %}
+				{% else %}
+					{% assign offsetValue = 2 %}
+				{% endif %}
+
+				{% for image in product.images offset:offsetValue %}
+					{% assign moduleCheck = forloop.index | modulo:4 %}
+					{% if moduleCheck == 1 %}
+						{% assign groupIndex = groupIndex | plus: 1 %}
+						<div class="group" data-groupindex="{{ groupIndex }}" id="groupIndex_{{ groupIndex }}" >
+					{% endif %}
+					<div class="product-img" {{ moduleCheck }}>
+						<a class="other-image-link" data-fancybox="image-gallery" href="{{ image | product_img_url: 'master' }}">
+							<img src="{{ image | img_url: 'master' }}" title="{{ product.title }}" alt="{{ product.title }}" />
+						</a>
+					</div>
+					{% if moduleCheck == 0 or forloop.last == true %}
+						</div>
+					{% endif %}
+				{% endfor %}
+
+			{% endif %}
+
+		</div>
+		</div>
+
+		<script>
+		  $(document).ready(function(){
+			var $owl = $('#product-item');
+			$owl.on('initialize.owl.carousel', function(event){
+				// Do something
+				resizeVideo();
+			});
+			$owl.owlCarousel({
+				loop:true,
+				nav:true,
+				items: 1,
+				lazyLoad: true,
+				autoHeight: false,
+				responsive:{
+					0:{
+						items:1,
+						autoHeight: true,
+					},
+					600:{
+						items:1
+					},
+					1000:{
+						items:1
+					}
+				}
+			});
+		  });
+		</script>
+
+		{% comment %}
+		{% if groupCountre > 4 %}
+			<style>
+				.group{display: none;}
+				.group.active{display: block;}
+			</style>
+			<a href="javascript:void(0);" onclick="nextSlide();" id="next-link">Next</a>
+			<a href="javascript:void(0);" onclick="preSlide();" id="pre-link">Pre</a>
+			<script>
+				var currSlice = 1;
+				function checkNextAvail(){
+					var nextSlideGroup = $('#groupIndex_' + (currSlice+1) );
+					if(nextSlideGroup.length){
+						$('#next-link').show();
+					}else{
+						$('#next-link').hide();
+					}
+				}
+				function preNextAvail(){
+					var preSlideGroup = $('#groupIndex_' + (currSlice-1) );
+					if(preSlideGroup.length){
+						$('#pre-link').show();
+					}else{
+						$('#pre-link').hide();
+					}
+				}
+				function nextSlide(){
+					var currSlideGroup = $('#groupIndex_' + currSlice );
+					var nextSlideGroup = $('#groupIndex_' + (currSlice+1) );
+					if(nextSlideGroup.length){
+						currSlideGroup.removeClass('active');
+						nextSlideGroup.addClass('active');
+						window.currSlice += 1;
+						checkNextAvail();
+						preNextAvail();
+					}
+				}
+				function preSlide(){
+					var currSlideGroup = $('#groupIndex_' + currSlice );
+					var preSlideGroup = $('#groupIndex_' + (currSlice-1) );
+					if(preSlideGroup.length){
+						currSlideGroup.removeClass('active');
+						preSlideGroup.addClass('active');
+						window.currSlice -= 1;
+						preNextAvail();
+						checkNextAvail();
+					}
+				}
+			</script>
+		{% endif %}
+		{% endcomment %}
+
+		{% if video %}
+		<script>
+			function videoControls(){
+				var elem = document.getElementById("product-video");
+				// $('#video-thumb').remove();
+				// $(elem).show();
+				if(elem.paused){
+					elem.play();
+					$('#video-play-button').hide();
+				} else {
+					elem.pause();
+					$('#video-play-button').show();
+				}
+			}
+
+			$(document).ready(function(){
+				// checkNextAvail();
+				// preNextAvail();
+				$('.first-product-image img').load(function(){
+					resizeVideo();
+				});
+				$( window ).resize(function() {
+				  resizeVideo();
+				});
+			});
+
+			function resizeVideo(){
+				var ref = $('.first-product-image');
+				var refHeight = ref.height();
+				var refWidth = ref.width();
+				// $('.product-video img').height(refHeight).width(refWidth);
+				document.getElementById("product-video").style.setProperty( 'height', refHeight + 'px', 'important' );
+				// $('.product-video img, .product-video video').css({"width": refWidth + 'px !important', "height": refHeight + 'px !important' });
+			}
+		</script>
+		{% endif %}
+
+       <script>
+          $(window).load(function() {
+            $('.shifter-navigation').insertAfter('#PageContainer');
+          });
+      </script>
+
+      <div id="product-right" class="desktop-6 mobile-3 product-info-prt">
+
+		{% comment %}
+        {% if collection %}
+        <div class="desktop-1 right mobile-hide">
+          {% if collection.previous_product %}
+          {{ '<i class="icon-angle-left icon-2x"></i>' | link_to: collection.previous_product }}
+          {% endif %}
+          &nbsp;
+          {% if collection.next_product %}
+          {{ '<i class="icon-angle-right icon-2x"></i>' | link_to: collection.next_product }}
+          {% endif %}
+        </div>
+        {% endif %}
+		{% endcomment %}
+
+        <div id="product-description">
+		<div class="prd-title-price">
+		 <h1 itemprop="name">{{ product.title }}</h1>
+          
+
+          {% if settings.vendor %}<h3>{{ 'products.product.designer' | t }}: {{ product.vendor }}</h3>{% endif %}
+          <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+            <p id="product-price" class="product-price">
+              {% if product.available %}
+              {% if product.compare_at_price > product.price %}
+              <span class="product-price" itemprop="price">{{ product.price | money }}</span>&nbsp;<span class="was">{{ product.compare_at_price | money }}</span>
+              {% else %}
+             <span class="product-price" itemprop="price">{{ product.price | money }}</span>
+              {% endif %}
+              {% else %}
+              <span class="" itemprop="price">{{ product.price | money }}</span>{% if product.compare_at_price > product.price %}&nbsp;<span class="was">{{ product.compare_at_price | money }}</span>{% endif %}
+              {% endif %}
+            </p>
+            <!--product-price-->
+
+         
+              <span class="stamped-product-reviews-badge stamped-main-badge" data-id="{{ product.id }}" data-product-sku="{{ product.handle }}" style="display: inline-block;">{{ product.metafields.stamped.badge }}</span>
+
+			</div>
+			  </div>
+
+            <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+            <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
+
+            {% if settings.product-note != blank and false %}
+            <p class="product-note">
+              {{ settings.product-note }}
+            </p>
+            {% endif %}
+
+            {% include 'short-form' %}
+
+			<div class="social-and-policy-container">
+				<div class="social-container">
+					{% include 'social' with product %}
+				</div>
+				<div class="policy-links">
+					<ul>
+						<li>
+							<a href="#shipping-policy-content" data-fancybox="shipping-policy" >Shipping Policy</a>
+						</li>
+						<li>
+							<a href="#return-policy-content" data-fancybox="return-policy" >Return Policy</a>
+						</li>
+					</ul>
+					<div id="shipping-policy-content" style="display:none;">
+						{{ pages.returns-exchanges.content }}
+					</div>
+					<div id="return-policy-content" style="display:none;">
+						{{ pages.shipping-information.content }}
+					</div>
+				</div>
+			</div>
+
+			<div class="product-desc-container">
+				<div class="product-desc">
+					{{ product.description }}
+					{% if video %}
+					<video preload="auto" style="display: none;" id="product-video" muted="" playsinline="">
+					  <source src="//cdn.shopify.com/s/files/1/0580/1077/files/{{video}}.mp4" type="video/mp4" />
+					  <source src="//cdn.shopify.com/s/files/1/0580/1077/files/{{video}}.webm" type="video/webm" />
+					</video>
+					{% endif %}
+				</div>
+				<a href="javascript:void(0);" class="desc-slider show-less">- Less Details</a>
+				<script>
+					jQuery(document).ready(function(){
+						var pdElement = jQuery('.product-desc');
+						var pdTriggerElement = jQuery('.desc-slider');
+						var heightOfPD = pdElement.height();
+						pdTriggerElement.click(function(){
+							if(pdTriggerElement.hasClass('show-more')){
+								pdTriggerElement.removeClass('show-more').addClass('show-less').html('- Less Details');
+								pdElement.removeClass('hide-overflow');
+							}else{
+								pdTriggerElement.removeClass('show-less').addClass('show-more').html('+ More Details');
+								pdElement.addClass('hide-overflow');
+							}
+						});
+					});
+				</script>
+		    </div>
+
+          {% comment %}
+          <div class="rte">
+            {{ product.description }}
+          </div>   {% endcomment %}
+
+
+		  {% comment %}
+           <div class="fabric">
+      	 	{% include 'fabric-icons' %}
+      		</div>
+
+
+          <div class="tab">
+            <ul id="demoTab" class="resp-tabs-list hor_1">
+
+              {% if fabric %}
+              <li class="h5">Fabric Info</li>
+              <div class="same">
+                <div class="product-fabrics newf">
+                  <div class="scrollbar-outer" id="scrollouter2">
+                    {% include 'our-fabrics' with fabric %}
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+
+              <span id="reviews" style="visibility: hidden; height: 0;"></span>
+
+              <li class="h5">Product Care</li>
+              <div class="same">
+                <div class="scrollbar-outer" id="scrollouter5">
+                  	 {{ pages.garment-care.content }}
+                </div>
+              </div>
+              {% if product.title contains 'Sock Leggings' %}
+              <li class="h5">FAQ’s</li>
+              {% endif %}
+              {% if product.title contains 'Sock Leggings' %}
+              <div class="same faq">
+                <div class="product-desc newf">
+                  <div class="scrollbar-outer" id="scrollouter6">
+                    {{ pages.sock-leggings-faq-s.content }}
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+            </ul>
+          </div>
+
+		  {% endcomment %}
+
+        </div>
+      </div>
+
+
+      <div class="clear"></div>
+	  <div id="stamped-main-widget" 
+data-widget-style="standard"
+data-product-id="{{ product.id }}" 
+data-name="{{ product.title | escape }}" 
+data-url="{{ shop.url }}{{ product.url }}" 
+data-image-url="{{ product.featured_image | product_img_url: "large" |replace: '?', '%3F' | replace: '&','%26'}}" 
+data-description="{{ product.description | escape }}" 
+data-product-sku="{{product.handle}}"> 
+{{ product.metafields.stamped.reviews }} 
+</div>
+
+      <div class="clear"></div>
+
+      {% include "foursixty-product-gallery" %}
+
+
+      {% comment %}
+      <div class="clear"></div>
+
+      {% if collection %}
+		{% include 'related-products' %}
+      {% endif %}
+
+
+      {% if collection %}
+      <div id="product-navigation" class="desktop-12 mobile-3">
+        <span class="backto">
+          {{ 'products.product.back_to' | t }} {{ collection.title | link_to: collection.url }}
+        </span>
+      </div>
+      {% endif %}
+
+      {% endcomment %}
+
+    </div>
+  </div>
+</div>
+
+
+<script>
+	$(document).on('change','select',function(){
+		if (!$('#AddToCart').hasClass('disabled') ) {
+			$('.notification-bis').hide();
+		} else {
+			$('.notification-bis').show();
+		}
+	});
+</script>
+{{'jquery.fancybox.js' | asset_url | script_tag}}
+{{'jquery.fancybox.css' | asset_url | stylesheet_tag}}

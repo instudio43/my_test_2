@@ -1,0 +1,221 @@
+{% layout settings.customer_layout %}
+<div id="content" >
+  <div id="customer-wrapper" class="desktop-12 mobile-3">
+
+    <!-- Left Side -->
+
+    <div id="template" class="desktop-5 mobile-3">
+
+      <!-- Guest Checkout login -->
+
+      {% if shop.checkout.guest_login %}
+      <div id="guest" class="desktop-12 mobile-3">
+        <div class="template_header">
+          <h2>{{ 'customer.login.guest_title' | t }}</h2>
+          <!-- original code before added customer custom fields app -->
+          {% comment %}
+          {% form 'guest_login' %}
+          <input aria-label="Checkout as guest" class="secondary button" type="submit" value="{{ 'customer.login.guest_continue' | t }}" />
+          {% endform %}
+          {% endcomment %}
+          <!-- original code before added customer custom fields app -->
+          {% include 'customer-fields' %}
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="clear"></div>
+
+
+      <!-- End Guest Checkout login -->
+      <!-- Customer Login -->
+
+
+      <!--  <div id="customer" class="desktop-12 mobile-3">
+<div class="template_header">
+<h2>{{ 'customer.login.title' | t }}</h2>
+</div>
+
+{% form 'customer_login' %}
+{{ form.errors | default_errors }}
+<script src='//open-signin.okasconcepts.com/customer/script?shop=bombshell-sportswear.myshopify.com'></script>
+
+<div id="login_email" class="clearfix large_form">
+<label for="customer_email" class="login">{{ 'customer.login.email' | t }}</label>
+<input type="email" value="" name="customer[email]" id="customer_email" class="large" size="30" />
+</div>
+
+{% if form.password_needed %}
+
+<div id="login_password" class="clearfix large_form">
+<label for="customer_password" class="login">{{ 'customer.login.password' | t }}</label>
+<input type="password" value="" name="customer[password]" id="customer_password" class="large password" size="16" />
+<div id="forgot_password">
+<a href="#" onclick="showRecoverPasswordForm();return false;">{{ 'customer.login.forgot_password' | t }}</a>
+</div>
+</div>
+
+{% endif %}
+
+<div class="action_bottom">
+<input class="secondary button" type="submit" value="{{ 'customer.login.sign_in' | t }}" />
+</div>
+
+{% endform %}
+</div> -->
+
+
+      <!-- End Customer Login -->
+      <!-- Password Recovery -->
+
+
+      <div id="recover-password" class="desktop-12 mobile-3" style='display:none'>
+        <div class="template_header">
+          <h2>{{ 'customer.recover_password.title' | t }}</h2>
+          <p class="note">{{ 'customer.recover_password.subtext' | t }}</p>
+        </div>
+
+        {% form 'recover_customer_password' %}
+
+        {{ form.errors | default_errors }}
+
+        <div id="recover_email" class="clearfix large_form">
+          <label for="email" class="large">{{ 'customer.recover_password.email' | t }}</label>
+          <input aria-label="Recover Email" type="email" value="" size="30" name="email" id="recover-email" class="large" />
+        </div>
+
+        <div class="action_bottom">
+          <input aria-label="Submit" class="secondary button" type="submit" value="{{ 'customer.recover_password.submit' | t }}" />
+          <span class="note"><a href="#" onkeypress="hideRecoverPasswordForm();return false;" onclick="hideRecoverPasswordForm();return false;">{{ 'customer.recover_password.cancel' | t }}</a></span>
+        </div>
+
+        {% endform %}
+      </div>
+    </div>
+
+
+    <!-- End Left Side -->
+
+
+    <!-- End Password Recovery -->
+    <!-- Create Account -->
+
+
+    <!-- Create Customer -->
+    <div id="create-customer" class="desktop-push-2 desktop-5 mobile-3 createaccount">
+
+      <div class="contain-full">
+        <div class="left-side column-half">
+          <img src="{{ 'register.jpg' | asset_url }}" alt="register-banner">
+        </div>
+        <div class="right-side column-half">
+          <div class="form-contain">
+            <div class="template_header">
+              <h2>{{ 'customer.register.title' | t }}</h2>
+            </div>
+            {% form 'create_customer' %}
+            {{ form.errors | default_errors }}
+
+            <div id="first_name" class="clearfix large_form">
+              <input aria-label="First Name" type="text" value="" name="customer[first_name]" id="first_name" class="large" size="30" placeholder="{{ 'customer.register.first_name' | t }}" />
+            </div>
+
+            <div id="last_name" class="clearfix large_form">
+              <input aria-label="Last Name" type="text" value="" name="customer[last_name]" id="last_name" class="large" size="30" placeholder="{{ 'customer.register.last_name' | t }}" />
+            </div>
+
+            <div id="email" class="clearfix large_form">
+              <input aria-label="Email Address" type="email" value="" name="customer[email]" id="email" class="large" size="30" placeholder="{{ 'customer.register.email' | t }}" />
+            </div>
+
+
+            <div id="password" class="clearfix large_form">
+              <input aria-label="Password" type="password" value="" name="customer[password]" id="password" class="large password" size="30" placeholder="{{ 'customer.register.password' | t }}" />
+            </div>
+            <div class="agree-section no_sapce">
+              <div class="custom_checkbox">
+                <input id="agree" name="agree" required="required" checked="" type="checkbox">
+                <label for="agree"> I have reviewed and agree to the <a class="agree-checkout" href="/pages/terms-policies" target="_blank">terms and conditions</a></label>
+              </div>
+            </div>
+            <div class="agree-section">
+              <div class="custom_checkbox">
+                <input id="agree_2"  type="checkbox" checked="checked">
+                <label for="agree_2">Please notify me of New Releases and Restocks</label>
+                <input type="hidden" name="customer[accepts_marketing]" id="acm" value="true"/>
+              </div>
+            </div>
+            <div class="action_bottom">
+              <input aria-label="Submit" class="secondary button" type="submit" value="{{ 'customer.register.submit' | t }}"/>
+            </div>
+            <span class="already-login">Already have an account? <a href="/account/login"> Log in. </a> </span>
+            {% endform %}
+            
+			<form id="email_signup_main" action="//manage.kmail-lists.com/subscriptions/subscribe" data-ajax-submit="//manage.kmail-lists.com/ajax/subscriptions/subscribe" method="GET" target="_blank" novalidate="novalidate">
+              <input type="hidden" name="g" value="JKcmiE">
+              <input type="hidden" name="email" id="k_id_email">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Create Account -->
+  </div>
+</div>
+
+<script type="text/javascript">
+  
+  $(document).ready(function(){
+    $('#agree_2').on('change', function(){
+      if($(this).is(':checked')) {        
+	      $('#create_customer #acm').val('true');
+      } else {
+      	$('#create_customer #acm').val('false');
+      }            
+    });
+  });
+  
+// THIS IS SO BAD!  Replaced by above code.
+//	
+//   $(document).ready(function(){
+//     $('#agree_2').on('change', function(){
+//       if($(this).is(':checked')) {
+//         $('#create_customer').append('<input type="hidden" name="customer[accepts_marketing]" id="acm" value="true"/>');
+//       } else {
+//         $('#create_customer').append('<input type="hidden" name="customer[accepts_marketing]" id="acm" value="false"/>');
+//       }
+//     });
+//   });
+  
+  function showRecoverPasswordForm() {
+    document.getElementById('recover-password').style.display = 'inline-block';
+    document.getElementById('customer').style.display='none';
+  }
+
+  function hideRecoverPasswordForm() {
+    document.getElementById('recover-password').style.display = 'none';
+    document.getElementById('customer').style.display = 'inline-block';
+  }
+
+  if (window.location.hash == '#recover') { showRecoverPasswordForm() }
+</script>
+
+<script type="text/javascript" src="//www.klaviyo.com/media/js/public/klaviyo_subscribe.js"></script> 
+<script type="text/javascript">
+  $(document).ready(function(){
+  	$('#create_customer input#email').on('change',function(e){
+    	$('#email_signup_main #k_id_email').val($(this).val());
+//         console.log('Changed value to ' + $('#email_signup_main #k_id_email').val());
+	  }).change();
+    
+    $( "#create_customer" ).submit(function( event ) {
+      if($('#agree_2').is(":checked")) {
+      	$('#email_signup_main').submit();
+      }
+      return true;
+	});
+  });
+  KlaviyoSubscribe.attachToForms('#email_signup_main', {
+    hide_form_on_success: true
+  });
+</script>

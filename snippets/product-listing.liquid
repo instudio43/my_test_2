@@ -1,0 +1,78 @@
+
+<div class="ci">
+<div class="smartwishlist-container">
+	{% if customer %}
+		<span tabindex="0" class="smartwishlist" data-product="{{ product.id }}" data-variant="{{ product.variants.first.id }}"></span>
+
+	{% else %}
+		<a tabindex="0" aria-label="Toggle wishlist" href="javascript:void(0);" class="smartwishlist-label" onkeypress="$('#wishlist-pop, #wishlist-overlay').fadeIn();$('body').addClass('wl-pop-open');" onclick="$('#wishlist-pop, #wishlist-overlay').fadeIn();$('body').addClass('wl-pop-open');"><span class="fa fa-heart-o"></span></a>
+	{% endif %}
+</div>
+{% comment %}
+	{% if product.available %}
+		{% for col in product.collections %}
+			{% if col.handle == 'new' %}
+				<div class="new icn">{{ 'products.general.new' | t }}</div>
+			{% endif %}
+		{% endfor %}
+
+		{% if product.price < product.compare_at_price %}
+			<div class="sale-item icn">{{ 'products.general.sale' | t }}</div>
+		{% endif %}
+
+	{% else %}
+		{% comment %} <div class="so icn">{{ 'products.general.sold' | t }}</div>{% endcomment %}
+	{% endif %}
+{% endcomment %}
+
+    <div class="reveal">
+		<a href="{{ product.url }}" title="{{ product.title | escape }}">
+			<div class="front">
+				<img src="{{ product.featured_image.src | img_url: '100x' }}"
+                       alt="{{ product.featured_image.src.alt | escape }}"
+                       data-sizes="auto"
+                       data-src="{{ product.featured_image.src | img_url: '900x' }}"
+                       data-srcset="{{ product.featured_image.src | img_url: '300x' }} 300w,
+                                    {{ product.featured_image.src | img_url: '400x' }} 400w,
+                                    {{ product.featured_image.src | img_url: '500x' }} 500w,
+                                    {{ product.featured_image.src | img_url: '600x' }} 600w,
+                                    {{ product.featured_image.src | img_url: '700x' }} 700w,
+                                    {{ product.featured_image.src | img_url: '800x' }} 800w,
+                                    {{ product.featured_image.src | img_url: '900x' }} 900w,
+                                    {{ product.featured_image.src | img_url: '1920x' }} 1920w"
+                       class="img-fluid lazyload">
+			</div>
+          <div class="product-info">
+	
+		<span class="product_bg one">
+			<div class="product-details">
+				<div class="h22">{{ product.title }}</div>
+				{% if settings.vendor %}<h3>{{ product.vendor }}</h3>{% endif %}
+				{% assign color_index = '' %}
+				{% for product_options in product.options %}
+					{% if product_options == 'Color' %}
+						{% capture color_index %}option{{ forloop.index }}{% endcapture %}
+						{% break %}
+					{% endif %}
+				{% endfor %}
+              	<div class="product-type">{{ product.type }}</div>
+				<div class="product-color">{{ product.variants.first[color_index] }}</div>
+				<div class="grid-link__meta price">
+					{% if product.price < product.compare_at_price %}
+						<div class="grid-link__sale_price onsale">{{ product.price | money }}</div>
+						<div class="grid-link__sale_price was">{{ product.compare_at_price | money }}</div>
+					{% else %}
+						<div class="prod-price">{% if product.price_varies %} {{ 'products.general.from' | t }} {{ product.price_min | money }} - {{ product.price_max | money }} {% else %}{{ product.price | money }}{% endif %}</div>
+					{% endif %}
+				</div>
+			</div>
+           <p class="sale_title" style="display: block !important;">{{collection.title}}</p>
+		</span>
+	
+</div>
+		</a>
+    </div>
+</div>
+
+
+{% comment %}{% include 'product-popup' %}{% endcomment %}

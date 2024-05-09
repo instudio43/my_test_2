@@ -1,0 +1,47 @@
+<h2>{{section.settings.title}}</h2>
+<h3>{{section.settings.sub_title}}</h3>
+<div class="home-hats-slider">
+  {% for product in collections[section.settings.slider-collection].products %}
+  <div class="hats-slide">
+    <a href="{{product.url}}">
+    <img src="{{ product.featured_image | product_img_url: 'grande' }}" alt="{{ product.featured_image.alt }}" />
+    </a>
+    <div class="hats-detail-block">
+      <span class="prod-title">{{product.title}}</span>
+      <span class="prod-price">{{product.price | money}}</span>
+      <a href="{{product.url}}" class="btnShop">Shop Now</a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% schema %}
+  {
+    "name": "Home Hats Slider",
+	"class":"section-home-hats-slider",
+    "settings": [
+		{
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+			"default":"HATS"
+        },
+		{
+          "type": "text",
+          "id": "sub_title",
+          "label": "Sub Title",
+			"default":"TOP OF YOUR LOOK"
+        },
+        {
+          "type": "collection",
+          "id": "slider-collection",
+          "label": "Choose a collection"
+        }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

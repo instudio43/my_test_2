@@ -1,0 +1,135 @@
+<style>
+  #homepage-custom-images-block .left-content .clt-link, #homepage-custom-images-block .left-content .clt-title	{
+    color: {{ settings.home-custom-1-text-color }} !important;
+  }
+  #homepage-custom-images-block .left-content .clt-link{
+    border: {{ settings.home-custom-1-text-color }} 2px solid;
+  }
+  #homepage-custom-images-block .left-content .clt-link:hover{
+    color: {{ settings.home-custom-1-text-color-hover }} !important;
+    border: {{ settings.home-custom-1-text-color-hover }} 2px solid;
+    /*  background: {{ settings.home-custom-1-text-color }};*/
+  }
+  #homepage-custom-images-block .right-content .top-container .clt-title, #homepage-custom-images-block .right-content .top-container .clt-link{
+    color: {{ settings.home-custom-2-text-color }};
+  }
+  #homepage-custom-images-block .right-content .top-container .clt-link:hover{
+    color: {{ settings.home-custom-2-text-color-hover }} !important;
+  }
+  #homepage-custom-images-block .right-content .bottom-container .clt-title, #homepage-custom-images-block .right-content .bottom-container .clt-link{
+    color: {{ settings.home-custom-3-text-color }} ;
+  }
+  #homepage-custom-images-block .right-content .bottom-container .clt-link:hover{
+    color: {{ settings.home-custom-3-text-color-hover }} !important;
+  }
+
+</style>
+<section id="homepage-custom-images-block" class="homepage-custom-scn">
+  <div class="left-content desktop-6 tablet-6 mobile-6">
+    <div class="{% if settings.homepage-custom-banner-video.type == 'vimeo' %}video_vimeo{% endif %}" id="videoContainer">
+      {% if settings.homepage-custom-video.type == 'vimeo' %}
+        <script>
+          $(document).ready(function(){
+            autoPlayVideo('{{ settings.homepage-custom-banner-video.id }}','auto','auto');
+          });
+          function autoPlayVideo(vcode, width, height){
+            "use strict";
+            if( $(window).width() > 767){
+              height = $('#homepage-custom-images-block > div.right-content.desktop-6.tablet-6.mobile-6').height();
+            }else{
+              height = $('div#videoContainer').height();
+            }
+            $("#videoContainer").html('<iframe width="'+width+'" allow="autoplay; fullscreen" src="https://player.vimeo.com/video/'+vcode+'?autoplay=1&title=false&background=1&byline=false&portrait=true&autopause=0&muted=1&loop=1&rel=0&wmode=transparent&controls=0" frameborder="0" allowfullscreen></iframe>');
+            $('#videoContainer iframe, .left-content.custom-video-prt > img').attr('style', 'height: '+height+"px !important");
+            var iResizeCount = 0;
+            var safeResize = setInterval(function () {
+              if( $(window).width() > 767){
+                height = $('#homepage-custom-images-block > div.right-content.desktop-6.tablet-6.mobile-6').height();
+              }else{
+                height = $('#homepage > div.desktop-12.tablet-12.mobile-12.hats-banner-section.only-mobile.position-set-left').height();
+              }
+              $('#videoContainer iframe, .left-content.custom-video-prt > img').attr('style', 'height: '+height+"px !important");
+              iResizeCount++;
+              if (height > 300 || iResizeCount > 10) {
+                clearInterval(safeResize);
+              }
+            },500);
+          }
+        </script>
+        {% elsif settings.homepage-custom-banner-video.type == 'youtube' %}
+
+        <script>
+          $(document).ready(function(){
+            autoPlayVideo('{{ settings.homepage-custom-banner-video.id }}','auto','auto');
+          });
+          function autoPlayVideo(vcode, width, height){
+            "use strict";
+            if( $(window).width() > 767){
+              height = $('#homepage-custom-images-block > div.right-content.desktop-6.tablet-6.mobile-6').height();
+            }else{
+              height = $('div#videoContainer').height();
+            }
+            $("#videoContainer").html('<iframe width="'+width+'" src="https://www.youtube.com/embed/'+vcode+'?autoplay=1&loop=1&rel=0&wmode=transparent" frameborder="0" allowfullscreen wmode="Opaque"></iframe>');
+            $('#videoContainer iframe, .left-content.custom-video-prt > img').attr('style', 'height: '+height+"px !important");
+            setTimeout(function () {
+              if( $(window).width() > 767){
+                height = $('#homepage-custom-images-block > div.right-content.desktop-6.tablet-6.mobile-6').height();
+              }else{
+                height = $('#homepage > div.desktop-12.tablet-12.mobile-12.hats-banner-section.only-mobile.position-set-left').height();
+              }
+              $('#videoContainer iframe, .left-content.custom-video-prt > img').attr('style', 'height: '+height+"px !important");
+            },350);
+          }
+        </script>
+
+      {% else %}
+        Uploaded video url is not supprted.
+      {% endif %}
+    </div>
+    <script>
+      var resizeTimer;
+      $(window).on('resize', function(e) {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+          var obj = $('#homepage-custom-images-block > div.right-content.desktop-6.tablet-6.mobile-6');
+          if (obj && obj.height()) {
+            if( $(window).width() > 767){
+              obj = $('#homepage-custom-images-block > div.right-content.desktop-6.tablet-6.mobile-6');
+              $('#videoContainer iframe, .left-content.custom-video-prt > img').attr('style', 'height: '+obj.height()+"px !important");
+            }else{
+              obj = $('#homepage > div.desktop-12.tablet-12.mobile-12.hats-banner-section.only-mobile.position-set-left');
+              $('#videoContainer iframe, .left-content.custom-video-prt > img').attr('style', 'height: '+(obj.height())+"px !important");
+            }
+          }
+        }, 50);
+      });
+    </script>
+  </div>
+  <div class="right-content desktop-6 tablet-6 mobile-6">
+    <div class="top-container">
+      <a href="{{ settings.home-custom-2-link }}">
+        <img src="{{ 'home-custom-right-top-image.jpg' | asset_url }}" alt="All Tops" />
+        <div class="over-lay-text">
+          {% if settings.home-custom-2-text != blank %}
+            <div class="clt-title" >{{ settings.home-custom-2-text }}</div>
+          {% endif %}
+          {% if settings.home-custom-2-text != blank %}
+            <div class="clt-link" ><span>{{ settings.home-custom-2-label }}</span></div>
+          {% endif %}
+        </div></a>
+    </div>
+    <div class="bottom-container">
+      <a href="{{ settings.home-custom-3-link }}"> <img src="{{ 'home-custom-right-bottom-image.jpg' | asset_url }}" alt="All Bottoms" />
+        <div class="over-lay-text">
+          {% if settings.home-custom-3-text != blank %}
+            <div class="clt-title" style="color: {{ rightBottomTextColor }}">{{ settings.home-custom-3-text }}</div>
+          {% endif %}
+          {% if settings.home-custom-3-text != blank %}
+            <div class="clt-link" style="color: {{ rightBottomTextColor }} !important;"><span>{{ settings.home-custom-3-label }}</span></div>
+          {% endif %}
+        </div></a>
+    </div>
+
+    </article>
+</section>
+<div class="clear"></div>

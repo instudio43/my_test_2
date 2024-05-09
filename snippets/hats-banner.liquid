@@ -1,0 +1,40 @@
+<div class="homepage-section mobile-hide">
+  <div class="desktop-12 tablet-12 mobile-12 hats-banner-section slides">
+    <a href="{{ settings.desktop_hats_banner_link }}" title="Hats">
+      <img src="{{ 'hats-banner.jpg' | asset_url }}" alt="{{ settings.desktop_hats_banner_alt }}" title="{{ settings.desktop_hats_banner_alt }}" class="mobile-hide"/>      
+    </a>
+    <div class="over-lay-text flex-caption">
+      <div class="caption-inners">
+        {% if settings.desktop_hats_banner_text != blank %} 
+        <h2 class="clt-title slide-title" style="color:{{ settings.desktop_hats_banner_text_color }}">{{ settings.desktop_hats_banner_text }}</h2>
+        {% endif %}
+        {% if settings.desktop_hats_banner_link_label_caption != blank %} 
+        <p class="caption" style="color:{{ settings.desktop_hats_banner_text_color }}">{{ settings.desktop_hats_banner_link_label_caption }}</p>
+        {% endif %}
+        {% if settings.desktop_hats_banner_link_label_button %}
+        <div class="cta">
+          <a style="border: 2px solid {{settings.desktop_hats_banner_text_color }}; color: {{settings.desktop_hats_banner_text_color }};" href="{{ settings.desktop_hats_banner_link }}">
+            {{ settings.desktop_hats_banner_link_label }}
+          </a>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% if settings.hats-mobslide-1-check %}
+<div class="desktop-12 tablet-12 mobile-12 hats-banner-section only-mobile position-set-{{ settings.hats-mobslide_1_caption-align }}">
+  <a href="{{ settings.hats_banner_link }}" title="{{ settings.hats-mobslide1_alt }}">    
+    <img src="{{ 'hats-banner-mobile.jpg' | asset_url }}" alt="{{ settings.hats-mobslide1_alt }}" title="{{ settings.hats-mobslide1_alt }}" class="only-mobile"/>
+    <div class="over-lay-text">
+      <div class="clt-title" style="color:{{ settings.hats-mobslide-1-title-color }}">{{ settings.hats_banner_text }}</div>
+       {% if settings.hats-mobslide-1-caption != blank %} 
+        <p class="caption" style="color:{{ settings.hats-mobslide-1-title-color }}">{{ settings.hats-mobslide-1-caption }}</p>
+        {% endif %}
+      {% if settings.hats-mobslide-1-button %}
+      <div class="clt-link" style="color:{{ settings.hats-mobslide-1-title-color }} !important; border-color:{{ settings.hats-mobslide-1-title-color }};"><span>{{ settings.hats_banner_link_label }}</span></div>
+      {% endif %}
+    </div>
+  </a>
+</div>
+{% endif %}

@@ -1,0 +1,40 @@
+<div class="{{ page.title | handleize | append: '-page'}}">
+
+<div id="content" class="row" >	
+  <div class="section-title desktop-12 mobile-3">
+    <h1>{{ page.title }}</h1>
+  </div>
+
+  <div id="faq" class="desktop-12 tablet-6 mobile-3">
+
+    <div class="faq-content">
+      {{ page.content }}
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+  $(document).ready(function(){
+    $('.faq-content #data h2').click(function(){
+      $('.faq-content h2').not(this).removeClass('ct');
+      if($(this).hasClass('ct')) {
+        $(this).next('div').slideUp();
+        $(this).removeClass('ct');
+      }
+      else {
+        $('.faq-content #data h2').next('div').slideUp();
+        $(this).next('div').slideDown();
+        $(this).addClass('ct');
+      }	
+    });
+	
+	// categories
+	$('#categories li').click(function(){
+		$(this).addClass('active').siblings().removeClass('active');
+		$('#cont_' + $(this).attr('id')).addClass('active').siblings().removeClass('active');
+	});
+	
+  });
+</script>

@@ -1,0 +1,122 @@
+<script>  
+/* ********************************************************************************************************************** */	 
+// Facebook Pixel Code 
+/* ********************************************************************************************************************** */
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','//connect.facebook.net/en_US/fbevents.js');
+
+  
+var glegem = glegem || function(){(window["glegem"].q = window["glegem"].q || []).push(arguments)};
+glegem("OnCheckoutStepLoaded",function(data){ 
+ switch(data.StepId){
+  case data.Steps.LOADED:
+		// FB - view checkout
+        fbq('init', '441767216176558');
+        fbq('track', 'InitiateCheckout');     
+      break;
+  case data.Steps.CONFIRMATION:
+     if (data.IsSuccess){
+
+		var totalCartDiscount = 0;
+       	var totalOriginalCartDiscount = 0;
+		for(i=0;i<data.details.discounts.length;i++){
+          if(data.details.discounts[i].discountTypeId == 1){
+			totalCartDiscount = totalCartDiscount + data.details.discounts[i].customerPrice;
+            totalOriginalCartDiscount = totalOriginalCartDiscount + data.details.discounts[i].price;
+          }
+		}	 
+       // Start of GA Ecommerce
+       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                               })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+       // fill in GA account id
+       ga('create', 'UA-53610418-1', 'auto');
+
+       ga('require','ecommerce');
+
+       ga('ecommerce:addTransaction', {
+         'id': data.OrderId,
+         'affiliation': 'Global-E',
+         'revenue': data.details.totalProductsPrice - totalOriginalCartDiscount,
+         'shipping': data.details.discountedShippingPrice ,                     
+         'tax': data.details.totalVAT,                                          
+         'currency': data.details.currency                                      
+       });
+
+       for(i=0;i<data.details.products.length;i++){
+         ga('ecommerce:addItem', {
+           'id': data.OrderId,
+           'name': data.details.products[i].name,                       		
+           'sku':data.details.products[i].sku,                                  
+           'category': data.details.products[i].categories.length ? data.details.products[i].categories[0].name : '', 
+           'price': data.details.products[i].price,                             
+           'quantity': data.details.products[i].quantity,                       
+           'currency': data.details.currency                                    
+         });
+       }
+       ga('ecommerce:send');
+
+       // End of GA Ecommerce  
+       
+       //Wunderkind smart tag
+       
+    (function(d) {
+		var e = d.createElement('script');
+		e.src = d.location.protocol + '//tag.bounceexchange.com/4079/i.js';
+		e.async = true;
+		d.getElementsByTagName("head")[0].appendChild(e);
+	}(document));   
+       
+       //global line items array
+       
+    var global_line_items = []
+	for (i=0;i<data.details.products.length;i++){
+	global_line_items.push({
+	'product_id': data.OrderID,
+	'sku':data.details.products[i].sku,
+	'price': data.details.products[i].price,
+	'quantity': data.details.products[i].quantity,
+	})
+};
+
+       // --------------- Wunderkind conversion pixel
+	  window.top.bouncex = window.top.bouncex || [];
+	  window.top.bouncex.push(["conversion", {
+		  "order_id":data.OrderId,
+		  "email":data.details.customerEmail,
+		  "phone":data.details.CustomerInfo.BillingAddress.Phone1,
+		  "goal":"purchase",
+		  "currency":data.details.currency,
+		  "total_discount":data.details.totalDiscountsPrice,
+		  "tax":data.details.totalVAT,
+		  "shipping":data.details.discountedShippingPrice,
+		  "amount":data.details.totalProductsPrice - totalOriginalCartDiscount,
+		  "pay_method":data.details.paymentMethodName,
+          "item":global_line_items
+	  }]);	   
+      //----------------------
+       
+
+             
+       
+		// FB - checkout completed
+       
+        var fb_order_value =  data.details.totalProductsPrice - totalOriginalCartDiscount;
+       
+        fbq('init', '441767216176558');
+        fbq('track', 'Purchase', {
+        value: fb_order_value,
+        currency: data.details.currency
+        });
+       
+          
+     }}});
+
+
+</script>
+

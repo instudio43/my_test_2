@@ -1,0 +1,31 @@
+	  {% if product.tags contains 'type-light' %}
+             <div>
+               <p> FABRIC TYPE: </p>
+            <img alt="Light fabric" class="fabric-icon" src="//cdn.shopify.com/s/files/1/0580/1077/files/Weight_icon.png?8645396689906322147"/>
+            <label>Second Skin - Light</label> 
+             </div>
+      {% elsif product.tags contains 'type-medium' %}
+             <div>
+               <p> FABRIC TYPE: </p>
+      		<img "Medium fabric" class="fabric-icon" src="//cdn.shopify.com/s/files/1/0580/1077/files/Weight_icon.png?8645396689906322147"/>
+      		<label >Second Skin Compression - Middle </label> 
+             </div>
+      {% elsif product.tags contains 'type-heavy' %}
+               <div>
+                 <p> FABRIC TYPE: </p>
+            <img alt="Heavy Fabric" class="fabric-icon" src="//cdn.shopify.com/s/files/1/0580/1077/files/Weight_icon.png?8645396689906322147"/>
+      		<label >Supplex - Heavy</label> 
+             </div>
+	  {% endif %}
+
+{% if product.tags contains 'stretch-four-way' %}
+			<div>
+               <p> STRETCH: </p>
+            <img alt="Stretch Fabric" class="fabric-icon" src="//cdn.shopify.com/s/files/1/0580/1077/files/Stretch_icon.png?8645396689906322147"/>
+            <label>Four Way</label> 
+            </div>
+{% endif %}
+
+
+
+	  
