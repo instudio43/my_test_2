@@ -27,7 +27,7 @@
           {% endif %}
           {% for image in product.images %}
           {% if forloop.first %}
-          <img src="{{ image | img_url: '1368X1859' }}" alt="{% if image.alt | escape != blank %}{{ image.alt | escape }}{% else %}{{ product.title }}{% endif %}" />
+          <img src="{{ image | img_url: '1368X1859' }}" alt="{% if image.alt %}{{ image.alt | escape }}{% else %}{{ product.title }}{% endif %}" />
           {% endif %}
           {% endfor %}
         </a>
@@ -59,3 +59,13 @@
     {% endfor %}
   </div>
 </div>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% if image.alt | escape != blank %}"
+  to: "{% if image.alt %}"
+  position: 1224..1242
+{% endcomment %}
